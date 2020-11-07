@@ -26,6 +26,6 @@ app.title = 'VisNote'
 app.layout = create_layout(app)
 demo_callbacks(app)
 
-# Running server
+# Running server 
 if __name__ == "__main__":
-    app.run_server(debug=True, port=8888)
+    app.run_server(debug=True)

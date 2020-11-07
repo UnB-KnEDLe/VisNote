@@ -367,17 +367,25 @@ menu #dropdown-dataset {
   color: white;
 }
 
-.Button2 {
+#start-button{
   background-color:  rgb(135, 202, 59);
   color: white;
   margin-right: 10px;
 }
 
-.Button2:hover {
+#start-button:hover{
   background-color: white; 
   color: black; 
   border: 2px solid rgb(135, 202, 59);
   margin-right: 10px;
+}
+
+.Button2 {
+  
+}
+
+.Button2:hover {
+  
 }
 
 .Button3 {
@@ -412,7 +420,8 @@ menu #dropdown-dataset {
   color: black; 
   border: 2px solid rgb(139, 139, 132);
   float: right;
-  padding: 0px;
+  padding-left: 7px;
+  padding-right: 7px;
   margin-right: 10px;
 }
 

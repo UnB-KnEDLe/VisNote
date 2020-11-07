@@ -281,9 +281,8 @@ def create_layout(app):
                                                     html.Button(id='submit-button', className="Button3", n_clicks=0, children='Submit'), ],
                                                 ),
                                             ]),
-
-                                            html.Button(
-                                                children=[html.I(className="fas fa-2x fa-question-circle")], className="Button5", id="help-button", n_clicks=0),
+                                            html.A(html.Button(
+                                                children=[html.I(className="fas fa-2x fa-question-circle")], className="Button5", id="help-button", n_clicks=0), href='https://youtu.be/q7vsvmx2xZA', target="_blank",id="link_youtube"),
                                             html.Button(
                                                 children=[html.I(className="fas fa-lg fa-download"), " Download"], className="Button4", id="finish-button", n_clicks=0),
                                         ]
@@ -948,9 +947,29 @@ def demo_callbacks(app):
                 df = pd.DataFrame(data)
 
             dfAnno = df
-            return {"display": "none"}, {"display": "grid", "grid-template-columns": "70% 15% auto"}
+            return {"display": "none"}, {"display": "grid", "grid-template-columns": "70% auto auto"}
         else:
             return {"display": "grid", "grid-template-columns": "70% 30%"}, {"display": "none"}
+
+
+    @app.callback(
+    [
+        Output("about-us", "style")   
+    ],
+    [
+        Input("about-button", "n_clicks")
+    ]
+    )
+    def display_about(clicks):
+        if clicks is None:
+            clicks = 0
+        if (clicks % 2) == 1:
+            clicks += 1
+            return [{"display": "grid"}]
+        else:
+            clicks += 1 
+
+        return [{"display": "none"}]
 
     @app.callback(
     [
@@ -962,7 +981,7 @@ def demo_callbacks(app):
     ]
     )
     def display_help(clicks):
-        if clicks is None:
+        '''if clicks is None:
             clicks = 0
         if (clicks % 2) == 1:
             clicks += 1
@@ -971,11 +990,12 @@ def demo_callbacks(app):
                 "Close Help",
             )
         else:
-            clicks += 1
-            return (
-                {"display": "none"},
-                html.I(className="fas fa-2x fa-question-circle"),
-            )
+            clicks += 1 '''
+
+        return (
+            {"display": "none"},
+            html.I(className="fas fa-2x fa-question-circle"),
+        )
 
     @app.callback(
         [
@@ -1014,8 +1034,7 @@ def demo_callbacks(app):
 
     @app.callback(
         [
-            Output("qnt-annotations", "children"),
-            Output("start-button", "children"),
+            Output("qnt-annotations", "children")
         ],
         [
             Input("start-button", "n_clicks"),
@@ -1059,7 +1078,21 @@ def demo_callbacks(app):
                 qnt += 1
             i += 1
 
-        return html.H6("Annotate (" + str(qnt) + ")"), "Annotate"
+        return [html.H6("Annotate (" + str(qnt) + ")")]
+
+    @app.callback(
+        [
+            Output("start-button", "style"),
+            Output("start-button", "children")
+        ],
+        [
+            Input("dropdown-label", "value")
+        ]
+    )
+    def unlabel_button(label):
+        if label == "Unlabeled":
+            return [{"background-color":"rgb(238, 59, 59)", "border": "2px solid white"}, "Unlabel"]
+        return [{}, "Annotate"]
 
     @app.callback(
         Output('download', 'children'),
@@ -1070,7 +1103,7 @@ def demo_callbacks(app):
         if click:
             df = dfAnno
             df = df.drop(columns=["Unnamed: 0", "x", "y"])
-            df.to_csv("annotation.csv", index=False)
+            
 
             i = 0
             qnt = 0
