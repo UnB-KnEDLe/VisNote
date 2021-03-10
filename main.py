@@ -54,8 +54,10 @@ def create_layout(app):
                     className="row background",
                     id="proximo",
                     children=[
+                        html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0),
                         html.Button(children=["Corrigir classes ->"], className="Button", id="corrigir-classes-button", n_clicks=0),
                         html.Button(id="value-corrigir-classes-button", className="Button",n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["<- Voltar"], className="Button", id="voltar-corrigir-classes-button", n_clicks=0),
                         html.Button(children=["Extrair entidades ->"], className="Button", id="extrair-entidades-button", n_clicks=0),
                         html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0),
                         ],         
@@ -184,7 +186,39 @@ def create_layout(app):
                                                 value="Todos",
                                 ),
 
-                                html.Div(id='tabela_atos',children=[])
+                                html.Div(id='tabela_atos',children=[
+                                    dash_table.DataTable(
+                                        id='datatable',
+                                        #columns=[{"name": i, "id": i} for i in df2.columns],
+                                        #data=df2.to_dict('records'),
+                                        editable=True,
+                                        row_selectable="single",
+                                        selected_rows=[],
+                                        hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
+                                        css=[{"selector": ".show-hide", "rule": "display: none", }],
+                                        style_as_list_view=True,
+                                        style_cell={
+                                                'overflow': 'auto',
+                                                'textOverflow': 'ellipsis',
+                                                'minWidth':'300px',
+                                                #'maxWidth': '300px',
+                                                'textAlign': 'left'
+                                        }, 
+                                        style_data={
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                        },
+                                        style_table={
+                                                'maxHeight': '67vh',
+                                                'overflowY': 'auto',
+                                                'overflowX': 'auto',
+                                                #'marginBottom': '40px'
+                                        },
+                                        style_header={
+                                            #'display': 'none'
+                                        },
+                                    ),
+                                ])
                                              
                         ]),    
                     ],
@@ -364,10 +398,84 @@ def main_callbacks(app):
         [ 
             Output("corrigir-classes-button", "style"),   
             Output("pagina-extrair-classes", "style"),
+            Output("voltar-extrair-classes-button", "style"),
             Output("extrair-entidades-button", "style"),   
             Output("pagina-corrigir-classes", "style"),
+            Output("voltar-corrigir-classes-button", "style"), 
             Output("corrigir-entidades-button", "style"),   
-            Output("pagina-extrair-entidades", "style"),    
+            Output("pagina-extrair-entidades", "style"),
+        ],
+        [
+            Input('upload-data', 'contents'),
+            Input("corrigir-classes-button", "n_clicks"),
+            Input("extrair-entidades-button", "n_clicks"), 
+            Input("voltar-extrair-classes-button", "n_clicks"),
+            Input("voltar-corrigir-classes-button", "n_clicks"),
+        ]
+    )
+    def control_displays(upload_data,corrigir_classes,extrair_entidades,voltar_extrair_classes,voltar_corrigir_classes):
+
+        if voltar_corrigir_classes > 0:
+            return [{"display":"none"}, # corrigir-classes-button
+                    {"display":"none"}, # pagina-extrair-classes
+                    {},
+                    {}, # extrair-entidades-button
+                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
+                    {"display":"none"},
+                    {"display":"none"}, # corrigir-entidades-button
+                    {"display": "none"}] # pagina-extrair-entidades
+        
+        elif extrair_entidades > 0:
+            return [{"display":"none"}, # corrigir-classes-button
+                    {"display":"none"}, # pagina-extrair-classes
+                    {"display":"none"},
+                    {"display":"none"}, # extrair-entidades-button
+                    {"display":"none"}, # pagina-corrigir-classes
+                    {},
+                    {}, # corrigir-entidades-button
+                    {}] # pagina-extrair-entidades
+        
+        elif voltar_extrair_classes > 0:
+            return [{}, #corrigir-classes-button
+                    {}, #pagina-extrair-classes
+                    {"display":"none"},
+                    {"display":"none"}, # extrair-entidades-button
+                    {"display": "none"}, #pagina-corrigir-classes
+                    {"display":"none"},
+                    {"display":"none"}, #corrigir-entidades-button
+                    {"display": "none"}] #pagina-extrair-entidades
+
+        elif corrigir_classes > 0:
+            return [{"display":"none"}, # corrigir-classes-button
+                    {"display":"none"}, # pagina-extrair-classes
+                    {},
+                    {}, # extrair-entidades-button
+                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
+                    {"display":"none"},
+                    {"display":"none"}, # corrigir-entidades-button
+                    {"display": "none"}] # pagina-extrair-entidades
+        elif (upload_data is not None):
+            return [{}, #corrigir-classes-button
+                    {}, #pagina-extrair-classes
+                    {"display":"none"},
+                    {"display":"none"}, # extrair-entidades-button
+                    {"display": "none"}, #pagina-corrigir-classes
+                    {"display":"none"},
+                    {"display":"none"}, #corrigir-entidades-button
+                    {"display": "none"}] #pagina-extrair-entidades
+        return [{"display": "none"}, #corrigir-classes-button
+                {}, #pagina-extrair-classes
+                {"display":"none"},
+                {"display":"none"}, # extrair-entidades-button
+                {"display": "none"}, #pagina-corrigir-classes
+                {"display":"none"},
+                {"display":"none"}, #corrigir-entidades-button
+                {"display": "none"}] #pagina-extrair-entidades
+
+    @app.callback(
+        [ 
+            Output("voltar-extrair-classes-button", "n_clicks"),
+            Output("voltar-corrigir-classes-button", "n_clicks"),
         ],
         [
             Input('upload-data', 'contents'),
@@ -375,25 +483,10 @@ def main_callbacks(app):
             Input("extrair-entidades-button", "n_clicks"), 
         ]
     )
-    def control_displays(upload_data,corrigir_classes,extrair_entidades):
-        if extrair_entidades > 0:
-            return [{"display":"none"},
-                    {"display":"none"},
-                    {"display":"none"},
-                    {"display":"none"},
-                    {},
-                    {}]
-        elif corrigir_classes > 0:
-            return [{"display":"none"},
-                    {"display":"none"},
-                    {},
-                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"},
-                    {"display":"none"},
-                    {"display": "none"}]
-        elif (upload_data is not None):
-            return [{},{},{"display":"none"},{"display": "none"},{"display":"none"},{"display": "none"}]
-        return [{"display": "none"},{},{"display":"none"},{"display": "none"},{"display":"none"},{"display": "none"}]
+    def reset_voltar_buttons(upload_data,corrigir_classes,extrair_entidades):
+        return [0, 0]
 
+    
     # Extrair anotações XML - Parte 1
 
     @app.callback(
@@ -550,7 +643,7 @@ def main_callbacks(app):
                 ],
                 data=df2.to_dict('records'),
                 editable=True,
-                row_selectable="multi",
+                row_selectable="single",
                 selected_rows=[],
                 hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
                 css=[{"selector": ".show-hide", "rule": "display: none", }],
@@ -634,10 +727,14 @@ def main_callbacks(app):
             Input("corrigir-classe-button","n_clicks"),
             Input("enviar-corrigir-classe-button","n_clicks"),
             Input("graph-3d-plot-tsne", "clickData"),
+            Input('datatable', "derived_virtual_selected_rows")
         ]
     )
-    def display_corrigir(corrigir,enviar,clickData):
-        if not clickData: 
+    def display_corrigir(corrigir,enviar,clickData,clickTable):
+        if clickTable is None:
+            clickTable = []
+
+        if (not clickData) and clickTable == []: 
             return[{"display":"none"},{"display":"none"}]
         elif corrigir == enviar:
             return [{},{"display":"none"}]
@@ -667,6 +764,23 @@ def main_callbacks(app):
 
         else: 
             indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+
+        return indice
+
+    def achar_indice_tabela_atos(x,y):
+        df = pd.read_csv("testando_tsne_umap.csv")
+
+        XY = {}
+        XY['x'] = x
+        XY['y'] = y
+
+        X = [x]
+        #X.append(XY['x'])
+        Y = [y]
+        #Y.append(XY['y'])
+        
+        
+        indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
 
         return indice
 
@@ -759,24 +873,6 @@ def main_callbacks(app):
 
             indice = achar_indice(clickData,mp)
 
-            '''XY = {}
-            XY['x'] = clickData["points"][0]['x']
-            XY['y'] = clickData["points"][0]['y']
-
-            X = []
-            X.append(XY['x'])
-            Y = []
-            Y.append(XY['y'])
-            
-            if mp == 'UMAP':
-                achar_indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-                        
-            elif mp == 't-SNE':
-                achar_indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
-
-            else: 
-                achar_indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index'''
-
             df.at[indice, 'estado'] = "Confirmado"
 
             df.to_csv("testando_tsne_umap.csv",index=False)
@@ -794,17 +890,48 @@ def main_callbacks(app):
         [
             Input("graph-3d-plot-tsne", "clickData"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
+            Input('datatable', "derived_virtual_selected_rows")
         ],
         [
-            State("dropdown-method", "value")
+            State("dropdown-method", "value"),
+            State('datatable', "data"),
         ]
     )
-    def explore_data(clickData,enviar, mp):
+    def explore_data(clickData,enviar, selected_row_indices, mp, table):
         df = pd.read_csv("testando_tsne_umap.csv")
         label = 'Apagar'
         contents = []
 
         contents.append(html.H5("Clique em um ponto no layout para obter mais informações."),)
+
+        if selected_row_indices is None:
+            selected_row_indices = []
+
+        if selected_row_indices != []:
+            selected_rows=[table[i] for i in selected_row_indices]
+            x = selected_rows[0]["x_umap"]
+            y = selected_rows[0]["y_umap"]
+
+            indice = achar_indice_tabela_atos(x,y)
+
+            contents = []
+            label = df['tipo'][indice]
+            conteudo = df['conteudo'][indice]
+            documento = df['documento'][indice]
+            idd = df['id'][indice]
+    
+            contents.append(html.H6("Classe atual:"))
+            for j in label:
+                contents.append(html.P(j,className="card-tab"))
+            contents.append(html.H6("Ato:"))
+            for i in conteudo:
+                contents.append(html.P(i,className="card-tab"))
+            contents.append(html.H6("Documento:"))
+            for k in documento:
+                contents.append(html.P(k,className="card-tab"))
+            contents.append(html.H6("Id:"))
+            for l in idd:
+                contents.append(html.P(l,className="card-tab"))
 
         if clickData or enviar:
             indice = achar_indice(clickData,mp)
