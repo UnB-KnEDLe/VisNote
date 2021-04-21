@@ -38,15 +38,36 @@ def cleanText(text):
 def remove_stopwords(tokens):
     return [token for token in tokens if token.lower() not in stop_list] 
 
+def find_entidades(df,j):
+    entidades = []
+    i = 0
+    while i < len(df.texto):
+        if df.id_dodf_rel[i] == df.id_dodf_rel[j]:
+            entidades.append(df.id_geral[i])
+        i += 1
+    return entidades
+
 def preprocess(df):
+    colunas = ['id_geral', 'id_dodf_rel','tipo_rel','estado_rel','texto','anotacoes']
+    df_result = pd.DataFrame(columns = colunas)
+    
+    dictAux = {'id_geral':'x', 'id_dodf_rel':'x','tipo_rel':'x','estado_rel':'x','texto':'x','anotacoes':[]}
+    tipos_atos = ['Ato_Abono_Permanencia','Ato_Aposentadoria','Ato_Cessao','Ato_Exoneracao_Comissionado','Ato_Exoneracao_Efetivo','Ato_Nomeacao_Comissionado','Ato_Nomeacao_Efetivo','Ato_Retificacao_Comissionado','Ato_Retificacao_Efetivo','Ato_Reversao','Ato_Substituicao','Ato_Tornado_Sem_Efeito_Apo','Ato_Tornado_Sem_Efeito_Exo_Nom']
     textos = []
     textos_clean = []
     i = 0
-    while i < len(df.conteudo):
-        if len(df.conteudo[i]) > 0:
-            textos.append(df.conteudo[i])
-        else:
-            textos.append("nan")
+    while i < len(df.texto):
+        if (len(df.texto[i]) > 0) and (df.tipo_ent[i] in tipos_atos):
+            dictAux["id_geral"] = df.id_geral[i]    
+            dictAux["id_dodf_rel"] = df.id_dodf_rel[i]
+            dictAux["tipo_rel"] = df.tipo_rel[i]
+            dictAux["estado_rel"] = 'nao_confirmado'
+            dictAux["texto"] = df.texto[i]
+            dictAux["anotacoes"] = find_entidades(df,i)
+            df_length = len(df_result)
+            df_result.loc[df_length] = dictAux
+                                
+            textos.append(df.texto[i])
         i += 1
 
     i = 0
@@ -58,7 +79,9 @@ def preprocess(df):
 
     text_stop = [' '.join(remove_stopwords(doc)) for doc in text_tokens]
     
-    return text_stop
+    df_result['texto_temp'] = text_stop
+    
+    return df_result
 
 def run_tfidf(text):
     corpus = list(text)
@@ -75,7 +98,7 @@ def run_tsne(tfidf):
     return df_tsne
 
 def run_umap(tfidf):
-    reducer = umap.UMAP(n_neighbors=100, min_dist=0.8,metric='euclidean')
+    reducer = umap.UMAP(n_neighbors=100, min_dist=0.99,metric='cosine')
     embedding = reducer.fit_transform(tfidf)
 
     x = list(embedding[:,0])
@@ -87,28 +110,19 @@ def run_umap(tfidf):
     return df_umap
 
 def projecao_multi(df):
-    text = preprocess(df)
+    result = preprocess(df)
+    text = result.texto_temp
+    
+    result = result.drop(columns=['texto_temp'])
     tfidf = run_tfidf(text)
     
-    df_tsne = run_tsne(tfidf)
-    df_tsne['tipo'] = df.tipo 
-    
+    df_tsne = run_tsne(tfidf)    
     df_umap = run_tsne(tfidf)
-    df_umap['tipo'] = df.tipo
     
-    result = pd.DataFrame()
     result["x_tsne"] = df_tsne.x
     result["y_tsne"] = df_tsne.y
     result["x_umap"] = df_umap.x
     result["y_umap"] = df_umap.y
-    result["cod"] = df.cod
-    result["documento"] = df.documento
-    result["id"] = df.id
-    result["anotador"] = df.anotador
-    result["tipo"] = df.tipo
-    result["conteudo"] = df.conteudo
-    result["estado"] = df.estado
-    
-    
+      
     return result
     

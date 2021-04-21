@@ -1,4 +1,4 @@
-from extract_xml import extrair_anotacoes, organize_content, return_tables, return_entidades
+from extract_xml import extrair_anotacoes, organize_content, return_tables
 from run_multiproj import projecao_multi
 
 import dash
@@ -14,6 +14,8 @@ import re
 from urllib.parse import quote as urlquote
 import urllib
 
+from ast import literal_eval
+
 colors = {
         'Ato_Abono_Permanencia': 'rgb(237,100,90)',
         'Ato_Aposentadoria': 'rgb(135,197,95)',
@@ -21,7 +23,7 @@ colors = {
         'Ato_Exoneracao_Comissionado': 'rgb(180,151,231)',
         'Ato_Exoneracao_Efetivo': 'rgb(220,176,242)',
         'Ato_Nomeacao_Comissionado': 'rgb(102,197,204)',
-        'Ato_Nomeacao_Efetivo': 'reg(158,185,243)',
+        'Ato_Nomeacao_Efetivo': 'rgb(158,185,243)',
         'Ato_Retificacao_Comissionado': 'rgb(248,156,116)',
         'Ato_Retificacao_Efetivo': 'rgb(246,207,113)',
         'Ato_Reversao': 'rgb(47,138,196)',
@@ -32,6 +34,72 @@ colors = {
         'Avaliar_Depois': 'rgb(179,179,179)',
         'Apagar': '#FFFFFF',
 }
+
+options_entidades = [{'label': 'Ato_Abono_Permanencia', 'value': 'Ato_Abono_Permanencia'},
+ {'label': 'Ato_Exoneracao_Comissionado','value': 'Ato_Exoneracao_Comissionado'},
+ {'label': 'Ato_Exoneracao_Efetivo', 'value': 'Ato_Exoneracao_Efetivo'},
+ {'label': 'Ato_Nomeacao_Comissionado', 'value': 'Ato_Nomeacao_Comissionado'},
+ {'label': 'Ato_Retificacao_Comissionado','value': 'Ato_Retificacao_Comissionado'},
+ {'label': 'Ato_Retificacao_Efetivo', 'value': 'Ato_Retificacao_Efetivo'},
+ {'label': 'Ato_Tornado_Sem_Efeito_Exo_Nom','value': 'Ato_Tornado_Sem_Efeito_Exo_Nom'},
+ {'label': 'nome', 'value': 'nome'},
+ {'label': 'simbolo', 'value': 'simbolo'},
+ {'label': 'cargo_comissionado', 'value': 'cargo_comissionado'},
+ {'label': 'hierarquia_lotacao', 'value': 'hierarquia_lotacao'},
+ {'label': 'orgao', 'value': 'orgao'},
+ {'label': 'a_pedido_ou_nao', 'value': 'a_pedido_ou_nao'},
+ {'label': 'motivo', 'value': 'motivo'},
+ {'label': 'matricula', 'value': 'matricula'},
+ {'label': 'tipo_documento', 'value': 'tipo_documento'},
+ {'label': 'data_documento', 'value': 'data_documento'},
+ {'label': 'numero_dodf', 'value': 'numero_dodf'},
+ {'label': 'data_dodf', 'value': 'data_dodf'},
+ {'label': 'pagina_dodf', 'value': 'pagina_dodf'},
+ {'label': 'cargo_efetivo', 'value': 'cargo_efetivo'},
+ {'label': 'vigencia', 'value': 'vigencia'},
+ {'label': 'quadro', 'value': 'quadro'},
+ {'label': 'processo_SEI', 'value': 'processo_SEI'},
+ {'label': 'informacao_errada', 'value': 'informacao_errada'},
+ {'label': 'informacao_corrigida', 'value': 'informacao_corrigida'},
+ {'label': 'tipo_ato', 'value': 'tipo_ato'},
+ {'label': 'lotacao', 'value': 'lotacao'},
+ {'label': 'matricula_SIAPE', 'value': 'matricula_SIAPE'},
+ {'label': 'fundamento_legal', 'value': 'fundamento_legal'},
+ {'label': 'numero_documento', 'value': 'numero_documento'},
+ {'label': 'Ato_Substituicao', 'value': 'Ato_Substituicao'},
+ {'label': 'nome_substituto', 'value': 'nome_substituto'},
+ {'label': 'matricula_substituto', 'value': 'matricula_substituto'},
+ {'label': 'cargo_substituto', 'value': 'cargo_substituto'},
+ {'label': 'nome_substituido', 'value': 'nome_substituido'},
+ {'label': 'matricula_substituido', 'value': 'matricula_substituido'},
+ {'label': 'simbolo_objeto_substituicao','value': 'simbolo_objeto_substituicao'},
+ {'label': 'cargo_objeto_susbtituicao', 'value': 'cargo_objeto_susbtituicao'},
+ {'label': 'data_inicial', 'value': 'data_inicial'},
+ {'label': 'data_final', 'value': 'data_final'},
+ {'label': 'numero_dodf_edital_normativo','value': 'numero_dodf_edital_normativo'},
+ {'label': 'data_dodf_edital_normativo','value': 'data_dodf_edital_normativo'},
+ {'label': 'numero_dodf_resultado_final','value': 'numero_dodf_resultado_final'},
+ {'label': 'data_dodf_resultado_final', 'value': 'data_dodf_resultado_final'},
+ {'label': 'cargo', 'value': 'cargo'},
+ {'label': 'edital_normativo', 'value': 'edital_normativo'},
+ {'label': 'edital_resultado_final', 'value': 'edital_resultado_final'},
+ {'label': 'candidato', 'value': 'candidato'},
+ {'label': 'Ato_Nomeacao_Efetivo', 'value': 'Ato_Nomeacao_Efetivo'},
+ {'label': 'simbolo_substituto', 'value': 'simbolo_substituto'},
+ {'label': 'Ato_Tornado_Sem_Efeito_Apo','value': 'Ato_Tornado_Sem_Efeito_Apo'},
+ {'label': 'padrao', 'value': 'padrao'},
+ {'label': 'classe', 'value': 'classe'},
+ {'label': 'orgao_cedente', 'value': 'orgao_cedente'},
+ {'label': 'cargo_orgao_cessionario', 'value': 'cargo_orgao_cessionario'},
+ {'label': 'orgao_cessionario', 'value': 'orgao_cessionario'},
+ {'label': 'Ato_Cessao', 'value': 'Ato_Cessao'},
+ {'label': 'onus', 'value': 'onus'},
+ {'label': 'Ato_Reversao', 'value': 'Ato_Reversao'},
+ {'label': 'matricula_siape', 'value': 'matricula_siape'},
+ {'label': 'data_edital_normativo', 'value': 'data_edital_normativo'},
+ {'label': 'data_edital_resultado_final','value': 'data_edital_resultado_final'},
+ {'label': 'carreira', 'value': 'carreira'},
+ {'label': 'data', 'value': 'data'}]
 
 def create_layout(app):
     return html.Div([
@@ -54,12 +122,12 @@ def create_layout(app):
                     className="row background",
                     id="proximo",
                     children=[
-                        html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0),
-                        html.Button(children=["Corrigir classes ->"], className="Button", id="corrigir-classes-button", n_clicks=0),
+                        html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Corrigir classes ->"], className="Button", id="corrigir-classes-button", n_clicks=0, style={"display":"none"}),
                         html.Button(id="value-corrigir-classes-button", className="Button",n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["<- Voltar"], className="Button", id="voltar-corrigir-classes-button", n_clicks=0),
-                        html.Button(children=["Extrair entidades ->"], className="Button", id="extrair-entidades-button", n_clicks=0),
-                        html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0),
+                        html.Button(children=["<- Voltar"], className="Button", id="voltar-corrigir-classes-button", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Extrair entidades ->"], className="Button", id="extrair-entidades-button", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0, style={"display":"none"}),
                         ],         
                 ),
 
@@ -86,6 +154,7 @@ def create_layout(app):
         html.Div(
             className="card",
             id="about-us",
+            style={"display": "none"},
             children=[
                 html.Div(
                     id="about-content",
@@ -142,17 +211,16 @@ def create_layout(app):
                        },
             children=[
                 html.Div(
-                    className="card-ato",
-                    id="lista atos",
-                    children=[
-                        html.Div(
-                            id="atos",
-                            children=[
-                                html.H4(className='card-title',
-                                        style={"text-align": "center"},
-                                        children=["Atos"],
-                                        ),  
-
+                    #className="card-ato",
+                    id="lista_atos",
+                    className="control-tabs",
+                    children=[                       
+                        dcc.Tabs(id='tabs_left', value='atos', children=[
+                            # guia referente às informações do ponto que foi clicado por último
+                            dcc.Tab(
+                                label='ATOS',
+                                value='atos',
+                                children=[                                    
                                 html.Button(id="flag-warning-atos", className="Button",n_clicks=0, style={"display":"none"}),
 
                                 dcc.ConfirmDialog(
@@ -191,7 +259,7 @@ def create_layout(app):
                                         id='datatable',
                                         #columns=[{"name": i, "id": i} for i in df2.columns],
                                         #data=df2.to_dict('records'),
-                                        editable=True,
+                                        editable=False,
                                         row_selectable="single",
                                         selected_rows=[],
                                         hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
@@ -219,8 +287,78 @@ def create_layout(app):
                                         },
                                     ),
                                 ])
-                                             
-                        ]),    
+                            ]),  
+
+                            dcc.Tab(
+                                label='ENTIDADES',
+                                value='entidades',
+                                children=[
+                                    html.Div(id='tabela_entidades',children=[
+                                    dash_table.DataTable(
+                                        id='datatable_entidades',
+                                        #columns=[{"name": i, "id": i} for i in df2.columns],
+                                        #data=df2.to_dict('records'),
+                                        editable=False,
+                                        row_selectable="single",
+                                        selected_rows=[],
+                                        hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
+                                        css=[{"selector": ".show-hide", "rule": "display: none", }],
+                                        style_as_list_view=True,
+                                        style_cell={
+                                                'overflow': 'auto',
+                                                'textOverflow': 'ellipsis',
+                                                'minWidth':'300px',
+                                                #'maxWidth': '300px',
+                                                'textAlign': 'left'
+                                        }, 
+                                        style_data={
+                                            'whiteSpace': 'normal',
+                                            'height': 'auto',
+                                        },
+                                        style_table={
+                                                'maxHeight': '67vh',
+                                                'overflowY': 'auto',
+                                                'overflowX': 'auto',
+                                                #'marginBottom': '40px'
+                                        },
+                                        style_header={
+                                            #'display': 'none'
+                                        },
+                                    ),
+                                ])
+                                ]
+                            ),
+
+                            #guia legenda
+                            dcc.Tab(
+                                label='LEGENDA',
+                                value='legend',
+                                children=[
+                                    html.Div(id='control-tab-2', style={"padding": "10px", 'width':'40vh'}, children=[
+                                    html.H6("Classes:"),
+                                    #html.P(style={'display':'grid','grid-template-columns':'25% 75%', 'float':'left'},children=[html.P('#',style={'color':'rgb(237,100,90)'}),"Ato_Abono_Permanencia"]),
+                                    html.P("Ato_Abono_Permanencia"),
+                                    html.P("Ato_Aposentadoria"),
+                                    html.P("Ato_Exoneracao_Comissionado"),
+                                    html.P("Ato_Exoneracao_Efetivo"),
+                                    html.P("Ato_Abono_Permanencia"),
+                                    html.P("Ato_Nomeacao_Comissionado"),
+                                    html.P("Ato_Nomeacao_Efetivo"),
+                                    html.P("Ato_Retificacao_Comissionado"),
+                                    html.P("Ato_Retificacao_Efetivo"),
+                                    html.P("Ato_Reversao"),
+                                    html.P("Ato_Substituicao"),
+                                    html.P("Ato_Tornado_Sem_Efeito_Apo"),
+                                    html.P("Ato_Tornado_Sem_Efeito_Exo_Nom"),
+                                    html.Br(),
+                                    html.H6("Estados:"),
+                                    html.P("Confirmado: a classe deste ato já foi verificada"),
+                                    html.P("Apagar: o conteúdo desta anotação não é um ato"),
+                                    html.P("Avaliar Depois:o anotador está em dúvida sobre a classe"),
+                                    ])
+                                ]
+                            ),
+                        ])                          
                     ],
                 ),
                 #menu e layout
@@ -228,7 +366,12 @@ def create_layout(app):
                     id="pagina-corrigir-classes-meio",
                     #style={"height": "100%"},
                     children=[
-                        # menu com os controles
+                        
+                        
+                        # Layouts
+                        html.Div(className='card-graph', id = "grafico",
+                            children=[
+# menu com os controles
                         html.Div(
                             className="row background",
                             id="menu",
@@ -270,17 +413,14 @@ def create_layout(app):
                                 ),
                             ],
                         ),
-                        
-                        # Layouts
-                        html.Div(className='card-graph', id = "grafico",
-                            children=[
                                 dcc.Graph(id="graph-3d-plot-tsne")
                             ]),
                 ]),
                 
                 # telas que mostram informações extras sob demanda
                 html.Div(
-                    id="control-tabs",
+                    className="control-tabs",
+                    
                     children=[
                         dcc.Tabs(id='tabs', value='point', children=[
                             # guia referente às informações do ponto que foi clicado por último
@@ -291,11 +431,11 @@ def create_layout(app):
                                     html.Div(id='control-tab', style={"padding": "5px"}, children=[
                                         html.Div(id="selected-point"),
                                         html.Div(id="corrigir-classe-buttons", children=[
-                                            html.Button("confirmar",id="confirmar-classe-button", className="Button",n_clicks=0),
+                                            html.Button("confirmar",id="confirmar-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                             html.Button(id="confirmar-classe-button-result", className="Button",n_clicks=0, style={"display":"none"}), 
-                                            html.Button("corrigir",id="corrigir-classe-button", className="Button",n_clicks=0),
+                                            html.Button("corrigir",id="corrigir-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                         ]),                  
-                                        html.Div(id="input-corrigir-classe",children=[
+                                        html.Div(id="input-corrigir-classe",style={"display":"none"},children=[
                                             html.H6("Nova classe:"),
                                             html.H6(className="card-tab",children=[
                                                 dcc.Dropdown(
@@ -323,41 +463,15 @@ def create_layout(app):
                                                 value="Ato_Cessao",
                                             ),
                                             ]),
-                                            html.Button("Enviar",id="enviar-corrigir-classe-button", className="Button",n_clicks=0),
+                                            html.Button("Enviar",id="enviar-corrigir-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                             html.Button(id="enviar-corrigir-classe-button-result",n_clicks=0, style={"display":"none"}),
                                         ]),
                                 ]),
                                 
                             ]),
-
-                            dcc.Tab(
-                                label='LEGENDA CORES',
-                                value='legend',
-                                children=[
-                                    html.Div(id='control-tab-2', style={"padding": "10px", 'width':'40vh'}, children=[
-                                    html.H6("Classes:"),
-                                    #html.P(style={'display':'grid','grid-template-columns':'25% 75%', 'float':'left'},children=[html.P('#',style={'color':'rgb(237,100,90)'}),"Ato_Abono_Permanencia"]),
-                                    html.P("Ato_Abono_Permanencia"),
-                                    html.P("Ato_Aposentadoria"),
-                                    html.P("Ato_Exoneracao_Comissionado"),
-                                    html.P("Ato_Exoneracao_Efetivo"),
-                                    html.P("Ato_Abono_Permanencia"),
-                                    html.P("Ato_Nomeacao_Comissionado"),
-                                    html.P("Ato_Nomeacao_Efetivo"),
-                                    html.P("Ato_Retificacao_Comissionado"),
-                                    html.P("Ato_Retificacao_Efetivo"),
-                                    html.P("Ato_Reversao"),
-                                    html.P("Ato_Substituicao"),
-                                    html.P("Ato_Tornado_Sem_Efeito_Apo"),
-                                    html.P("Ato_Tornado_Sem_Efeito_Exo_Nom"),
-                                    html.Br(),
-                                    html.H6("Estados:"),
-                                    html.P("Confirmado: a classe deste ato já foi verificada"),
-                                    html.P("Apagar: o conteúdo desta anotação não é um ato"),
-                                    html.P("Avaliar Depois:o anotador está em dúvida sobre a classe"),
-                                    ])
-                                ]
-                            ),                                
+                            
+                            
+                                                            
                         ])
                     ]
                 ),
@@ -414,7 +528,7 @@ def main_callbacks(app):
         ]
     )
     def control_displays(upload_data,corrigir_classes,extrair_entidades,voltar_extrair_classes,voltar_corrigir_classes):
-
+        '''
         if voltar_corrigir_classes > 0:
             return [{"display":"none"}, # corrigir-classes-button
                     {"display":"none"}, # pagina-extrair-classes
@@ -463,7 +577,17 @@ def main_callbacks(app):
                     {"display":"none"},
                     {"display":"none"}, #corrigir-entidades-button
                     {"display": "none"}] #pagina-extrair-entidades
-        return [{"display": "none"}, #corrigir-classes-button
+        '''
+        return [{"display":"none"}, # corrigir-classes-button
+                    {"display":"none"}, # pagina-extrair-classes
+                    {"display":"none"},
+                    {"display":"none"}, # extrair-entidades-button
+                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
+                    {"display":"none"},
+                    {"display":"none"}, # corrigir-entidades-button
+                    {"display": "none"}] # pagina-extrair-entidades
+        '''
+        [{"display": "none"}, #corrigir-classes-button
                 {}, #pagina-extrair-classes
                 {"display":"none"},
                 {"display":"none"}, # extrair-entidades-button
@@ -471,7 +595,7 @@ def main_callbacks(app):
                 {"display":"none"},
                 {"display":"none"}, #corrigir-entidades-button
                 {"display": "none"}] #pagina-extrair-entidades
-
+        '''
     @app.callback(
         [ 
             Output("voltar-extrair-classes-button", "n_clicks"),
@@ -487,7 +611,7 @@ def main_callbacks(app):
         return [0, 0]
 
     
-    # Extrair anotações XML - Parte 1
+    # Parte 1 - Extração de anotações do XML
 
     @app.callback(
         [
@@ -505,12 +629,10 @@ def main_callbacks(app):
         if list_of_contents is not None:
             xmls = []
             organize_content(list_of_contents, list_of_names, list_of_dates,xmls)
-            modo = "junto"
-            children = [return_tables(xmls,modo)]
-            return [children]
-        
+            children = [return_tables(xmls)]
         return [children]
 
+    '''
     @app.callback(
         [
             Output('output-entidades', 'children'),
@@ -532,27 +654,27 @@ def main_callbacks(app):
             return [children]
         
         return [children]
-
-    # Corrigir Classes
+    '''
+    # Parte 2 - Gerar Layouts - Relações
 
     # Gráfico
 
             #color_discrete_sequence=px.colors.qualitative.Pastel
     def generate_figure(dict_dfs, mp,label):
         if mp == "TEMP" and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "estado",
+            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "tipo_rel",
                                 color_discrete_map=colors)
         elif mp == 'UMAP' and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "estado",
+            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "estado_rel",
                                 color_discrete_map=colors)
         elif mp == 't-SNE' and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "estado", 
+            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "estado_rel", 
                                 color_discrete_map=colors)
         elif mp == 'UMAP' and label == "classe":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "tipo",
+            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "tipo_rel",
                                 color_discrete_map=colors)
         elif mp == 't-SNE' and label == "classe":
-            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "tipo", 
+            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "tipo_rel", 
                                 color_discrete_map=colors)
 
         figure.update_traces(marker=dict(line=dict(width=1, color='white')),)
@@ -585,9 +707,9 @@ def main_callbacks(app):
     )
     def run_tsne_umap(run):
         if run > 0:
-            df = pd.read_csv("testando.csv")
+            df = pd.read_csv("lista_anotacoes.csv")
             dict_dfs = projecao_multi(df) 
-            dict_dfs.to_csv("testando_tsne_umap.csv",index=False)
+            dict_dfs.to_csv("lista_relacoes.csv",index=False)
             return [1]
         return [0]
 
@@ -604,6 +726,8 @@ def main_callbacks(app):
             return [True]
         return [False]
 
+    # função responsável por montar a tabela de atos
+    
     @app.callback(
         [
             Output('tabela_atos', 'children'),
@@ -613,27 +737,34 @@ def main_callbacks(app):
             Input("value-corrigir-classes-button", "n_clicks"),
         ]
     )
-    def update_styles(tipos,run):
+    def montar_tabela_relacoes(tipos,run):
+        run = 1 #tirar isso aqui depois
+        #qnd voltar a extracao, retomar lista de relacoes anterior
         if run == 0:
-            df = pd.read_csv("temp_df.csv")
+            df = pd.read_csv("lista_relacoes_testes.csv")
         else:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes_testes.csv")
         
         df2 = df
         if "Todos" not in tipos:
-            df2 = df[(df.estado == tipos[0])]
+            df2 = df[(df.tipo_rel == tipos[0])]
             if len(tipos) > 1:
                 t = len(tipos)
                 j = 1
                 while j < t:
-                    df3 = df[(df.estado == tipos[j])]
+                    df3 = df[(df.tipo_rel == tipos[j])]
                     j = j + 1
                     frames = [df2,df3]
                     df2 = pd.concat(frames)
 
-        temp = df2.tipo
-        df2 = df2.drop(columns=['tipo'])
-        df2["tipo"] = temp
+        #ajustando o posicionamento das colunas, não afeta nada em questão de valores
+        temp = df2.tipo_rel
+        df2 = df2.drop(columns=['tipo_rel'])
+        df2["tipo_rel"] = temp
+
+        temp = df2.tipo_rel
+        df2 = df2.drop(columns=['estado_rel'])
+        df2["estado_rel"] = temp
 
         return [
             dash_table.DataTable(
@@ -642,10 +773,89 @@ def main_callbacks(app):
                     {"name": i, "id": i} for i in df2.columns
                 ],
                 data=df2.to_dict('records'),
-                editable=True,
+                editable=False,
                 row_selectable="single",
                 selected_rows=[],
-                hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
+                hidden_columns=['id_geral','id_dodf_rel','anotacoes','x_tsne','y_tsne','x_umap','y_umap'],
+                css=[{"selector": ".show-hide", "rule": "display: none", }],
+                style_as_list_view=True,
+                style_cell={
+                        'overflow': 'auto',
+                        'textOverflow': 'ellipsis',
+                        'minWidth':'300px',
+                        #'maxWidth': '300px',
+                        'textAlign': 'left'
+                }, 
+                style_data={
+                    'whiteSpace': 'normal',
+                    'height': 'auto',
+                },
+                style_table={
+                        'maxHeight': '67vh',
+                        'overflowY': 'auto',
+                        'overflowX': 'auto',
+                        #'marginBottom': '40px'
+                },
+                style_header={
+                    #'display': 'none'
+                },
+            ),
+        ]
+    
+    
+    @app.callback(
+        [
+            Output('tabela_entidades', 'children'),
+        ],
+        [
+            Input("dropdown-atos","value"),
+            Input("value-corrigir-classes-button", "n_clicks"),
+        ]
+    )
+    def montar_tabela_entidades(tipos,run):
+        run = 1 #tirar isso aqui depois e alteraar lista de anotacoes
+        if run == 0:
+            df = pd.read_csv("lista_anotacoes_testes.csv")
+        else:
+            df = pd.read_csv("lista_anotacoes_testes.csv")
+        
+        df2 = df[(df.tipo_rel != df.tipo_ent)]
+        
+        if "Todos" not in tipos:
+            df2 = df[(df.tipo_rel == tipos[0])]
+            if len(tipos) > 1:
+                t = len(tipos)
+                j = 1
+                while j < t:
+                    df3 = df[(df.tipo_rel == tipos[j])]
+                    j = j + 1
+                    frames = [df2,df3]
+                    df2 = pd.concat(frames)
+
+        #ajustando o posicionamento das colunas, não afeta nada em questão de valores
+        temp = df2.tipo_ent
+        df2 = df2.drop(columns=['tipo_ent'])
+        df2["tipo_ent"] = temp
+
+        temp = df2.tipo_rel
+        df2 = df2.drop(columns=['tipo_rel'])
+        df2["tipo_rel"] = temp
+
+        temp = df2.estado_ent
+        df2 = df2.drop(columns=['estado_ent'])
+        df2["estado_ent"] = temp
+
+        return [
+            dash_table.DataTable(
+                id='datatable_entidades',
+                columns=[
+                    {"name": i, "id": i} for i in df2.columns
+                ],
+                data=df2.to_dict('records'),
+                editable=False,
+                row_selectable="single",
+                selected_rows=[],
+                hidden_columns= ['id_geral', 'id_dodf_rel', 'id_dodf', 'id_rel','anotador_rel', 'id_ent', 'anotador_ent'],
                 css=[{"selector": ".show-hide", "rule": "display: none", }],
                 style_as_list_view=True,
                 style_cell={
@@ -687,17 +897,19 @@ def main_callbacks(app):
         ]    
     )
     def display_scatter_plot(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
-        #tipos = ["Ato_Substituicao", "Ato_Nomeacao_Comissionado",'Ato_Retificacao_Comissionado','Ato_Tornado_Sem_Efeito_Apo', "Ato_Tornado_Sem_Efeito_Exo_Nom"]
         display = 0
+        run = 1 #tirar isso aqui depois
+        #qnd voltar a extracao, retomar lista de relacoes anterior
         if run == 0:
-            df = pd.read_csv("temp_df.csv")
+            df = pd.read_csv("lista_relacoes_testes.csv")
             figure = generate_figure(df,'TEMP',label)
-
+        #mudar aqui para lista_relacoes depois, mudei para ficar mais rápido de debugar
         elif run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes_testes.csv")
+            
             df2 = df
             if "Todos" not in tipos:
-                df2 = df[(df.estado == tipos[0])]
+                df2 = df[(df.tipo_rel == tipos[0])]
                 if len(df2) == 0:
                     display = 1
                     figure = generate_figure(df,mp,label)
@@ -706,17 +918,185 @@ def main_callbacks(app):
                     t = len(tipos)
                     j = 1
                     while j < t:
-                        df3 = df[(df.estado == tipos[j])]
+                        df3 = df[(df.tipo_rel == tipos[j])]
                         j = j + 1
                         frames = [df2,df3]
                         df2 = pd.concat(frames)
+            
                 
             figure = generate_figure(df2,mp,label)
-            return [figure,display]
 
         return [figure,display]
 
     # Interações
+
+    def achar_indice(clickData,mp):
+        #qnd voltar a extracao, retomar lista de relacoes anterior
+        df = pd.read_csv("lista_relacoes_testes.csv")
+
+        XY = {}
+        XY['x'] = clickData["points"][0]['x']
+        XY['y'] = clickData["points"][0]['y']
+
+        X = []
+        X.append(XY['x'])
+        Y = []
+        Y.append(XY['y'])
+        
+        #if mp == 'UMAP':
+            #indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+                    
+        #el
+        if mp == 't-SNE':
+            indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
+
+        else: 
+            indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+
+        return indice
+
+    def achar_indice_tabela_atos(x,y):
+        #qnd voltar a extracao, retomar lista de relacoes anterior
+        df = pd.read_csv("lista_relacoes_testes.csv")
+
+        XY = {}
+        XY['x'] = x
+        XY['y'] = y
+
+        X = [x]
+        #X.append(XY['x'])
+        Y = [y]
+        #Y.append(XY['y'])
+        
+        indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+
+        return indice
+
+    def busca_lista_anotacoes(id_geral):
+        #qnd voltar a parte de extracao, alterar lista de anotacoes
+        df = pd.read_csv("lista_anotacoes_testes.csv")
+
+        #id_geral_list = [id_geral]
+            
+        indice = df[(df['id_geral'] == id_geral)].index
+        info = []
+        tipo_ent = df['tipo_ent'][indice]
+        texto_ent = df['texto'][indice]
+        info.append(list(tipo_ent)[0])
+        info.append(list(texto_ent)[0])
+
+        return info
+    
+
+    @app.callback(
+        [
+            Output("selected-point", "children"),
+        ],
+        [
+            Input("graph-3d-plot-tsne", "clickData"),
+            Input("enviar-corrigir-classe-button-result", "n_clicks"),
+            Input('datatable', "derived_virtual_selected_rows")
+        ],
+        [
+            State("dropdown-method", "value"),
+            State('datatable', "data"),
+        ]
+    )
+    def explore_data(clickData,enviar, selected_row_indices, mp, table):
+        df = pd.read_csv("lista_relacoes_testes.csv")
+
+        #temp, apenas para testar por agora
+        
+
+
+        #label = 'Apagar'
+        contents = []
+
+        contents.append(html.H5("Clique em um ponto no layout para obter mais informações."),)
+
+        if selected_row_indices is None:
+            selected_row_indices = []
+
+        if selected_row_indices != []:
+            selected_rows=[table[i] for i in selected_row_indices]
+            x = selected_rows[0]["x_umap"]
+            y = selected_rows[0]["y_umap"]
+
+            indice = achar_indice_tabela_atos(x,y)
+
+            contents = []
+
+            #Procurar informações desejadas
+
+            tipo_rel = df.tipo_rel[indice]
+            texto = df.texto[indice]
+            idd = df['id_dodf_rel'][indice]
+            anotacoes = df['anotacoes'][indice]
+    
+            contents.append(html.H6("Ato:"))
+            contents.append(html.H5("Tipo:"))
+            contents.append(html.P(tipo_rel,className="card-tab"))
+            contents.append(html.H5("Texto:"))
+            contents.append(html.P(texto,className="card-tab"))
+            contents.append(html.H5("Id:"))
+            contents.append(html.P(idd,className="card-tab"))
+
+            contents.append(html.H6("Entidades:"))
+            for i in anotacoes:
+                info = busca_lista_anotacoes(i)
+                tipo_ent = info[0]
+                texto_ent = info[1]
+                contents.append(html.P(str(tipo_ent),className="card-tab"))
+                contents.append(dcc.Input(id=str(i), type="text", value=str(texto_ent)))
+                    
+                #html.P(str(texto_ent),className="card-tab"))
+
+        elif clickData or enviar:
+            indice = achar_indice(clickData,mp)
+
+            contents = []
+
+            tipo_rel = df.tipo_rel[indice]
+            texto = df.texto[indice]
+            idd = df['id_dodf_rel'][indice]
+            anotacoes = list(df.anotacoes[indice])[0]
+            list_anotacoes = literal_eval(anotacoes)
+            contents.append(html.H4("Ato",style={'text-align': 'center'}))
+            contents.append(html.H5("Tipo:"))
+            contents.append(html.P(tipo_rel,className="card-tab"))
+            contents.append(html.H5("Texto:"))
+            contents.append(html.P(texto,className="card-tab"))
+            contents.append(html.H5("Id da relação:"))
+            contents.append(html.P(idd,className="card-tab"))
+            contents.append(html.H4("Entidades",style={'text-align': 'center'}))
+            #contents.append(html.P(anotacoes,className="card-tab"))
+
+            
+            for i in list_anotacoes:
+                
+                info = busca_lista_anotacoes(i)
+                tipo_ent = info[0]
+                texto_ent = info[1]
+                contents.append(html.Div(className="card-tab",style={'align-items': 'center', 'justify-content':'center'}, children=[
+                    #html.P('Tipo de entidade'),
+                    dcc.Dropdown(id=i+'tipo_ent',
+                                searchable=True,
+                                clearable=False,
+                                options=options_entidades,
+                                placeholder="Select a label",
+                                value=tipo_ent,),
+                    #html.P('Texto:'),
+                    dcc.Textarea(id=str(i), value=texto_ent,style={'width':'100%','min-height': '80px'}),
+                    html.Button(children=["Atualizar"], className="Button", id=i+"buttonAtualizar", n_clicks=0),
+                    html.Button(children=["Confirmar"], className="Button", id=i+"buttonConfirmar", n_clicks=0),
+                    html.Button(children=["Apagar"], className="Button", id=i+"buttonApagar", n_clicks=0),
+                    #html.P(texto_ent)
+                ]))
+            contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)   
+            
+        return [contents]
+
+    '''
 
     @app.callback(
         [
@@ -744,45 +1124,7 @@ def main_callbacks(app):
         return [{},{}]
 
 
-    def achar_indice(clickData,mp):
-        df = pd.read_csv("testando_tsne_umap.csv")
-
-        XY = {}
-        XY['x'] = clickData["points"][0]['x']
-        XY['y'] = clickData["points"][0]['y']
-
-        X = []
-        X.append(XY['x'])
-        Y = []
-        Y.append(XY['y'])
-        
-        if mp == 'UMAP':
-            indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-                    
-        elif mp == 't-SNE':
-            indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
-
-        else: 
-            indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-
-        return indice
-
-    def achar_indice_tabela_atos(x,y):
-        df = pd.read_csv("testando_tsne_umap.csv")
-
-        XY = {}
-        XY['x'] = x
-        XY['y'] = y
-
-        X = [x]
-        #X.append(XY['x'])
-        Y = [y]
-        #Y.append(XY['y'])
-        
-        
-        indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-
-        return indice
+    
 
     @app.callback(
         [
@@ -801,7 +1143,7 @@ def main_callbacks(app):
         result = 0
         label = "Apagar"
         if corrigir > 0:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes.csv")
 
             indice = achar_indice(clickData,mp)
 
@@ -829,7 +1171,7 @@ def main_callbacks(app):
     def corrigir_classe(enviar,classe,clickData,mp):
         result = 0
         if enviar > 0:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes.csv")
 
             indice = achar_indice(clickData,mp)
 
@@ -846,7 +1188,7 @@ def main_callbacks(app):
                 df.at[indice, 'estado'] = "Confirmado"
             
 
-            df.to_csv("testando_tsne_umap.csv",index=False)
+            df.to_csv("lista_relacoes.csv",index=False)
 
             result = 1
 
@@ -869,13 +1211,13 @@ def main_callbacks(app):
     def confirmar_classe(confirmar,clickData,mp):
         result = 0
         if confirmar > 0:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes.csv")
 
             indice = achar_indice(clickData,mp)
 
             df.at[indice, 'estado'] = "Confirmado"
 
-            df.to_csv("testando_tsne_umap.csv",index=False)
+            df.to_csv("lista_relacoes.csv",index=False)
 
             result = 1
 
@@ -898,7 +1240,7 @@ def main_callbacks(app):
         ]
     )
     def explore_data(clickData,enviar, selected_row_indices, mp, table):
-        df = pd.read_csv("testando_tsne_umap.csv")
+        df = pd.read_csv("lista_relacoes.csv")
         label = 'Apagar'
         contents = []
 
@@ -972,7 +1314,7 @@ def main_callbacks(app):
         ]
     )
     def confirmar_classe_varios(confirmar, selectedData, mp):
-        df = pd.read_csv("testando_tsne_umap.csv")
+        df = pd.read_csv("lista_relacoes.csv")
 
         if selectedData:
             
@@ -999,18 +1341,19 @@ def main_callbacks(app):
                 df.at[indice, 'estado'] = "Confirmado"
                 j += 1
 
-            df.to_csv("testando_tsne_umap.csv",index=False)
+            df.to_csv("lista_relacoes.csv",index=False)
 
             return [1]
 
-        '''
-        i = 0
-        qnt = 0
-        while i < len(df):
-            if df["estado"][i] == "Confirmado":
-                qnt += 1
-            i += 1
-        '''
+        
+        
+        #i = 0
+        #qnt = 0
+        #while i < len(df):
+        #    if df["estado"][i] == "Confirmado":
+        #        qnt += 1
+        #    i += 1
+        
 
         return [0]
 
@@ -1026,10 +1369,12 @@ def main_callbacks(app):
         csv_string = ""
 
         if salvar:
-            df = pd.read_csv("testando_tsne_umap.csv")
+            df = pd.read_csv("lista_relacoes.csv")
             dff = df
             csv_string = dff.to_csv(index=False, encoding='utf-8')
             csv_string = "data:text/csv;charset=utf-8," + \
                 urllib.parse.quote(csv_string)
         return [csv_string]
+
+    '''
     
