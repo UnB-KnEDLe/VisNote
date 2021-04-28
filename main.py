@@ -1,5 +1,5 @@
-from extract_xml import extrair_anotacoes, organize_content, return_tables
-from run_multiproj import projecao_multi
+from extraction import extraction_callbacks, organize_content, return_tables
+from multidimensional_projection import projecao_multi
 
 import dash
 from dash.dependencies import Input, Output, State
@@ -364,57 +364,117 @@ def create_layout(app):
                 #menu e layout
                 html.Div(
                     id="pagina-corrigir-classes-meio",
-                    #style={"height": "100%"},
+                    className="control-tabs",
+                    
                     children=[
-                        
-                        
-                        # Layouts
-                        html.Div(className='card-graph', id = "grafico",
-                            children=[
-# menu com os controles
-                        html.Div(
-                            className="row background",
-                            id="menu",
-                            children=[
-                                html.Div(
-                                    id="menu-visualizacoes",
-                                    children=[
-                                        dcc.Dropdown(
-                                            id="dropdown-method",
-                                            searchable=False,
-                                            clearable=False,
-                                            options=[
-                                                {"label": "UMAP","value": "UMAP",},
-                                                {"label": "t-SNE","value": "t-SNE",},                                                                    
+                        dcc.Tabs(id='tabs_middle', value='atos_graph', 
+                    #style={"height": "100%"},
+                        children=[
+                            dcc.Tab(
+                                label='RELAÇÕES',
+                                value='atos_graph',
+                                children=[
+                                    # Layouts className='card-graph',
+                                    html.Div( id = "grafico",
+                                        children=[
+                                        # menu com os controles
+                                        html.Div(
+                                            className="row background",
+                                            id="menu",
+                                            children=[
+                                                html.Div(
+                                                    id="menu-visualizacoes",
+                                                    children=[
+                                                        dcc.Dropdown(
+                                                            id="dropdown-method",
+                                                            searchable=False,
+                                                            clearable=False,
+                                                            options=[
+                                                                {"label": "UMAP","value": "UMAP",},
+                                                                {"label": "t-SNE","value": "t-SNE",},                                                                    
+                                                            ],
+                                                            placeholder="Select a technique",
+                                                            value="t-SNE",
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id="dropdown-label",
+                                                            searchable=False,
+                                                            clearable=False,
+                                                            options=[
+                                                                {"label": "Classe","value": "classe",},
+                                                                {"label": "Estado","value": "estado",},                                                                    
+                                                            ],
+                                                            placeholder="Select a label",
+                                                            value="classe",
+                                                        ),
+                                                        html.Button("vários",id="confirmar-varios-classes-button", className="Button",n_clicks=0),
+                                                        html.Button(id="confirmar-varios-classes-button-result", className="Button",n_clicks=0,style={"display":"none"}),
+                                                        html.A(children=[html.Button("Salvar",id="salvar-corrigir-classes-button", className="Button",n_clicks=0)],
+                                                            id='salvar-corrigir-classes-link',
+                                                            download="backup_classes.csv",
+                                                            href="",
+                                                            target="_blank",
+                                                        ),                           
+                                                    ]
+                                                ),
                                             ],
-                                            placeholder="Select a technique",
-                                            value="UMAP",
                                         ),
-                                        dcc.Dropdown(
-                                            id="dropdown-label",
-                                            searchable=False,
-                                            clearable=False,
-                                            options=[
-                                                {"label": "Classe","value": "classe",},
-                                                {"label": "Estado","value": "estado",},                                                                    
+                                            dcc.Graph(id="graph-3d-plot-tsne")
+                                        ]),
+                                ]),
+                            dcc.Tab(
+                                label='ENTIDADES',
+                                value='entidades_graph',
+                                children=[
+                                    # Layouts className='card-graph',
+                                    html.Div(id = "grafico-entidades",
+                                        children=[
+                                        # menu com os controles
+                                        html.Div(
+                                            className="row background",
+                                            id="menu-entidades",
+                                            children=[
+                                                html.Div(
+                                                    id="menu-visualizacoes-entidades",
+                                                    children=[
+                                                        dcc.Dropdown(
+                                                            id="dropdown-method-entidades",
+                                                            searchable=False,
+                                                            clearable=False,
+                                                            options=[
+                                                                {"label": "UMAP","value": "UMAP",},
+                                                                {"label": "t-SNE","value": "t-SNE",},                                                                    
+                                                            ],
+                                                            placeholder="Select a technique",
+                                                            value="t-SNE",
+                                                        ),
+                                                        dcc.Dropdown(
+                                                            id="dropdown-label-entidades",
+                                                            searchable=False,
+                                                            clearable=False,
+                                                            options=[
+                                                                {"label": "Classe","value": "classe",},
+                                                                {"label": "Estado","value": "estado",},                                                                    
+                                                            ],
+                                                            placeholder="Select a label",
+                                                            value="classe",
+                                                        ),
+                                                        html.Button("vários",id="confirmar-varios-entidades-button", className="Button",n_clicks=0),
+                                                        html.Button(id="confirmar-varios-entidades-button-result", className="Button",n_clicks=0,style={"display":"none"}),
+                                                        html.A(children=[html.Button("Salvar",id="salvar-corrigir-entidades-button", className="Button",n_clicks=0)],
+                                                            id='salvar-corrigir-entidades-link',
+                                                            download="backup_entidades.csv",
+                                                            href="",
+                                                            target="_blank",
+                                                        ),                           
+                                                    ]
+                                                ),
                                             ],
-                                            placeholder="Select a label",
-                                            value="estado",
                                         ),
-                                        html.Button("vários",id="confirmar-varios-classes-button", className="Button",n_clicks=0),
-                                        html.Button(id="confirmar-varios-classes-button-result", className="Button",n_clicks=0,style={"display":"none"}),
-                                        html.A(children=[html.Button("Salvar",id="salvar-corrigir-classes-button", className="Button",n_clicks=0)],
-                                            id='salvar-corrigir-classes-link',
-                                            download="backup_classes.csv",
-                                            href="",
-                                            target="_blank",
-                                        ),                           
-                                    ]
-                                ),
-                            ],
-                        ),
-                                dcc.Graph(id="graph-3d-plot-tsne")
-                            ]),
+                                            dcc.Graph(id="graph-entidades")
+                                        ]),
+                                ]),
+                        ]),
                 ]),
                 
                 # telas que mostram informações extras sob demanda
@@ -528,7 +588,7 @@ def main_callbacks(app):
         ]
     )
     def control_displays(upload_data,corrigir_classes,extrair_entidades,voltar_extrair_classes,voltar_corrigir_classes):
-        '''
+        
         if voltar_corrigir_classes > 0:
             return [{"display":"none"}, # corrigir-classes-button
                     {"display":"none"}, # pagina-extrair-classes
@@ -587,7 +647,7 @@ def main_callbacks(app):
                     {"display":"none"}, # corrigir-entidades-button
                     {"display": "none"}] # pagina-extrair-entidades
         '''
-        [{"display": "none"}, #corrigir-classes-button
+        return [{"display": "none"}, #corrigir-classes-button
                 {}, #pagina-extrair-classes
                 {"display":"none"},
                 {"display":"none"}, # extrair-entidades-button
@@ -595,7 +655,9 @@ def main_callbacks(app):
                 {"display":"none"},
                 {"display":"none"}, #corrigir-entidades-button
                 {"display": "none"}] #pagina-extrair-entidades
-        '''
+
+
+
     @app.callback(
         [ 
             Output("voltar-extrair-classes-button", "n_clicks"),
@@ -612,26 +674,8 @@ def main_callbacks(app):
 
     
     # Parte 1 - Extração de anotações do XML
-
-    @app.callback(
-        [
-            Output('output-data-upload', 'children'),
-        ],
-        [
-            Input('upload-data', 'contents')
-        ],
-        [
-            State('upload-data', 'filename'),
-            State('upload-data', 'last_modified')
-        ])
-    def update_output(list_of_contents, list_of_names, list_of_dates):
-        children = []
-        if list_of_contents is not None:
-            xmls = []
-            organize_content(list_of_contents, list_of_names, list_of_dates,xmls)
-            children = [return_tables(xmls)]
-        return [children]
-
+    extraction_callbacks(app)
+    
     '''
     @app.callback(
         [
@@ -655,47 +699,8 @@ def main_callbacks(app):
         
         return [children]
     '''
-    # Parte 2 - Gerar Layouts - Relações
 
-    # Gráfico
-
-            #color_discrete_sequence=px.colors.qualitative.Pastel
-    def generate_figure(dict_dfs, mp,label):
-        if mp == "TEMP" and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "tipo_rel",
-                                color_discrete_map=colors)
-        elif mp == 'UMAP' and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "estado_rel",
-                                color_discrete_map=colors)
-        elif mp == 't-SNE' and label == "estado":
-            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "estado_rel", 
-                                color_discrete_map=colors)
-        elif mp == 'UMAP' and label == "classe":
-            figure = px.scatter(dict_dfs, x='x_umap', y='y_umap', color = "tipo_rel",
-                                color_discrete_map=colors)
-        elif mp == 't-SNE' and label == "classe":
-            figure = px.scatter(dict_dfs, x='x_tsne', y='y_tsne', color = "tipo_rel", 
-                                color_discrete_map=colors)
-
-        figure.update_traces(marker=dict(line=dict(width=1, color='white')),)
-
-        figure.update_layout(legend=dict(
-            orientation="v",
-            yanchor="top",
-            y=1,
-            xanchor="left",
-            x=1,
-            title=dict(text="Legenda", font=dict(
-                family="Arial", size=22), side="top"),
-            valign="top",
-            itemclick="toggleothers",
-        ),
-            yaxis={'visible': False, 'showticklabels': False},
-            xaxis={'visible': False, 'showticklabels': False},
-            margin=dict(l=40, r=40, t=50, b=40))
-
-        figure.update_layout(showlegend=False)
-        return figure
+    # multidimensional projection callbacks
 
     @app.callback(
         [    
@@ -707,11 +712,47 @@ def main_callbacks(app):
     )
     def run_tsne_umap(run):
         if run > 0:
-            df = pd.read_csv("lista_anotacoes.csv")
-            dict_dfs = projecao_multi(df) 
-            dict_dfs.to_csv("lista_relacoes.csv",index=False)
+            relacoes = pd.read_csv("./csv/lista_relacoes.csv")
+            mdp_relacoes = projecao_multi(relacoes) 
+            mdp_relacoes.to_csv("./csv/lista_relacoes.csv",index=False)
+            entidades = pd.read_csv("./csv/lista_entidades.csv")
+            mdp_entidades = projecao_multi(entidades) 
+            mdp_entidades.to_csv("./csv/lista_entidades.csv",index=False)
+
             return [1]
         return [0]
+
+    #layout e layout enrichments callbacks
+
+    def generate_figure(dict_dfs, mp,label,ent_ou_rel):
+        if mp == 'TEMP' or mp == 'UMAP':
+            X = 'x_umap'
+            Y = 'y_umap'
+        else: 
+            X = 'x_tsne'
+            Y = 'y_tsne'
+
+        if ent_ou_rel == 'ent':
+            if label == 'classe':
+                COLOR = 'tipo_ent'
+            else:
+                COLOR = 'estado_ent'
+
+            figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = COLOR,color_discrete_map=colors)
+            figure.update_layout(legend=dict(orientation="v",yanchor="top",y=1,xanchor="left",x=1,title=dict(text="Legenda", font=dict(family="Arial", size=22), side="top"),valign="top",itemclick="toggleothers",),yaxis={'visible': False, 'showticklabels': False},xaxis={'visible': False, 'showticklabels': False},margin=dict(l=40, r=40, t=50, b=40))
+
+        elif ent_ou_rel == 'rel':
+            if label == 'classe':
+                COLOR = 'tipo_rel'
+            else:
+                COLOR = 'estado_rel'
+            
+            figure = px.scatter(dict_dfs, x=X, y=Y, color = COLOR,color_discrete_sequence=px.colors.qualitative.Pastel)
+            figure.update_layout(showlegend=False)
+
+        figure.update_traces(marker=dict(line=dict(width=1, color='white')),)
+            
+        return figure
 
     @app.callback(
         [
@@ -726,7 +767,6 @@ def main_callbacks(app):
             return [True]
         return [False]
 
-    # função responsável por montar a tabela de atos
     
     @app.callback(
         [
@@ -738,12 +778,10 @@ def main_callbacks(app):
         ]
     )
     def montar_tabela_relacoes(tipos,run):
-        run = 1 #tirar isso aqui depois
-        #qnd voltar a extracao, retomar lista de relacoes anterior
         if run == 0:
-            df = pd.read_csv("lista_relacoes_testes.csv")
+            df = pd.read_csv("./csv/relacoes_temp.csv")
         else:
-            df = pd.read_csv("lista_relacoes_testes.csv")
+            df = pd.read_csv("./csv/lista_relacoes.csv")
         
         df2 = df
         if "Todos" not in tipos:
@@ -802,7 +840,6 @@ def main_callbacks(app):
             ),
         ]
     
-    
     @app.callback(
         [
             Output('tabela_entidades', 'children'),
@@ -813,11 +850,10 @@ def main_callbacks(app):
         ]
     )
     def montar_tabela_entidades(tipos,run):
-        run = 1 #tirar isso aqui depois e alteraar lista de anotacoes
         if run == 0:
-            df = pd.read_csv("lista_anotacoes_testes.csv")
+            df = pd.read_csv("./csv/entidades_temp.csv")
         else:
-            df = pd.read_csv("lista_anotacoes_testes.csv")
+            df = pd.read_csv("./csv/lista_entidades.csv")
         
         df2 = df[(df.tipo_rel != df.tipo_ent)]
         
@@ -881,6 +917,7 @@ def main_callbacks(app):
             ),
         ]
 
+
     @app.callback(
         [    
             Output("graph-3d-plot-tsne", "figure"),
@@ -896,23 +933,20 @@ def main_callbacks(app):
             Input("confirmar-varios-classes-button-result", "n_clicks")
         ]    
     )
-    def display_scatter_plot(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
+    def display_grafico_relacoes(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
         display = 0
-        run = 1 #tirar isso aqui depois
-        #qnd voltar a extracao, retomar lista de relacoes anterior
         if run == 0:
-            df = pd.read_csv("lista_relacoes_testes.csv")
-            figure = generate_figure(df,'TEMP',label)
-        #mudar aqui para lista_relacoes depois, mudei para ficar mais rápido de debugar
+            df = pd.read_csv("./csv/relacoes_temp.csv")
+            figure = generate_figure(df,'TEMP',label,'rel')
         elif run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
-            df = pd.read_csv("lista_relacoes_testes.csv")
+            df = pd.read_csv("./csv/lista_relacoes.csv")
             
             df2 = df
             if "Todos" not in tipos:
                 df2 = df[(df.tipo_rel == tipos[0])]
                 if len(df2) == 0:
                     display = 1
-                    figure = generate_figure(df,mp,label)
+                    figure = generate_figure(df,mp,label,'rel')
                     return [figure,display]
                 if len(tipos) > 1:
                     t = len(tipos)
@@ -924,15 +958,58 @@ def main_callbacks(app):
                         df2 = pd.concat(frames)
             
                 
-            figure = generate_figure(df2,mp,label)
+            figure = generate_figure(df2,mp,label,'rel')
 
         return [figure,display]
+
+    @app.callback(
+        [    
+            Output("graph-entidades", "figure"),
+        ],
+        [
+            Input("dropdown-atos","value"),
+            Input("value-corrigir-classes-button", "n_clicks"),
+            Input("dropdown-method-entidades", "value"),
+            Input("dropdown-label-entidades", "value"),
+            Input("confirmar-classe-button-result", "n_clicks"),
+            Input("enviar-corrigir-classe-button-result", "n_clicks"),
+            Input("confirmar-varios-entidades-button-result", "n_clicks")
+        ]    
+    )
+    def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
+        display = 0
+        if run == 0:
+            df = pd.read_csv("./csv/entidades_temp.csv")
+            figure = generate_figure(df,'TEMP',label,'ent')
+        elif run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
+            df = pd.read_csv("./csv/lista_entidades.csv")
+            
+            df2 = df
+            if "Todos" not in tipos:
+                df2 = df[(df.tipo_rel == tipos[0])]
+                if len(df2) == 0:
+                    display = 1
+                    figure = generate_figure(df,mp,label,'ent')
+                    return [figure,display]
+                if len(tipos) > 1:
+                    t = len(tipos)
+                    j = 1
+                    while j < t:
+                        df3 = df[(df.tipo_rel == tipos[j])]
+                        j = j + 1
+                        frames = [df2,df3]
+                        df2 = pd.concat(frames)
+            
+                
+            figure = generate_figure(df2,mp,label,'ent')
+
+        return [figure]
+
 
     # Interações
 
     def achar_indice(clickData,mp):
-        #qnd voltar a extracao, retomar lista de relacoes anterior
-        df = pd.read_csv("lista_relacoes_testes.csv")
+        df = pd.read_csv("./csv/lista_relacoes.csv")
 
         XY = {}
         XY['x'] = clickData["points"][0]['x']
@@ -956,8 +1033,7 @@ def main_callbacks(app):
         return indice
 
     def achar_indice_tabela_atos(x,y):
-        #qnd voltar a extracao, retomar lista de relacoes anterior
-        df = pd.read_csv("lista_relacoes_testes.csv")
+        df = pd.read_csv("./csv/lista_relacoes.csv")
 
         XY = {}
         XY['x'] = x
@@ -973,11 +1049,11 @@ def main_callbacks(app):
         return indice
 
     def busca_lista_anotacoes(id_geral):
-        #qnd voltar a parte de extracao, alterar lista de anotacoes
-        df = pd.read_csv("lista_anotacoes_testes.csv")
 
-        #id_geral_list = [id_geral]
-            
+        df = pd.read_csv("./csv/lista_entidades.csv")
+        id_geral = int(id_geral)
+
+        #como resolvi o bug que tinha aqui: os tipos eram diferentes, então converti id_geral para int    
         indice = df[(df['id_geral'] == id_geral)].index
         info = []
         tipo_ent = df['tipo_ent'][indice]
@@ -1003,7 +1079,7 @@ def main_callbacks(app):
         ]
     )
     def explore_data(clickData,enviar, selected_row_indices, mp, table):
-        df = pd.read_csv("lista_relacoes_testes.csv")
+        df = pd.read_csv("./csv/lista_relacoes.csv")
 
         #temp, apenas para testar por agora
         
@@ -1060,7 +1136,7 @@ def main_callbacks(app):
             texto = df.texto[indice]
             idd = df['id_dodf_rel'][indice]
             anotacoes = list(df.anotacoes[indice])[0]
-            list_anotacoes = literal_eval(anotacoes)
+            list_anotacoes = literal_eval(anotacoes) 
             contents.append(html.H4("Ato",style={'text-align': 'center'}))
             contents.append(html.H5("Tipo:"))
             contents.append(html.P(tipo_rel,className="card-tab"))
@@ -1069,30 +1145,28 @@ def main_callbacks(app):
             contents.append(html.H5("Id da relação:"))
             contents.append(html.P(idd,className="card-tab"))
             contents.append(html.H4("Entidades",style={'text-align': 'center'}))
-            #contents.append(html.P(anotacoes,className="card-tab"))
 
-            
-            for i in list_anotacoes:
-                
-                info = busca_lista_anotacoes(i)
+            j = 0
+            while j < len(list_anotacoes): 
+                id_anno = list_anotacoes[j]
+                info = busca_lista_anotacoes(id_anno)
                 tipo_ent = info[0]
                 texto_ent = info[1]
                 contents.append(html.Div(className="card-tab",style={'align-items': 'center', 'justify-content':'center'}, children=[
-                    #html.P('Tipo de entidade'),
-                    dcc.Dropdown(id=i+'tipo_ent',
+                    dcc.Dropdown(id=id_anno+'tipo_ent',
                                 searchable=True,
                                 clearable=False,
                                 options=options_entidades,
                                 placeholder="Select a label",
                                 value=tipo_ent,),
-                    #html.P('Texto:'),
-                    dcc.Textarea(id=str(i), value=texto_ent,style={'width':'100%','min-height': '80px'}),
-                    html.Button(children=["Atualizar"], className="Button", id=i+"buttonAtualizar", n_clicks=0),
-                    html.Button(children=["Confirmar"], className="Button", id=i+"buttonConfirmar", n_clicks=0),
-                    html.Button(children=["Apagar"], className="Button", id=i+"buttonApagar", n_clicks=0),
-                    #html.P(texto_ent)
+                    dcc.Textarea(id=id_anno, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
+                    html.Button(children=["Atualizar"], className="Button", id=id_anno+"buttonAtualizar", n_clicks=0),
+                    html.Button(children=["Confirmar"], className="Button", id=id_anno+"buttonConfirmar", n_clicks=0),
+                    html.Button(children=["Apagar"], className="Button", id=id_anno+"buttonApagar", n_clicks=0),
                 ]))
-            contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)   
+                j += 1
+            contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)
+              
             
         return [contents]
 

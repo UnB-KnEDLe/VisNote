@@ -316,8 +316,8 @@ body {
     margin-bottom: 15vh;
   }
 
-  #graph-3d-plot-tsne {
-    height: 77vh;
+  #graph-3d-plot-tsne, #graph-entidades {
+    height: 72vh;
   }
   
   #graph-3d-plot-tsne>div>div>svg:nth-child(1) {
@@ -348,7 +348,7 @@ body {
     margin-top: 5px;
 }
 
-#menu{
+#menu, #menu-entidades{
   height: auto;
   width: 75vh;
   vertical-align: middle;
@@ -468,12 +468,12 @@ body {
   color: white;
 }
 
-#dropdown-method{
+#dropdown-method, #dropdown-method-entidades{
   font-size: medium;
   min-width: 16vh;
 }
 
-#dropdown-label{
+#dropdown-label, #dropdown-label-entidades{
   font-size: medium;
   min-width: 16vh;
 }
@@ -487,7 +487,7 @@ body {
   font-size: medium;
 }
 
-#menu-visualizacoes{
+#menu-visualizacoes, #menu-visualizacoes-entidades{
   display: grid;
   place-items: center;
   grid-template-columns: 25% 25% 27% auto;
