@@ -1,5 +1,6 @@
 from extraction import extraction_callbacks, organize_content, return_tables
 from multidimensional_projection import projecao_multi
+from export import export_callbacks
 
 import dash
 from dash.dependencies import Input, Output, State
@@ -123,10 +124,10 @@ def create_layout(app):
                     id="proximo",
                     children=[
                         html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Corrigir classes ->"], className="Button", id="corrigir-classes-button", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Revisar anotações ->"], className="Button", id="corrigir-classes-button", n_clicks=0, style={"display":"none"}),
                         html.Button(id="value-corrigir-classes-button", className="Button",n_clicks=0, style={"display":"none"}),
                         html.Button(children=["<- Voltar"], className="Button", id="voltar-corrigir-classes-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Extrair entidades ->"], className="Button", id="extrair-entidades-button", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Exportar anotações ->"], className="Button", id="extrair-entidades-button", n_clicks=0, style={"display":"none"}),
                         html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0, style={"display":"none"}),
                         ],         
                 ),
@@ -256,7 +257,7 @@ def create_layout(app):
 
                                 html.Div(id='tabela_atos',children=[
                                     dash_table.DataTable(
-                                        id='datatable',
+                                        id='datatable_relacoes',
                                         #columns=[{"name": i, "id": i} for i in df2.columns],
                                         #data=df2.to_dict('records'),
                                         editable=False,
@@ -538,10 +539,10 @@ def create_layout(app):
             ],
         ),
 
-        # página de extração de entidades
+        # página de exportação de anotações revisadas
         html.Div(id = "pagina-extrair-entidades",children =[
             #Onde aparecem várias tabelas, uma para cada tipo de ato, com as entidades que foram extraídas
-            html.Div(id='output-entidades')], className='row'
+            html.Div(id='output-anotacoes-revisadas')], className='row'
         ),
 ])
 
@@ -675,11 +676,13 @@ def main_callbacks(app):
     
     # Parte 1 - Extração de anotações do XML
     extraction_callbacks(app)
+
+    export_callbacks(app)
     
     '''
     @app.callback(
         [
-            Output('output-entidades', 'children'),
+            Output('output-anotacoes-revisadas', 'children'),
         ],
         [
             Input("extrair-entidades-button", "n_clicks"),
@@ -738,7 +741,7 @@ def main_callbacks(app):
             else:
                 COLOR = 'estado_ent'
 
-            figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = COLOR,color_discrete_map=colors)
+            figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = COLOR,color_discrete_sequence=px.colors.qualitative.Pastel)
             figure.update_layout(legend=dict(orientation="v",yanchor="top",y=1,xanchor="left",x=1,title=dict(text="Legenda", font=dict(family="Arial", size=22), side="top"),valign="top",itemclick="toggleothers",),yaxis={'visible': False, 'showticklabels': False},xaxis={'visible': False, 'showticklabels': False},margin=dict(l=40, r=40, t=50, b=40))
 
         elif ent_ou_rel == 'rel':
@@ -747,7 +750,7 @@ def main_callbacks(app):
             else:
                 COLOR = 'estado_rel'
             
-            figure = px.scatter(dict_dfs, x=X, y=Y, color = COLOR,color_discrete_sequence=px.colors.qualitative.Pastel)
+            figure = px.scatter(dict_dfs, x=X, y=Y, color = COLOR,color_discrete_map=colors)
             figure.update_layout(showlegend=False)
 
         figure.update_traces(marker=dict(line=dict(width=1, color='white')),)
@@ -806,7 +809,7 @@ def main_callbacks(app):
 
         return [
             dash_table.DataTable(
-                id='datatable',
+                id='datatable_relacoes',
                 columns=[
                     {"name": i, "id": i} for i in df2.columns
                 ],
@@ -891,7 +894,7 @@ def main_callbacks(app):
                 editable=False,
                 row_selectable="single",
                 selected_rows=[],
-                hidden_columns= ['id_geral', 'id_dodf_rel', 'id_dodf', 'id_rel','anotador_rel', 'id_ent', 'anotador_ent'],
+                hidden_columns= ['id_geral', 'id_dodf_rel', 'id_dodf', 'id_rel','anotador_rel', 'id_ent', 'anotador_ent','x_tsne', 'y_tsne', 'x_umap', 'y_umap'],
                 css=[{"selector": ".show-hide", "rule": "display: none", }],
                 style_as_list_view=True,
                 style_cell={
@@ -916,7 +919,6 @@ def main_callbacks(app):
                 },
             ),
         ]
-
 
     @app.callback(
         [    
@@ -1008,22 +1010,21 @@ def main_callbacks(app):
 
     # Interações
 
-    def achar_indice(clickData,mp):
+    # Parte referente a atualizar 'detail on demand' de acordo com interações nas tabelas e gráficos 
+    # (falta atualizações de qnd ocorrer alterações nas anotações)
+
+    def find_id_tabela(id_dodf_rel):
         df = pd.read_csv("./csv/lista_relacoes.csv")
+        indice = df[df.id_dodf_rel == id_dodf_rel].index
 
-        XY = {}
-        XY['x'] = clickData["points"][0]['x']
-        XY['y'] = clickData["points"][0]['y']
+        return indice
 
-        X = []
-        X.append(XY['x'])
-        Y = []
-        Y.append(XY['y'])
-        
-        #if mp == 'UMAP':
-            #indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-                    
-        #el
+    def find_id_grafico_relacoes(x,y,mp):
+        df = pd.read_csv("./csv/lista_relacoes.csv")
+   
+        X = [x]
+        Y = [y]
+
         if mp == 't-SNE':
             indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
 
@@ -1032,21 +1033,26 @@ def main_callbacks(app):
 
         return indice
 
-    def achar_indice_tabela_atos(x,y):
-        df = pd.read_csv("./csv/lista_relacoes.csv")
-
-        XY = {}
-        XY['x'] = x
-        XY['y'] = y
+    def find_id_grafico_entidades(x,y,mp):
+        df = pd.read_csv("./csv/lista_entidades.csv")
 
         X = [x]
-        #X.append(XY['x'])
         Y = [y]
-        #Y.append(XY['y'])
-        
-        indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
 
-        return indice
+        if mp == 't-SNE':
+            indice_aux = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
+
+        else: 
+            indice_aux = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+
+        id_dodf_rel = df.id_dodf_rel[indice_aux]
+        print(type(id_dodf_rel))
+        print(id_dodf_rel)
+        print(list(id_dodf_rel)[0])
+
+        indice = find_id_tabela(list(id_dodf_rel)[0])
+
+        return indice 
 
     def busca_lista_anotacoes(id_geral):
 
@@ -1062,111 +1068,109 @@ def main_callbacks(app):
         info.append(list(texto_ent)[0])
 
         return info
-    
 
+    def update_contents(indice, df):
+        contents = []
+
+        tipo_rel = df.tipo_rel[indice]
+        texto = df.texto[indice]
+        idd = df['id_dodf_rel'][indice]
+        anotacoes = list(df.anotacoes[indice])[0]
+        list_anotacoes = literal_eval(anotacoes) 
+        contents.append(html.H4("Ato",style={'text-align': 'center'}))
+        contents.append(html.H5("Tipo:"))
+        contents.append(html.P(tipo_rel,className="card-tab"))
+        contents.append(html.H5("Texto:"))
+        contents.append(html.P(texto,className="card-tab"))
+        contents.append(html.H5("Id da relação:"))
+        contents.append(html.P(idd,className="card-tab"))
+        contents.append(html.H4("Entidades",style={'text-align': 'center'}))
+
+        j = 0
+        while j < len(list_anotacoes): 
+            id_anno = list_anotacoes[j]
+            info = busca_lista_anotacoes(id_anno)
+            tipo_ent = info[0]
+            texto_ent = info[1]
+            contents.append(html.Div(className="card-tab",style={'align-items': 'center', 'justify-content':'center'}, children=[
+                dcc.Dropdown(id=id_anno+'tipo_ent',
+                                searchable=True,
+                                clearable=False,
+                                options=options_entidades,
+                                placeholder="Select a label",
+                                value=tipo_ent,),
+                dcc.Textarea(id=id_anno, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
+                html.Button(children=["Atualizar"], className="Button", id=id_anno+"buttonAtualizar", n_clicks=0),
+                html.Button(children=["Confirmar"], className="Button", id=id_anno+"buttonConfirmar", n_clicks=0),
+                html.Button(children=["Apagar"], className="Button", id=id_anno+"buttonApagar", n_clicks=0),
+            ]))
+            j += 1
+        
+        contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)
+
+        return contents
+            
     @app.callback(
         [
             Output("selected-point", "children"),
         ],
         [
             Input("graph-3d-plot-tsne", "clickData"),
+            Input("graph-entidades", "clickData"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
-            Input('datatable', "derived_virtual_selected_rows")
+            Input('datatable_relacoes', "derived_virtual_selected_rows"),
+            Input('datatable_entidades', "derived_virtual_selected_rows")
         ],
         [
             State("dropdown-method", "value"),
-            State('datatable', "data"),
+            State('datatable_relacoes', "data"),
+            State('datatable_entidades', "data"),
         ]
     )
-    def explore_data(clickData,enviar, selected_row_indices, mp, table):
+    def explore_data(clickData,click_entidades,enviar, row_id_relacoes, row_id_entidades, mp, table_relacoes, table_entidades):
         df = pd.read_csv("./csv/lista_relacoes.csv")
-
-        #temp, apenas para testar por agora
-        
-
-
-        #label = 'Apagar'
         contents = []
 
         contents.append(html.H5("Clique em um ponto no layout para obter mais informações."),)
 
-        if selected_row_indices is None:
-            selected_row_indices = []
+        context = dash.callback_context
 
-        if selected_row_indices != []:
-            selected_rows=[table[i] for i in selected_row_indices]
-            x = selected_rows[0]["x_umap"]
-            y = selected_rows[0]["y_umap"]
+        trigger = context.triggered[0]['prop_id']
 
-            indice = achar_indice_tabela_atos(x,y)
+        if row_id_relacoes is None:
+            row_id_relacoes = []
 
-            contents = []
+        if row_id_entidades is None:
+            row_id_entidades = []
 
-            #Procurar informações desejadas
+        if str(trigger) == 'graph-3d-plot-tsne.clickData':
+            x = clickData["points"][0]['x']
+            y = clickData["points"][0]['y']
 
-            tipo_rel = df.tipo_rel[indice]
-            texto = df.texto[indice]
-            idd = df['id_dodf_rel'][indice]
-            anotacoes = df['anotacoes'][indice]
-    
-            contents.append(html.H6("Ato:"))
-            contents.append(html.H5("Tipo:"))
-            contents.append(html.P(tipo_rel,className="card-tab"))
-            contents.append(html.H5("Texto:"))
-            contents.append(html.P(texto,className="card-tab"))
-            contents.append(html.H5("Id:"))
-            contents.append(html.P(idd,className="card-tab"))
+            indice = find_id_grafico_relacoes(x,y,mp)
+            contents = update_contents(indice, df)
+        
+        elif str(trigger) == 'graph-entidades.clickData':
+            x = click_entidades["points"][0]['x']
+            y = click_entidades["points"][0]['y']
+            print('passei por graph-entidades')
 
-            contents.append(html.H6("Entidades:"))
-            for i in anotacoes:
-                info = busca_lista_anotacoes(i)
-                tipo_ent = info[0]
-                texto_ent = info[1]
-                contents.append(html.P(str(tipo_ent),className="card-tab"))
-                contents.append(dcc.Input(id=str(i), type="text", value=str(texto_ent)))
-                    
-                #html.P(str(texto_ent),className="card-tab"))
+            indice = find_id_grafico_entidades(x,y,mp)
+            contents = update_contents(indice, df)
 
-        elif clickData or enviar:
-            indice = achar_indice(clickData,mp)
+        elif str(trigger) == 'datatable_relacoes.derived_virtual_selected_rows' and row_id_relacoes != []:
+            selected_rows=[table_relacoes[i] for i in  row_id_relacoes]
+            id_dodf_rel = selected_rows[0]["id_dodf_rel"]
 
-            contents = []
+            indice = find_id_tabela(id_dodf_rel)
+            contents = update_contents(indice, df)
 
-            tipo_rel = df.tipo_rel[indice]
-            texto = df.texto[indice]
-            idd = df['id_dodf_rel'][indice]
-            anotacoes = list(df.anotacoes[indice])[0]
-            list_anotacoes = literal_eval(anotacoes) 
-            contents.append(html.H4("Ato",style={'text-align': 'center'}))
-            contents.append(html.H5("Tipo:"))
-            contents.append(html.P(tipo_rel,className="card-tab"))
-            contents.append(html.H5("Texto:"))
-            contents.append(html.P(texto,className="card-tab"))
-            contents.append(html.H5("Id da relação:"))
-            contents.append(html.P(idd,className="card-tab"))
-            contents.append(html.H4("Entidades",style={'text-align': 'center'}))
+        elif str(trigger) == 'datatable_entidades.derived_virtual_selected_rows' and row_id_entidades != []:
+            selected_rows=[table_entidades[i] for i in row_id_entidades]
+            id_dodf_rel = selected_rows[0]["id_dodf_rel"]
 
-            j = 0
-            while j < len(list_anotacoes): 
-                id_anno = list_anotacoes[j]
-                info = busca_lista_anotacoes(id_anno)
-                tipo_ent = info[0]
-                texto_ent = info[1]
-                contents.append(html.Div(className="card-tab",style={'align-items': 'center', 'justify-content':'center'}, children=[
-                    dcc.Dropdown(id=id_anno+'tipo_ent',
-                                searchable=True,
-                                clearable=False,
-                                options=options_entidades,
-                                placeholder="Select a label",
-                                value=tipo_ent,),
-                    dcc.Textarea(id=id_anno, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
-                    html.Button(children=["Atualizar"], className="Button", id=id_anno+"buttonAtualizar", n_clicks=0),
-                    html.Button(children=["Confirmar"], className="Button", id=id_anno+"buttonConfirmar", n_clicks=0),
-                    html.Button(children=["Apagar"], className="Button", id=id_anno+"buttonApagar", n_clicks=0),
-                ]))
-                j += 1
-            contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)
-              
+            indice = find_id_tabela(id_dodf_rel)
+            contents = update_contents(indice, df)
             
         return [contents]
 

@@ -165,15 +165,25 @@ def extract_relacoes(df):
 
 # Organiza o output em uma tabela para mostrar ao o usuário as anotações que foram extraídas
 def return_tables(xmls):
-    df = extract_entidades(xmls)
-    df_relacoes = extract_relacoes(df)
+    df_entidades = extract_entidades(xmls)
+    df_relacoes = extract_relacoes(df_entidades)
     list_of_tables = []
         
-    if df.shape[0] > 0 :
-        dff = df
-        csv_string = dff.to_csv(index=False, encoding='utf-8')
+    if df_entidades.shape[0] > 0 :
+        #dff = df_entidades
+
+        csv_string_entidades = df_entidades.to_csv(index=False, encoding='utf-8')
+        csv_string_entidades = "data:text/csv;charset=utf-8," + \
+            urllib.parse.quote(csv_string_entidades)
+
+        csv_string_relacoes = df_relacoes.to_csv(index=False, encoding='utf-8')
+        csv_string_relacoes = "data:text/csv;charset=utf-8," + \
+            urllib.parse.quote(csv_string_relacoes)
+
+        '''csv_string = dff.to_csv(index=False, encoding='utf-8')
         csv_string = "data:text/csv;charset=utf-8," + \
             urllib.parse.quote(csv_string)
+       
 
         download_button = html.A(
             children=['Download CSV'],
@@ -181,15 +191,15 @@ def return_tables(xmls):
             download="visnote_annotations.csv",
             href=csv_string,
             target="_blank")
-            
+        '''   
         list_of_tables.append(\
             html.Div([
                 html.H2("Anotações de Entidades", className='text-act'),
-                html.H4("Quantidade: " + str(df.shape[0]), className='text-ocu'),
+                html.H4("Quantidade: " + str(df_entidades.shape[0]), className='text-ocu'),
 
                 dash_table.DataTable(
-                    data=df.to_dict('records'),
-                    columns=[{'name': i, 'id': i} for i in df.columns],
+                    data=df_entidades.to_dict('records'),
+                    columns=[{'name': i, 'id': i} for i in df_entidades.columns],
                     style_cell={
                             'overflow': 'hidden',
                             'textOverflow': 'ellipsis',
@@ -203,7 +213,13 @@ def return_tables(xmls):
                             'marginBottom': '40px'
                         }
                 ),
-                download_button,
+                html.A(
+                    className = 'choose-button',
+                    children=['Download CSV'],
+                    id='download-link-entidades',
+                    download="visnote_annotations_entidades.csv",
+                    href=csv_string_entidades,
+                    target="_blank"),
             ], className='card-csv')\
         )
         list_of_tables.append(\
@@ -227,7 +243,13 @@ def return_tables(xmls):
                             'marginBottom': '40px'
                         }
                 ),
-                download_button,
+                html.A(
+                    className = 'choose-button',
+                    children=['Download CSV'],
+                    id='download-link-entidades',
+                    download="visnote_annotations_entidades.csv",
+                    href=csv_string_entidades,
+                    target="_blank"),
             ], className='card-csv')\
         )
     else:
