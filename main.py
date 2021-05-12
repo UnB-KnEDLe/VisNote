@@ -3,7 +3,7 @@ from multidimensional_projection import projecao_multi
 from export import export_callbacks
 
 import dash
-from dash.dependencies import Input, Output, State
+from dash.dependencies import Input, Output, State, MATCH, ALL
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
@@ -31,10 +31,18 @@ colors = {
         'Ato_Substituicao': 'rgb(254,136,177)',
         'Ato_Tornado_Sem_Efeito_Apo': 'rgb(139,224,164)',
         'Ato_Tornado_Sem_Efeito_Exo_Nom': 'rgb(201,219,116)',
+        'confirmado': '#9EE09E',
+        'nao_confirmado': '#bbbbbb',
+        'em_duvida': '#FDFD97',
+        'deletar': '#FFFFFF',
+}
+
+'''colors_estado = {
         'Confirmado': '#000000',
         'Avaliar_Depois': 'rgb(179,179,179)',
         'Apagar': '#FFFFFF',
 }
+'''
 
 options_entidades = [{'label': 'Ato_Abono_Permanencia', 'value': 'Ato_Abono_Permanencia'},
  {'label': 'Ato_Exoneracao_Comissionado','value': 'Ato_Exoneracao_Comissionado'},
@@ -124,11 +132,18 @@ def create_layout(app):
                     id="proximo",
                     children=[
                         html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Revisar anotações ->"], className="Button", id="corrigir-classes-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(id="value-corrigir-classes-button", className="Button",n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["<- Voltar"], className="Button", id="voltar-corrigir-classes-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Exportar anotações ->"], className="Button", id="extrair-entidades-button", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0, style={"display":"none"}),
+                        
+                        
+                        
+                        html.Button(children=["Revisar anotações ->"], className="Button", id="button-revisar-anotacoes", n_clicks=0, style={"display":"none"}),
+                        html.Button(id="value-button-revisar-anotacoes", className="Button",n_clicks=0, style={"display":"none"}),
+                        
+                        html.Button(children=["Download anotações ->"], className="Button", id="button-output-anotacoes", n_clicks=0, style={"display":"none"}),
+                        
+                        html.Button(children=["<- Revisar anotações"], className="Button", id="button-voltar-revisar-anotacoes", n_clicks=0, style={"display":"none"}),
+                        html.Button(children=["Importar novas anotações ->"], className="Button", id="button-voltar-input-anotacoes", n_clicks=0, style={"display":"none"}),
+                        
+                        #html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0, style={"display":"none"}),
                         ],         
                 ),
 
@@ -179,7 +194,7 @@ def create_layout(app):
         ),
 
         # página de extração de anotações
-        html.Div(id = "pagina-extrair-classes",children =[
+        html.Div(id = "pagina-input-anotacoes",children =[
             # Local para a inserção dos arquivos XML
             html.Div([
                 html.H1('Extrair anotações', className='card-title'),
@@ -202,15 +217,17 @@ def create_layout(app):
         ]),
 
         # página de correção de anotações - nível tipo dos atos
-        html.Div(
-            className="row background",
-            id="pagina-corrigir-classes",
+        html.Div( 
+            className="row background",  
+            id="pagina-revisar-anotacoes",         
             style={
                        "display": "none",
-                       "grid-template-columns": "auto 400px",
+                       "grid-template-columns": "400px auto 400px",
                        "height":"auto",
                        },
             children=[
+                #flags
+                
                 html.Div(
                     #className="card-ato",
                     id="lista_atos",
@@ -364,7 +381,7 @@ def create_layout(app):
                 ),
                 #menu e layout
                 html.Div(
-                    id="pagina-corrigir-classes-meio",
+                    id="pagina-revisar-anotacoes-meio",
                     className="control-tabs",
                     
                     children=[
@@ -408,19 +425,14 @@ def create_layout(app):
                                                             placeholder="Select a label",
                                                             value="classe",
                                                         ),
-                                                        html.Button("vários",id="confirmar-varios-classes-button", className="Button",n_clicks=0),
-                                                        html.Button(id="confirmar-varios-classes-button-result", className="Button",n_clicks=0,style={"display":"none"}),
-                                                        html.A(children=[html.Button("Salvar",id="salvar-corrigir-classes-button", className="Button",n_clicks=0)],
-                                                            id='salvar-corrigir-classes-link',
-                                                            download="backup_classes.csv",
-                                                            href="",
-                                                            target="_blank",
-                                                        ),                           
+                                                        html.Button("confirmar vários",id="button-confirmar-varios-relacoes", className="Button",n_clicks=0),
+                                                        html.Button(id="button-confirmar-varios-relacoes-result", className="Button",n_clicks=0,style={"display":"none"}),
+                                                                                  
                                                     ]
                                                 ),
                                             ],
                                         ),
-                                            dcc.Graph(id="graph-3d-plot-tsne")
+                                            dcc.Graph(id="graph-relacoes")
                                         ]),
                                 ]),
                             dcc.Tab(
@@ -460,14 +472,9 @@ def create_layout(app):
                                                             placeholder="Select a label",
                                                             value="classe",
                                                         ),
-                                                        html.Button("vários",id="confirmar-varios-entidades-button", className="Button",n_clicks=0),
-                                                        html.Button(id="confirmar-varios-entidades-button-result", className="Button",n_clicks=0,style={"display":"none"}),
-                                                        html.A(children=[html.Button("Salvar",id="salvar-corrigir-entidades-button", className="Button",n_clicks=0)],
-                                                            id='salvar-corrigir-entidades-link',
-                                                            download="backup_entidades.csv",
-                                                            href="",
-                                                            target="_blank",
-                                                        ),                           
+                                                        html.Button("confirmar vários",id="button-confirmar-varios-entidades", className="Button",n_clicks=0),
+                                                        html.Button(id="button-confirmar-varios-entidades-result", className="Button",n_clicks=0,style={"display":"none"}),
+                                                                                  
                                                     ]
                                                 ),
                                             ],
@@ -491,6 +498,9 @@ def create_layout(app):
                                 children=[
                                     html.Div(id='control-tab', style={"padding": "5px"}, children=[
                                         html.Div(id="selected-point"),
+                                        html.Button(children=["CONFIRMAR TODOS"], className="Button-control", id='confirmar-relacao-control',n_clicks=0, style={'display':'none'}),
+                                        html.Button(children=["DELETAR RELAÇÃO"], className="Button-control", id='deletar-relacao-control', n_clicks=0, style={'display':'none'}),
+                                        html.Button(id="flag-update-relacao-control", className="Button",n_clicks=0,style={"display":"none"}),
                                         html.Div(id="corrigir-classe-buttons", children=[
                                             html.Button("confirmar",id="confirmar-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                             html.Button(id="confirmar-classe-button-result", className="Button",n_clicks=0, style={"display":"none"}), 
@@ -527,12 +537,8 @@ def create_layout(app):
                                             html.Button("Enviar",id="enviar-corrigir-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                             html.Button(id="enviar-corrigir-classe-button-result",n_clicks=0, style={"display":"none"}),
                                         ]),
-                                ]),
-                                
-                            ]),
-                            
-                            
-                                                            
+                                ]),                                
+                            ]),                                                            
                         ])
                     ]
                 ),
@@ -540,8 +546,13 @@ def create_layout(app):
         ),
 
         # página de exportação de anotações revisadas
-        html.Div(id = "pagina-extrair-entidades",children =[
+        html.Div(id = "pagina-output-anotacoes",children =[
             #Onde aparecem várias tabelas, uma para cada tipo de ato, com as entidades que foram extraídas
+            dcc.Loading(
+                    id="loading-2",
+                    children=[html.Div([html.Div(id="loading-output-2")])],
+                    type="circle",
+                ),
             html.Div(id='output-anotacoes-revisadas')], className='row'
         ),
 ])
@@ -571,108 +582,113 @@ def main_callbacks(app):
 
     @app.callback(
         [ 
-            Output("corrigir-classes-button", "style"),   
-            Output("pagina-extrair-classes", "style"),
-            Output("voltar-extrair-classes-button", "style"),
-            Output("extrair-entidades-button", "style"),   
-            Output("pagina-corrigir-classes", "style"),
-            Output("voltar-corrigir-classes-button", "style"), 
-            Output("corrigir-entidades-button", "style"),   
-            Output("pagina-extrair-entidades", "style"),
+            Output("button-revisar-anotacoes", "style"),   
+            Output("button-output-anotacoes", "style"), 
+            Output("button-voltar-revisar-anotacoes", "style"), 
+            Output("button-voltar-input-anotacoes", "style"), 
+
+            Output("pagina-input-anotacoes", "style"),
+            Output("pagina-revisar-anotacoes", "style"),
+            Output("pagina-output-anotacoes", "style"),           
         ],
         [
             Input('upload-data', 'contents'),
-            Input("corrigir-classes-button", "n_clicks"),
-            Input("extrair-entidades-button", "n_clicks"), 
-            Input("voltar-extrair-classes-button", "n_clicks"),
-            Input("voltar-corrigir-classes-button", "n_clicks"),
+            Input("button-revisar-anotacoes", "n_clicks"),   
+            Input("button-output-anotacoes", "n_clicks"), 
+            Input("button-voltar-revisar-anotacoes", "n_clicks"), 
+            Input("button-voltar-input-anotacoes", "n_clicks"),
         ]
     )
-    def control_displays(upload_data,corrigir_classes,extrair_entidades,voltar_extrair_classes,voltar_corrigir_classes):
-        
-        if voltar_corrigir_classes > 0:
-            return [{"display":"none"}, # corrigir-classes-button
-                    {"display":"none"}, # pagina-extrair-classes
-                    {},
-                    {}, # extrair-entidades-button
-                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
-                    {"display":"none"},
-                    {"display":"none"}, # corrigir-entidades-button
-                    {"display": "none"}] # pagina-extrair-entidades
-        
-        elif extrair_entidades > 0:
-            return [{"display":"none"}, # corrigir-classes-button
-                    {"display":"none"}, # pagina-extrair-classes
-                    {"display":"none"},
-                    {"display":"none"}, # extrair-entidades-button
-                    {"display":"none"}, # pagina-corrigir-classes
-                    {},
-                    {}, # corrigir-entidades-button
-                    {}] # pagina-extrair-entidades
-        
-        elif voltar_extrair_classes > 0:
-            return [{}, #corrigir-classes-button
-                    {}, #pagina-extrair-classes
-                    {"display":"none"},
-                    {"display":"none"}, # extrair-entidades-button
-                    {"display": "none"}, #pagina-corrigir-classes
-                    {"display":"none"},
-                    {"display":"none"}, #corrigir-entidades-button
-                    {"display": "none"}] #pagina-extrair-entidades
+    def control_displays(upload_data,revisar_anotacoes, output_anotacoes,voltar_revisar_anotacoes, voltar_input_anotacoes):       
+        # vê qual foi o input que ativou o callback
+        context = dash.callback_context
+        trigger = context.triggered[0]['prop_id']
 
-        elif corrigir_classes > 0:
-            return [{"display":"none"}, # corrigir-classes-button
-                    {"display":"none"}, # pagina-extrair-classes
-                    {},
-                    {}, # extrair-entidades-button
-                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
-                    {"display":"none"},
-                    {"display":"none"}, # corrigir-entidades-button
-                    {"display": "none"}] # pagina-extrair-entidades
-        elif (upload_data is not None):
-            return [{}, #corrigir-classes-button
-                    {}, #pagina-extrair-classes
-                    {"display":"none"},
-                    {"display":"none"}, # extrair-entidades-button
-                    {"display": "none"}, #pagina-corrigir-classes
-                    {"display":"none"},
-                    {"display":"none"}, #corrigir-entidades-button
-                    {"display": "none"}] #pagina-extrair-entidades
-        '''
-        return [{"display":"none"}, # corrigir-classes-button
-                    {"display":"none"}, # pagina-extrair-classes
-                    {"display":"none"},
-                    {"display":"none"}, # extrair-entidades-button
-                    {"padding": "15px","display": "grid","grid-template-columns": "400px auto 400px","height": "100vh"}, #pagina-corrigir-classes
-                    {"display":"none"},
-                    {"display":"none"}, # corrigir-entidades-button
-                    {"display": "none"}] # pagina-extrair-entidades
-        '''
-        return [{"display": "none"}, #corrigir-classes-button
-                {}, #pagina-extrair-classes
-                {"display":"none"},
-                {"display":"none"}, # extrair-entidades-button
-                {"display": "none"}, #pagina-corrigir-classes
-                {"display":"none"},
-                {"display":"none"}, #corrigir-entidades-button
-                {"display": "none"}] #pagina-extrair-entidades
+        displays = [
+            {"display":"none"}, #button-revisar-anotacoes
+            {"display":"none"}, #button-output-anotacoes
+            {"display":"none"}, #button-voltar-revisar-anotacoes
+            {"display":"none"}, #button-voltar-input-anotacoes
 
-
-
-    @app.callback(
-        [ 
-            Output("voltar-extrair-classes-button", "n_clicks"),
-            Output("voltar-corrigir-classes-button", "n_clicks"),
-        ],
-        [
-            Input('upload-data', 'contents'),
-            Input("corrigir-classes-button", "n_clicks"),
-            Input("extrair-entidades-button", "n_clicks"), 
+            {}, #pagina-input-anotacoes
+            {"display":"none"}, #pagina-revisar-anotacoes
+            {"display":"none"}, #pagina-output-anotacoes
         ]
-    )
-    def reset_voltar_buttons(upload_data,corrigir_classes,extrair_entidades):
-        return [0, 0]
 
+        #ao clicar no botao "REVISAR ANOTACOES ->"
+        if str(trigger) == 'upload-data.contents':
+            displays = [
+                {}, #button-revisar-anotacoes
+                {"display":"none"}, #button-output-anotacoes
+                {"display":"none"}, #button-voltar-revisar-anotacoes
+                {"display":"none"}, #button-voltar-input-anotacoes
+
+                {}, #pagina-input-anotacoes
+                {"display":"none"}, #pagina-revisar-anotacoes
+                {"display":"none"}, #pagina-output-anotacoes
+            ]
+
+        elif str(trigger) == 'button-revisar-anotacoes.n_clicks':
+            displays = [
+                {"display":"none"}, #button-revisar-anotacoes
+                {}, #button-output-anotacoes
+                {"display":"none"}, #button-voltar-revisar-anotacoes
+                {"display":"none"}, #button-voltar-input-anotacoes
+
+                {"display":"none"}, #pagina-input-anotacoes
+                {},#{"padding-left": "15px","padding-rigth": "15px","display": "grid","grid-template-columns": "400px auto 400px"}, #,"height": "100vh"pagina-revisar-anotacoes
+                {"display":"none"}, #pagina-output-anotacoes
+            ]
+
+        elif str(trigger) == 'button-output-anotacoes.n_clicks':
+            displays = [
+                {"display":"none"}, #button-revisar-anotacoes
+                {"display":"none"}, #button-output-anotacoes
+                {}, #button-voltar-revisar-anotacoes
+                {}, #button-voltar-input-anotacoes
+
+                {"display":"none"}, #pagina-input-anotacoes
+                {"display":"none"}, #pagina-revisar-anotacoes
+                {}, #pagina-output-anotacoes
+            ]
+
+        elif str(trigger) == 'button-voltar-revisar-anotacoes.n_clicks':
+            displays = [
+                {"display":"none"}, #button-revisar-anotacoes
+                {}, #button-output-anotacoes
+                {"display":"none"}, #button-voltar-revisar-anotacoes
+                {"display":"none"}, #button-voltar-input-anotacoes
+
+                {"display":"none"}, #pagina-input-anotacoes
+                {},#{"padding-left": "15px","padding-rigth": "15px","display": "grid","grid-template-columns": "400px auto 400px"}, #,"height": "100vh"pagina-revisar-anotacoes
+                {"display":"none"}, #pagina-output-anotacoes
+            ]
+
+        elif str(trigger) == 'button-voltar-input-anotacoes.n_clicks':
+            displays = [
+                {"display":"none"}, #button-revisar-anotacoes
+                {"display":"none"}, #button-output-anotacoes
+                {"display":"none"}, #button-voltar-revisar-anotacoes
+                {"display":"none"}, #button-voltar-input-anotacoes
+
+                {}, #pagina-input-anotacoes
+                {"display":"none"}, #pagina-revisar-anotacoes
+                {"display":"none"}, #pagina-output-anotacoes
+            ]
+
+        else: 
+            displays = [
+            {"display":"none"}, #button-revisar-anotacoes
+            {"display":"none"}, #button-output-anotacoes
+            {"display":"none"}, #button-voltar-revisar-anotacoes
+            {"display":"none"}, #button-voltar-input-anotacoes
+
+            {}, #pagina-input-anotacoes
+            {"display":"none"}, #pagina-revisar-anotacoes
+            {"display":"none"}, #pagina-output-anotacoes
+        ]
+
+        return displays
     
     # Parte 1 - Extração de anotações do XML
     extraction_callbacks(app)
@@ -685,7 +701,7 @@ def main_callbacks(app):
             Output('output-anotacoes-revisadas', 'children'),
         ],
         [
-            Input("extrair-entidades-button", "n_clicks"),
+            Input("button-output-anotacoes", "n_clicks"),
         ],
         [
             State('upload-data', 'contents'),
@@ -707,10 +723,10 @@ def main_callbacks(app):
 
     @app.callback(
         [    
-            Output("value-corrigir-classes-button", "n_clicks"),
+            Output("value-button-revisar-anotacoes", "n_clicks"),
         ],
         [
-            Input("corrigir-classes-button", "n_clicks")
+            Input("button-revisar-anotacoes", "n_clicks")
         ]    
     )
     def run_tsne_umap(run):
@@ -737,11 +753,10 @@ def main_callbacks(app):
 
         if ent_ou_rel == 'ent':
             if label == 'classe':
-                COLOR = 'tipo_ent'
+                figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = 'tipo_ent',color_discrete_sequence=px.colors.qualitative.Pastel)
             else:
-                COLOR = 'estado_ent'
-
-            figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = COLOR,color_discrete_sequence=px.colors.qualitative.Pastel)
+                figure = px.scatter(dict_dfs, x=X, y=Y,hover_name='texto', color = 'estado_ent',color_discrete_map=colors)
+                    
             figure.update_layout(legend=dict(orientation="v",yanchor="top",y=1,xanchor="left",x=1,title=dict(text="Legenda", font=dict(family="Arial", size=22), side="top"),valign="top",itemclick="toggleothers",),yaxis={'visible': False, 'showticklabels': False},xaxis={'visible': False, 'showticklabels': False},margin=dict(l=40, r=40, t=50, b=40))
 
         elif ent_ou_rel == 'rel':
@@ -777,10 +792,11 @@ def main_callbacks(app):
         ],
         [
             Input("dropdown-atos","value"),
-            Input("value-corrigir-classes-button", "n_clicks"),
+            Input("value-button-revisar-anotacoes", "n_clicks"),
+            Input('flag-update-relacao-control', 'n_clicks'),
         ]
     )
-    def montar_tabela_relacoes(tipos,run):
+    def montar_tabela_relacoes(tipos,run,flag_relacoes):
         if run == 0:
             df = pd.read_csv("./csv/relacoes_temp.csv")
         else:
@@ -849,10 +865,11 @@ def main_callbacks(app):
         ],
         [
             Input("dropdown-atos","value"),
-            Input("value-corrigir-classes-button", "n_clicks"),
+            Input("value-button-revisar-anotacoes", "n_clicks"),
+            Input('flag-update-relacao-control', 'n_clicks'),
         ]
     )
-    def montar_tabela_entidades(tipos,run):
+    def montar_tabela_entidades(tipos,run,flag_relacoes):
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
         else:
@@ -922,25 +939,27 @@ def main_callbacks(app):
 
     @app.callback(
         [    
-            Output("graph-3d-plot-tsne", "figure"),
+            Output("graph-relacoes", "figure"),
             Output("flag-warning-atos", 'n_clicks'),
         ],
         [
             Input("dropdown-atos","value"),
-            Input("value-corrigir-classes-button", "n_clicks"),
+            Input("value-button-revisar-anotacoes", "n_clicks"),
             Input("dropdown-method", "value"),
             Input("dropdown-label", "value"),
             Input("confirmar-classe-button-result", "n_clicks"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
-            Input("confirmar-varios-classes-button-result", "n_clicks")
+            Input("button-confirmar-varios-relacoes-result", "n_clicks"),
+            Input('flag-update-relacao-control', 'n_clicks'),
         ]    
     )
-    def display_grafico_relacoes(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
+    def display_grafico_relacoes(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag):
         display = 0
         if run == 0:
             df = pd.read_csv("./csv/relacoes_temp.csv")
             figure = generate_figure(df,'TEMP',label,'rel')
-        elif run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
+            return [figure,display]
+        else: #if run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
             df = pd.read_csv("./csv/lista_relacoes.csv")
             
             df2 = df
@@ -970,20 +989,21 @@ def main_callbacks(app):
         ],
         [
             Input("dropdown-atos","value"),
-            Input("value-corrigir-classes-button", "n_clicks"),
+            Input("value-button-revisar-anotacoes", "n_clicks"),
             Input("dropdown-method-entidades", "value"),
             Input("dropdown-label-entidades", "value"),
             Input("confirmar-classe-button-result", "n_clicks"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
-            Input("confirmar-varios-entidades-button-result", "n_clicks")
+            Input("button-confirmar-varios-entidades-result", "n_clicks"),
+            Input('flag-update-relacao-control', 'n_clicks'),
         ]    
     )
-    def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios):
+    def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag_relacoes):
         display = 0
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
             figure = generate_figure(df,'TEMP',label,'ent')
-        elif run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
+        else: #if run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
             df = pd.read_csv("./csv/lista_entidades.csv")
             
             df2 = df
@@ -1046,9 +1066,6 @@ def main_callbacks(app):
             indice_aux = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
 
         id_dodf_rel = df.id_dodf_rel[indice_aux]
-        print(type(id_dodf_rel))
-        print(id_dodf_rel)
-        print(list(id_dodf_rel)[0])
 
         indice = find_id_tabela(list(id_dodf_rel)[0])
 
@@ -1100,22 +1117,31 @@ def main_callbacks(app):
                                 placeholder="Select a label",
                                 value=tipo_ent,),
                 dcc.Textarea(id=id_anno, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
-                html.Button(children=["Atualizar"], className="Button", id=id_anno+"buttonAtualizar", n_clicks=0),
-                html.Button(children=["Confirmar"], className="Button", id=id_anno+"buttonConfirmar", n_clicks=0),
-                html.Button(children=["Apagar"], className="Button", id=id_anno+"buttonApagar", n_clicks=0),
+                
+                html.Button(children=["confirmar"], className="Button-control", id={'type': 'confirmar-entidade','index': id_anno}, n_clicks=0,value=id_anno),
+                html.Button(children=["em duvida"], className="Button-control", id={'type': 'duvida-entidade','index': id_anno}, n_clicks=0,value=id_anno),
+                html.Button(children=["deletar"], className="Button-control", id={'type': 'deletar entidade','index': id_anno}, n_clicks=0,value=id_anno),
             ]))
             j += 1
         
-        contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button", id=str(idd), n_clicks=0),)
+        """contents.append(html.Button(children=["CONFIRMAR TODOS"], className="Button-control", id={'type': 'confirmar-relacao','index': list(idd)[0]},n_clicks=0,value=list(idd)[0]),)
+        contents.append(html.Button(children=["DELETAR RELAÇÃO"], className="Button-control", id={'type': 'deletar-relacao','index': list(idd)[0]}, n_clicks=0,value=list(idd)[0]),)
+        html.Div(id={'type': 'flag-update-relacao-control','index': list(idd)[0]})
+        """
+        
 
         return contents
             
     @app.callback(
         [
             Output("selected-point", "children"),
+            Output("confirmar-relacao-control", "style"),
+            Output("deletar-relacao-control", "style"),
+            Output("confirmar-relacao-control", "value"),
+            Output("deletar-relacao-control", "value"),
         ],
         [
-            Input("graph-3d-plot-tsne", "clickData"),
+            Input("graph-relacoes", "clickData"),
             Input("graph-entidades", "clickData"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
             Input('datatable_relacoes', "derived_virtual_selected_rows"),
@@ -1130,11 +1156,13 @@ def main_callbacks(app):
     def explore_data(clickData,click_entidades,enviar, row_id_relacoes, row_id_entidades, mp, table_relacoes, table_entidades):
         df = pd.read_csv("./csv/lista_relacoes.csv")
         contents = []
+        style_confirmar = {'display':'none'}
+        style_deletar = {'display':'none'}
+        value = ''
 
         contents.append(html.H5("Clique em um ponto no layout para obter mais informações."),)
 
         context = dash.callback_context
-
         trigger = context.triggered[0]['prop_id']
 
         if row_id_relacoes is None:
@@ -1143,20 +1171,25 @@ def main_callbacks(app):
         if row_id_entidades is None:
             row_id_entidades = []
 
-        if str(trigger) == 'graph-3d-plot-tsne.clickData':
+        if str(trigger) == 'graph-relacoes.clickData':
             x = clickData["points"][0]['x']
             y = clickData["points"][0]['y']
 
             indice = find_id_grafico_relacoes(x,y,mp)
             contents = update_contents(indice, df)
+            style_confirmar = {}
+            style_deletar = {}
+            value = str(indice[0])
         
         elif str(trigger) == 'graph-entidades.clickData':
             x = click_entidades["points"][0]['x']
             y = click_entidades["points"][0]['y']
-            print('passei por graph-entidades')
 
             indice = find_id_grafico_entidades(x,y,mp)
             contents = update_contents(indice, df)
+            style_confirmar = {}
+            style_deletar = {}
+            value = str(indice[0])
 
         elif str(trigger) == 'datatable_relacoes.derived_virtual_selected_rows' and row_id_relacoes != []:
             selected_rows=[table_relacoes[i] for i in  row_id_relacoes]
@@ -1164,6 +1197,9 @@ def main_callbacks(app):
 
             indice = find_id_tabela(id_dodf_rel)
             contents = update_contents(indice, df)
+            style_confirmar = {}
+            style_deletar = {}
+            value = str(indice[0])
 
         elif str(trigger) == 'datatable_entidades.derived_virtual_selected_rows' and row_id_entidades != []:
             selected_rows=[table_entidades[i] for i in row_id_entidades]
@@ -1171,8 +1207,168 @@ def main_callbacks(app):
 
             indice = find_id_tabela(id_dodf_rel)
             contents = update_contents(indice, df)
+            style_confirmar = {}
+            style_deletar = {}
+            value = str(indice[0])
             
-        return [contents]
+        return [contents, style_confirmar, style_deletar, value,value]
+
+
+    # CONFIRMANDO E DELETANDO TODAS AS ANOTACOES DE UMA RELACAO
+
+    def update_entidade(id_geral, estado):
+        df = pd.read_csv("./csv/lista_entidades.csv")
+        id_geral = int(id_geral)    
+        indice = df[(df['id_geral'] == id_geral)].index
+        df.estado_ent[indice] = estado
+        df.to_csv("./csv/lista_entidades.csv", index=False)
+
+    def update_relacao_simples(indice,estado):
+        df = pd.read_csv("./csv/lista_relacoes.csv")
+        anotacoes = df.anotacoes[indice]
+        list_anotacoes = literal_eval(anotacoes) 
+
+        j = 0
+        while j < len(list_anotacoes): 
+            id_anno = list_anotacoes[j]
+            update_entidade(id_anno,estado)
+            j += 1
+
+        df.estado_rel[indice] = estado
+        df.to_csv("./csv/lista_relacoes.csv", index=False)
+
+    @app.callback(
+        [
+            Output('flag-update-relacao-control', 'n_clicks'),
+        ],
+        [
+            Input("confirmar-relacao-control", "n_clicks"),
+            Input("deletar-relacao-control", "n_clicks")
+        ],
+        [
+            State("confirmar-relacao-control", "value")
+        ]
+    )
+    def update_relacao_control(n1,n2,indice):
+        context = dash.callback_context
+        trigger = context.triggered[0]['prop_id']
+        print('cliquei e foi')
+
+        if str(trigger) == 'confirmar-relacao-control.n_clicks':
+            update_relacao_simples(int(indice),'confirmado')
+            print("passou confirmar")
+        
+        elif str(trigger) == 'deletar-relacao-control.n_clicks':
+            update_relacao_simples(int(indice),'deletar')
+            print("passou deletar")
+
+        return [n1+n2]
+
+
+    #CONFIRMANDO VÁRIAS RELACOES AO MESMO TEMPO
+
+    def update_relacao_simples2(indice,estado):
+        df = pd.read_csv("./csv/lista_relacoes.csv")
+        anotacoes = list(df.anotacoes[indice])
+        
+        if len(anotacoes) == 0:
+            update_apenas_relacao(indice,'em_duvida')
+
+        else: 
+            anotacoes = list(df.anotacoes[indice])[0]
+            list_anotacoes = literal_eval(anotacoes) 
+
+            j = 0
+            while j < len(list_anotacoes): 
+                id_anno = list_anotacoes[j]
+                update_entidade(id_anno,estado)
+                j += 1
+
+            df.estado_rel[indice] = estado
+            df.to_csv("./csv/lista_relacoes.csv", index=False)
+
+    def update_apenas_relacao(indice,estado):
+        df = pd.read_csv("./csv/lista_relacoes.csv")
+        df.estado_rel[indice] = estado
+        df.to_csv("./csv/lista_relacoes.csv", index=False)
+
+
+    @app.callback(
+        [
+            Output("button-confirmar-varios-relacoes-result", "n_clicks")
+        ],
+        [
+            Input("button-confirmar-varios-relacoes", "n_clicks"),
+        ],
+        [
+            State("graph-relacoes", "selectedData"),
+            State("dropdown-method", "value")
+        ]
+    )
+    def confirmar_varios_relacoes(confirmar, selectedData, mp):
+
+        if selectedData:  
+            j = 0
+            for point in selectedData["points"]:
+                x = selectedData["points"][j]['x']
+                y = selectedData["points"][j]['y']
+
+                indice = find_id_grafico_relacoes(x,y,mp)
+                update_relacao_simples2(indice,'confirmado')
+                j += 1
+
+            return [1]
+        return [0]
+
+    #CONFIRMANDO VÁRIAS ENTIDADES AO MESMO TEMPO
+
+    def update_entidade2(id_geral, estado):
+        df = pd.read_csv("./csv/lista_entidades.csv")
+        id_geral = int(id_geral)    
+        indice = df[(df['id_geral'] == id_geral)].index
+        df.estado_ent[indice] = estado
+        df.to_csv("./csv/lista_entidades.csv", index=False)
+
+    @app.callback(
+        [
+            Output("button-confirmar-varios-entidades-result", "n_clicks")
+        ],
+        [
+            Input("button-confirmar-varios-entidades", "n_clicks"),
+        ],
+        [
+            State("graph-entidades", "selectedData"),
+            State("dropdown-method-entidades", "value")
+        ]
+    )
+    def confirmar_varios_entidades(confirmar, selectedData, mp):
+        if selectedData:  
+            df = pd.read_csv("./csv/lista_entidades.csv")
+            j = 0
+            for point in selectedData["points"]:
+                x = selectedData["points"][j]['x']
+                y = selectedData["points"][j]['y'] 
+
+                X = [x]
+                Y = [y]
+
+                if mp == 't-SNE':
+                    indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
+
+                else: 
+                    indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
+
+                id_geral = list(df.id_geral[indice])[0] 
+                update_entidade2(id_geral,'confirmado')
+                j += 1
+
+            return [1]
+        return [0]
+        
+
+    
+    
+
 
     '''
 
@@ -1184,7 +1380,7 @@ def main_callbacks(app):
         [
             Input("corrigir-classe-button","n_clicks"),
             Input("enviar-corrigir-classe-button","n_clicks"),
-            Input("graph-3d-plot-tsne", "clickData"),
+            Input("graph-relacoes", "clickData"),
             Input('datatable', "derived_virtual_selected_rows")
         ]
     )
@@ -1213,7 +1409,7 @@ def main_callbacks(app):
             Input("corrigir-classe-button", "n_clicks"),
         ],
         [
-            State("graph-3d-plot-tsne", "clickData"),
+            State("graph-relacoes", "clickData"),
             State("dropdown-method", "value")
         ]
     )
@@ -1242,7 +1438,7 @@ def main_callbacks(app):
         ],
         [
             State("dropdown-classes","value"),
-            State("graph-3d-plot-tsne", "clickData"),
+            State("graph-relacoes", "clickData"),
             State("dropdown-method", "value")
         ]
     )
@@ -1282,7 +1478,7 @@ def main_callbacks(app):
             Input("confirmar-classe-button", "n_clicks")
         ],
         [
-            State("graph-3d-plot-tsne", "clickData"),
+            State("graph-relacoes", "clickData"),
             State("dropdown-method", "value")
         ]    
     )
@@ -1308,7 +1504,7 @@ def main_callbacks(app):
             Output("selected-point", "children"),
         ],
         [
-            Input("graph-3d-plot-tsne", "clickData"),
+            Input("graph-relacoes", "clickData"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
             Input('datatable', "derived_virtual_selected_rows")
         ],
@@ -1381,13 +1577,13 @@ def main_callbacks(app):
 
     @app.callback(
         [
-            Output("confirmar-varios-classes-button-result", "n_clicks")
+            Output("button-confirmar-varios-relacoes-result", "n_clicks")
         ],
         [
-            Input("confirmar-varios-classes-button", "n_clicks"),
+            Input("button-confirmar-varios-relacoes", "n_clicks"),
         ],
         [
-            State("graph-3d-plot-tsne", "selectedData"),
+            State("graph-relacoes", "selectedData"),
             State("dropdown-method", "value")
         ]
     )

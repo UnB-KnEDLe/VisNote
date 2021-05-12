@@ -114,7 +114,7 @@ def export_callbacks(app):
             Output('output-anotacoes-revisadas', 'children'),
         ],
         [
-            Input("extrair-entidades-button", "n_clicks"),
+            Input("button-output-anotacoes", "n_clicks"),
         ])
     def update_output(run):
         children = []

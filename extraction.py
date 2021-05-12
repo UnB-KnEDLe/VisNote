@@ -266,6 +266,7 @@ def extraction_callbacks(app):
     @app.callback(
         [
             Output('output-data-upload', 'children'),
+            Output("loading-output-2", "children")
         ],
         [
             Input('upload-data', 'contents')
@@ -280,4 +281,4 @@ def extraction_callbacks(app):
             xmls = []
             organize_content(list_of_contents, list_of_names, list_of_dates,xmls)
             children = [return_tables(xmls)]
-        return [children]
+        return [children,0]
