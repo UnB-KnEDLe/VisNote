@@ -7,6 +7,7 @@ from dash.dependencies import Input, Output, State, MATCH, ALL
 import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
+from dash.exceptions import PreventUpdate
 
 import pandas as pd
 import plotly.express as px
@@ -16,6 +17,8 @@ from urllib.parse import quote as urlquote
 import urllib
 
 from ast import literal_eval
+
+pd.options.mode.chained_assignment = None  # default='warn'
 
 colors = {
         'Ato_Abono_Permanencia': 'rgb(237,100,90)',
@@ -32,17 +35,11 @@ colors = {
         'Ato_Tornado_Sem_Efeito_Apo': 'rgb(139,224,164)',
         'Ato_Tornado_Sem_Efeito_Exo_Nom': 'rgb(201,219,116)',
         'confirmado': '#9EE09E',
+        'corrigido': ' #72ccd8',
         'nao_confirmado': '#bbbbbb',
         'em_duvida': '#FDFD97',
         'deletar': '#FFFFFF',
 }
-
-'''colors_estado = {
-        'Confirmado': '#000000',
-        'Avaliar_Depois': 'rgb(179,179,179)',
-        'Apagar': '#FFFFFF',
-}
-'''
 
 options_entidades = [{'label': 'Ato_Abono_Permanencia', 'value': 'Ato_Abono_Permanencia'},
  {'label': 'Ato_Exoneracao_Comissionado','value': 'Ato_Exoneracao_Comissionado'},
@@ -236,7 +233,7 @@ def create_layout(app):
                         dcc.Tabs(id='tabs_left', value='atos', children=[
                             # guia referente às informações do ponto que foi clicado por último
                             dcc.Tab(
-                                label='ATOS',
+                                label='Relações',
                                 value='atos',
                                 children=[                                    
                                 html.Button(id="flag-warning-atos", className="Button",n_clicks=0, style={"display":"none"}),
@@ -498,9 +495,12 @@ def create_layout(app):
                                 children=[
                                     html.Div(id='control-tab', style={"padding": "5px"}, children=[
                                         html.Div(id="selected-point"),
+                                        html.Button(children=["ATUALIZAR ENTIDADES"], className="Button-control", id='flag-update-entidade-control',n_clicks=0, style={'display':'none'}),
                                         html.Button(children=["CONFIRMAR TODOS"], className="Button-control", id='confirmar-relacao-control',n_clicks=0, style={'display':'none'}),
                                         html.Button(children=["DELETAR RELAÇÃO"], className="Button-control", id='deletar-relacao-control', n_clicks=0, style={'display':'none'}),
                                         html.Button(id="flag-update-relacao-control", className="Button",n_clicks=0,style={"display":"none"}),
+                                        html.Button(id="update-entidade", className="Button",n_clicks=0,style={"display":"none"}),
+                                        html.Div(children=['id_anno','nada'],id="id_geral_entidade", style={'display':'none'}),
                                         html.Div(id="corrigir-classe-buttons", children=[
                                             html.Button("confirmar",id="confirmar-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
                                             html.Button(id="confirmar-classe-button-result", className="Button",n_clicks=0, style={"display":"none"}), 
@@ -615,7 +615,6 @@ def main_callbacks(app):
             {"display":"none"}, #pagina-output-anotacoes
         ]
 
-        #ao clicar no botao "REVISAR ANOTACOES ->"
         if str(trigger) == 'upload-data.contents':
             displays = [
                 {}, #button-revisar-anotacoes
@@ -819,7 +818,7 @@ def main_callbacks(app):
         df2 = df2.drop(columns=['tipo_rel'])
         df2["tipo_rel"] = temp
 
-        temp = df2.tipo_rel
+        temp = df2.estado_rel
         df2 = df2.drop(columns=['estado_rel'])
         df2["estado_rel"] = temp
 
@@ -867,9 +866,10 @@ def main_callbacks(app):
             Input("dropdown-atos","value"),
             Input("value-button-revisar-anotacoes", "n_clicks"),
             Input('flag-update-relacao-control', 'n_clicks'),
+            Input('flag-update-entidade-control', 'n_clicks'),
         ]
     )
-    def montar_tabela_entidades(tipos,run,flag_relacoes):
+    def montar_tabela_entidades(tipos,run,flag_relacoes,flag_entidades):
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
         else:
@@ -996,10 +996,10 @@ def main_callbacks(app):
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
             Input("button-confirmar-varios-entidades-result", "n_clicks"),
             Input('flag-update-relacao-control', 'n_clicks'),
+            Input('flag-update-entidade-control', 'n_clicks'),
         ]    
     )
-    def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag_relacoes):
-        display = 0
+    def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag_relacoes,flag_entidades):
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
             figure = generate_figure(df,'TEMP',label,'ent')
@@ -1010,9 +1010,10 @@ def main_callbacks(app):
             if "Todos" not in tipos:
                 df2 = df[(df.tipo_rel == tipos[0])]
                 if len(df2) == 0:
-                    display = 1
+                    
+                    raise PreventUpdate
                     figure = generate_figure(df,mp,label,'ent')
-                    return [figure,display]
+                    return [figure]
                 if len(tipos) > 1:
                     t = len(tipos)
                     j = 1
@@ -1081,13 +1082,16 @@ def main_callbacks(app):
         info = []
         tipo_ent = df['tipo_ent'][indice]
         texto_ent = df['texto'][indice]
+        estado_ent = df['estado_ent'][indice]
         info.append(list(tipo_ent)[0])
         info.append(list(texto_ent)[0])
+        info.append(list(estado_ent)[0])
 
         return info
 
     def update_contents(indice, df):
         contents = []
+        
 
         tipo_rel = df.tipo_rel[indice]
         texto = df.texto[indice]
@@ -1109,18 +1113,34 @@ def main_callbacks(app):
             info = busca_lista_anotacoes(id_anno)
             tipo_ent = info[0]
             texto_ent = info[1]
+            estado_ent = info[2]
+            dict_color_buttons_entidade = {'corrigir':'#bbbbbb','confirmar':'#bbbbbb','em_duvida':'#bbbbbb','deletar':'#bbbbbb'}
+
+            if estado_ent == "confirmado":
+                dict_color_buttons_entidade['confirmar'] = '#72ccd8'
+            elif estado_ent == "corrigido":
+                dict_color_buttons_entidade['corrigir'] = '#72ccd8'
+            elif estado_ent == "em_duvida":
+                dict_color_buttons_entidade['em_duvida'] = '#72ccd8'
+            elif estado_ent == "deletar":
+                dict_color_buttons_entidade['deletar'] = '#72ccd8'
+
+
             contents.append(html.Div(className="card-tab",style={'align-items': 'center', 'justify-content':'center'}, children=[
-                dcc.Dropdown(id=id_anno+'tipo_ent',
+                dcc.Dropdown(id={'type': 'tipo_ent','index': id_anno},
                                 searchable=True,
                                 clearable=False,
                                 options=options_entidades,
                                 placeholder="Select a label",
                                 value=tipo_ent,),
-                dcc.Textarea(id=id_anno, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
+                dcc.Textarea(id={'type': 'text_ent','index': id_anno}, value=str(texto_ent),style={'width':'100%','min-height': '80px'}),
                 
-                html.Button(children=["confirmar"], className="Button-control", id={'type': 'confirmar-entidade','index': id_anno}, n_clicks=0,value=id_anno),
-                html.Button(children=["em duvida"], className="Button-control", id={'type': 'duvida-entidade','index': id_anno}, n_clicks=0,value=id_anno),
-                html.Button(children=["deletar"], className="Button-control", id={'type': 'deletar entidade','index': id_anno}, n_clicks=0,value=id_anno),
+                html.Button(children=["confirmar"], className="Button-control", id={'type': 'confirmar-entidade','index': id_anno}, n_clicks=0,value=id_anno,style={'background': dict_color_buttons_entidade['confirmar']}),
+                html.Button(children=["corrigir"], className="Button-control", id={'type': 'corrigir-entidade','index': id_anno}, n_clicks=0,value=id_anno,style={'background': dict_color_buttons_entidade['corrigir']}),
+                html.Button(children=["em duvida"], className="Button-control", id={'type': 'duvida-entidade','index': id_anno}, n_clicks=0,value=id_anno,style={'background': dict_color_buttons_entidade['em_duvida']}),
+                html.Button(children=["deletar"], className="Button-control", id={'type': 'deletar-entidade','index': id_anno}, n_clicks=0,value=id_anno,style={'background': dict_color_buttons_entidade['deletar']}),
+                html.Div(children=[id_anno,'nada','n'],id={'type': 'id_geral','index': id_anno}, style={'display':'none'})
+                
             ]))
             j += 1
         
@@ -1135,6 +1155,7 @@ def main_callbacks(app):
     @app.callback(
         [
             Output("selected-point", "children"),
+            Output("flag-update-entidade-control", "style"),
             Output("confirmar-relacao-control", "style"),
             Output("deletar-relacao-control", "style"),
             Output("confirmar-relacao-control", "value"),
@@ -1145,17 +1166,20 @@ def main_callbacks(app):
             Input("graph-entidades", "clickData"),
             Input("enviar-corrigir-classe-button-result", "n_clicks"),
             Input('datatable_relacoes', "derived_virtual_selected_rows"),
-            Input('datatable_entidades', "derived_virtual_selected_rows")
+            Input('datatable_entidades', "derived_virtual_selected_rows"),
+            
         ],
         [
             State("dropdown-method", "value"),
             State('datatable_relacoes', "data"),
-            State('datatable_entidades', "data"),
+            State('datatable_entidades', "data")
         ]
     )
     def explore_data(clickData,click_entidades,enviar, row_id_relacoes, row_id_entidades, mp, table_relacoes, table_entidades):
+        
         df = pd.read_csv("./csv/lista_relacoes.csv")
         contents = []
+        style_atualizar = {'display':'none'}
         style_confirmar = {'display':'none'}
         style_deletar = {'display':'none'}
         value = ''
@@ -1177,6 +1201,7 @@ def main_callbacks(app):
 
             indice = find_id_grafico_relacoes(x,y,mp)
             contents = update_contents(indice, df)
+            style_atualizar = {}
             style_confirmar = {}
             style_deletar = {}
             value = str(indice[0])
@@ -1187,6 +1212,7 @@ def main_callbacks(app):
 
             indice = find_id_grafico_entidades(x,y,mp)
             contents = update_contents(indice, df)
+            style_atualizar = {}
             style_confirmar = {}
             style_deletar = {}
             value = str(indice[0])
@@ -1197,6 +1223,7 @@ def main_callbacks(app):
 
             indice = find_id_tabela(id_dodf_rel)
             contents = update_contents(indice, df)
+            style_atualizar = {}
             style_confirmar = {}
             style_deletar = {}
             value = str(indice[0])
@@ -1207,20 +1234,26 @@ def main_callbacks(app):
 
             indice = find_id_tabela(id_dodf_rel)
             contents = update_contents(indice, df)
+            style_atualizar = {}
             style_confirmar = {}
             style_deletar = {}
             value = str(indice[0])
             
-        return [contents, style_confirmar, style_deletar, value,value]
+        return [contents, style_atualizar, style_confirmar, style_deletar, value,value]
 
 
     # CONFIRMANDO E DELETANDO TODAS AS ANOTACOES DE UMA RELACAO
 
-    def update_entidade(id_geral, estado):
+    def update_entidade_relacao(id_geral, estado):
         df = pd.read_csv("./csv/lista_entidades.csv")
         id_geral = int(id_geral)    
         indice = df[(df['id_geral'] == id_geral)].index
-        df.estado_ent[indice] = estado
+        estado_ent = list(df.estado_ent[indice])[0]
+        if estado == 'deletar':
+            df.estado_ent[indice] = estado
+        elif estado_ent == 'nao_confirmado':
+            df.estado_ent[indice] = estado
+        
         df.to_csv("./csv/lista_entidades.csv", index=False)
 
     def update_relacao_simples(indice,estado):
@@ -1231,7 +1264,7 @@ def main_callbacks(app):
         j = 0
         while j < len(list_anotacoes): 
             id_anno = list_anotacoes[j]
-            update_entidade(id_anno,estado)
+            update_entidade_relacao(id_anno,estado)
             j += 1
 
         df.estado_rel[indice] = estado
@@ -1252,7 +1285,6 @@ def main_callbacks(app):
     def update_relacao_control(n1,n2,indice):
         context = dash.callback_context
         trigger = context.triggered[0]['prop_id']
-        print('cliquei e foi')
 
         if str(trigger) == 'confirmar-relacao-control.n_clicks':
             update_relacao_simples(int(indice),'confirmado')
@@ -1365,290 +1397,104 @@ def main_callbacks(app):
             return [1]
         return [0]
         
+    def update_entidade(id_geral, estado):
+        df = pd.read_csv("./csv/lista_entidades.csv")
+        id_geral = int(id_geral)    
+        indice = df[(df['id_geral'] == id_geral)].index
+        df.estado_ent[indice] = estado
+        df.to_csv("./csv/lista_entidades.csv", index=False)
 
-    
-    
-
-
-    '''
+    #ATUALIZANDO APENAS UMA ENTIDADE
 
     @app.callback(
         [
-            Output("corrigir-classe-buttons","style"),
-            Output("input-corrigir-classe","style"),
+            Output({"index": MATCH, "type": "id_geral"}, "children"),    
         ],
         [
-            Input("corrigir-classe-button","n_clicks"),
-            Input("enviar-corrigir-classe-button","n_clicks"),
-            Input("graph-relacoes", "clickData"),
-            Input('datatable', "derived_virtual_selected_rows")
+            Input({"index": MATCH, "type": "confirmar-entidade"}, "n_clicks"),
+            Input({"index": MATCH, "type": "corrigir-entidade"}, "n_clicks"),
+            Input({"index": MATCH, "type": "duvida-entidade"}, "n_clicks"),
+            Input({"index": MATCH, "type": "deletar-entidade"}, "n_clicks")
+        ],
+        [
+            State({"index": MATCH, "type": "id_geral"}, "children")
         ]
     )
-    def display_corrigir(corrigir,enviar,clickData,clickTable):
-        if clickTable is None:
-            clickTable = []
+    def trigger_entidade(confirmar,corrigir,duvida,deletar,children): 
+        print('get_id')
+        print(children)
+        if deletar is None:
+            raise PreventUpdate
+        comando = children
+        context = dash.callback_context
+        trigger = context.triggered[0]['prop_id']
+        id_geral = children[0]
+        print(id_geral)
+        print(trigger)
 
-        if (not clickData) and clickTable == []: 
-            return[{"display":"none"},{"display":"none"}]
-        elif corrigir == enviar:
-            return [{},{"display":"none"}]
-        elif corrigir > enviar:
-            return [{"display":"none"},{}]
+        if trigger == '{"index":"'+str(id_geral)+'","type":"confirmar-entidade"}.n_clicks':
+            comando[1] ='confirmado'
+            comando[2] ='s'
+
+        elif trigger == '{"index":"'+str(id_geral)+'","type":"corrigir-entidade"}.n_clicks':
+            comando[1] ='corrigir'
+            comando[2] ='s'
         
-        return [{},{}]
+        elif trigger == '{"index":"'+str(id_geral)+'","type":"duvida-entidade"}.n_clicks':
+            comando[1] ='em_duvida'
+            comando[2] ='s'
 
+        elif trigger == '{"index":"'+str(id_geral)+'","type":"deletar-entidade"}.n_clicks':
+            comando[1] ='deletar'
+            comando[2] ='s'
+        else:
+            print('n bateu')
 
-    
+        return [comando]
 
-    @app.callback(
-        [
-            #Output("enviar-corrigir-classe-button-result", "n_clicks"),
-            Output("dropdown-classes","value")
-        ],
-        [
-            Input("corrigir-classe-button", "n_clicks"),
-        ],
-        [
-            State("graph-relacoes", "clickData"),
-            State("dropdown-method", "value")
-        ]
-    )
-    def corrigir_classe(corrigir,clickData,mp):
-        result = 0
-        label = "Apagar"
-        if corrigir > 0:
-            df = pd.read_csv("lista_relacoes.csv")
-
-            indice = achar_indice(clickData,mp)
-
-            label = str(df['tipo'][indice])
-
-            result = 1
-
-            return [label]
-
-        return [label]
-
-    @app.callback(
-        [
-            Output("enviar-corrigir-classe-button-result", "n_clicks"),
-        ],
-        [
-            Input("enviar-corrigir-classe-button", "n_clicks"),
-        ],
-        [
-            State("dropdown-classes","value"),
-            State("graph-relacoes", "clickData"),
-            State("dropdown-method", "value")
-        ]
-    )
-    def corrigir_classe(enviar,classe,clickData,mp):
-        result = 0
-        if enviar > 0:
-            df = pd.read_csv("lista_relacoes.csv")
-
-            indice = achar_indice(clickData,mp)
-
-            label = df['tipo'][indice]
-
+    def corrigir_entidade(id_geral,tipo,texto):
+        df = pd.read_csv("./csv/lista_entidades.csv")
             
-            if classe == "Avaliar_Depois":
-                df.at[indice, 'estado'] = "Avaliar_Depois"
-            elif classe == "Apagar":
-                df.at[indice, 'estado'] = "Apagar"
-                df.at[indice, 'tipo'] = "Apagar"
-            else: 
-                df.at[indice, 'tipo'] = classe
-                df.at[indice, 'estado'] = "Confirmado"
-            
+        print("PASSEI POR AQUIII")
+        id_geral = int(id_geral)    
+        indice = df[(df['id_geral'] == id_geral)].index
+        df.tipo_ent[indice] = tipo
+        df.texto[indice] = texto
+        df.estado_ent[indice] = 'corrigido'
 
-            df.to_csv("lista_relacoes.csv",index=False)
-
-            result = 1
-
-            return [result]
-
-        return [result]
-
-    @app.callback(
-        [    
-            Output("confirmar-classe-button-result", "n_clicks"),
-        ],
-        [
-            Input("confirmar-classe-button", "n_clicks")
-        ],
-        [
-            State("graph-relacoes", "clickData"),
-            State("dropdown-method", "value")
-        ]    
-    )
-    def confirmar_classe(confirmar,clickData,mp):
-        result = 0
-        if confirmar > 0:
-            df = pd.read_csv("lista_relacoes.csv")
-
-            indice = achar_indice(clickData,mp)
-
-            df.at[indice, 'estado'] = "Confirmado"
-
-            df.to_csv("lista_relacoes.csv",index=False)
-
-            result = 1
-
-            return [result]
-
-        return [result]
+        df.to_csv("./csv/lista_entidades.csv", index=False)
 
     @app.callback(
         [
-            Output("selected-point", "children"),
+            Output('update-entidade', 'n_clicks'),
         ],
         [
-            Input("graph-relacoes", "clickData"),
-            Input("enviar-corrigir-classe-button-result", "n_clicks"),
-            Input('datatable', "derived_virtual_selected_rows")
+            Input({"index": ALL, "type": "id_geral"}, "children") 
         ],
         [
-            State("dropdown-method", "value"),
-            State('datatable', "data"),
+            State('flag-update-entidade-control', 'n_clicks'),
+            State({"index": ALL, "type": "tipo_ent"}, "value"),
+            State({"index": ALL, "type": "text_ent"}, "value")
         ]
     )
-    def explore_data(clickData,enviar, selected_row_indices, mp, table):
-        df = pd.read_csv("lista_relacoes.csv")
-        label = 'Apagar'
-        contents = []
-
-        contents.append(html.H5("Clique em um ponto no layout para obter mais informações."),)
-
-        if selected_row_indices is None:
-            selected_row_indices = []
-
-        if selected_row_indices != []:
-            selected_rows=[table[i] for i in selected_row_indices]
-            x = selected_rows[0]["x_umap"]
-            y = selected_rows[0]["y_umap"]
-
-            indice = achar_indice_tabela_atos(x,y)
-
-            contents = []
-            label = df['tipo'][indice]
-            conteudo = df['conteudo'][indice]
-            documento = df['documento'][indice]
-            idd = df['id'][indice]
-    
-            contents.append(html.H6("Classe atual:"))
-            for j in label:
-                contents.append(html.P(j,className="card-tab"))
-            contents.append(html.H6("Ato:"))
-            for i in conteudo:
-                contents.append(html.P(i,className="card-tab"))
-            contents.append(html.H6("Documento:"))
-            for k in documento:
-                contents.append(html.P(k,className="card-tab"))
-            contents.append(html.H6("Id:"))
-            for l in idd:
-                contents.append(html.P(l,className="card-tab"))
-
-        if clickData or enviar:
-            indice = achar_indice(clickData,mp)
-
-            # Retrieve the index of the point clicked, given it is present in the set
-            
-            contents = []
-            label = df['tipo'][indice]
-            conteudo = df['conteudo'][indice]
-            documento = df['documento'][indice]
-            idd = df['id'][indice]
-    
-            contents.append(html.H6("Classe atual:"))
-            for j in label:
-                contents.append(html.P(j,className="card-tab"))
-            contents.append(html.H6("Ato:"))
-            for i in conteudo:
-                contents.append(html.P(i,className="card-tab"))
-            contents.append(html.H6("Documento:"))
-            for k in documento:
-                contents.append(html.P(k,className="card-tab"))
-            contents.append(html.H6("Id:"))
-            for l in idd:
-                contents.append(html.P(l,className="card-tab"))
-
-        return [contents]
-
-    @app.callback(
-        [
-            Output("button-confirmar-varios-relacoes-result", "n_clicks")
-        ],
-        [
-            Input("button-confirmar-varios-relacoes", "n_clicks"),
-        ],
-        [
-            State("graph-relacoes", "selectedData"),
-            State("dropdown-method", "value")
-        ]
-    )
-    def confirmar_classe_varios(confirmar, selectedData, mp):
-        df = pd.read_csv("lista_relacoes.csv")
-
-        if selectedData:
-            
-            j = 0
-            for point in selectedData["points"]:
-                XY = {}
-                XY['x'] = selectedData["points"][j]['x']
-                XY['y'] = selectedData["points"][j]['y']
-
-                X = []
-                X.append(XY['x'])
-                Y = []
-                Y.append(XY['y'])
-                
-                if mp == 'UMAP':
-                    indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-                            
-                elif mp == 't-SNE':
-                    indice = df[(df['x_tsne'].isin(X)) & (df['y_tsne'].isin(Y))].index
-
-                else: 
-                    indice = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
-
-                df.at[indice, 'estado'] = "Confirmado"
-                j += 1
-
-            df.to_csv("lista_relacoes.csv",index=False)
-
-            return [1]
-
-        
-        
-        #i = 0
-        #qnt = 0
-        #while i < len(df):
-        #    if df["estado"][i] == "Confirmado":
-        #        qnt += 1
-        #    i += 1
-        
-
-        return [0]
-
-    @app.callback(
-        [
-            Output('salvar-corrigir-classes-link', 'href'),
-        ],
-        [
-            Input("salvar-corrigir-classes-button", 'n_clicks'),
-        ]
-    )
-    def salvar_corrigir_classes(salvar):
-        csv_string = ""
-
-        if salvar:
-            df = pd.read_csv("lista_relacoes.csv")
-            dff = df
-            csv_string = dff.to_csv(index=False, encoding='utf-8')
-            csv_string = "data:text/csv;charset=utf-8," + \
-                urllib.parse.quote(csv_string)
-        return [csv_string]
-
-    '''
-    
+    def update_entidade_control(values,clicks,tipos,textos):
+        print('update_entidade')
+        print(values)
+        trigger = []
+        if values != []:
+            for i in range(len(values)):
+                if values[i][2] == 's':
+                    trigger = values[i]
+                    id_geral = trigger[0]
+                    do = trigger[1]
+                    if do == 'corrigir':
+                        print(tipos[i])
+                        print(textos[i])
+                        corrigir_entidade(id_geral,tipos[i],textos[i])
+                    else:
+                        update_entidade(id_geral, do)
+            if trigger == []:
+                raise PreventUpdate
+            print(trigger)
+            return [clicks+1]
+        return [clicks]

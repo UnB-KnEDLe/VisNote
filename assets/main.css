@@ -209,7 +209,7 @@ a:active {
     border: none;
     background-color:  #1ba6b8;
     color: black;
-}  
+} 
 
 .Button-control {
   width: 100%;
@@ -230,6 +230,7 @@ a:active {
 
 .Button-control:hover {
   border: none;
+  background: #72ccd8;
   background-color:  #1ba6b8;
   color: black;
 }
@@ -381,8 +382,9 @@ body {
   background: #FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 10px;
-  margin-bottom: 5px;
-  margin-top: 5px;
+  margin: 5px;
+  margin-left: 5%;
+
 }
 
 
@@ -516,7 +518,7 @@ body {
 #menu-visualizacoes, #menu-visualizacoes-entidades{
   display: grid;
   place-items: center;
-  grid-template-columns: 25% 25% 27% auto;
+  grid-template-columns: 25% 25% 50%;
   justify-content: flex-start;
   padding: 7px;
 }
@@ -527,4 +529,48 @@ body {
 
 .row.row-1 {
   display:block !important
+}
+
+/**[data-dash-is-loading="true"]{
+  visibility: hidden;
+}
+*[data-dash-is-loading="true"]::before{
+  content: "Loading...";
+  display: inline-block;
+  color: magenta;
+  visibility: visible;
+}*/
+
+@keyframes fadein {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 0.99;
+  }
+}
+
+._dash-loading-callback {
+font-family: sans-serif;
+padding-top: 50px;
+color: rgb(90, 90, 90);
+
+/* The banner */
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+text-align: center;
+cursor: progress;
+
+opacity: 0;
+background-color: rgba(248, 248, 248, 0.89);
+/* Delay animation by 1s to prevent flashing 
+   and smoothly transition the animation over 0.5s 
+ */
+-moz-animation: fadein 0.5s ease-in 1s forwards; /* Firefox */
+-webkit-animation: fadein 0.5s ease-in 1s forwards; /* Safari and Chrome */
+-o-animation: fadein 0.5s ease-in 1s forwards; /* Opera */
+  animation: fadein 0.5s ease-in 1s forwards;
 }

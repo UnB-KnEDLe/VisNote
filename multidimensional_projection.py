@@ -50,7 +50,7 @@ def projecao_multi(df):
     tfidf = run_tfidf(text)
     
     df_tsne = run_tsne(tfidf)    
-    df_umap = run_tsne(tfidf)
+    df_umap = run_umap(tfidf)
     
     result["x_tsne"] = df_tsne.x
     result["y_tsne"] = df_tsne.y
