@@ -1288,11 +1288,9 @@ def main_callbacks(app):
 
         if str(trigger) == 'confirmar-relacao-control.n_clicks':
             update_relacao_simples(int(indice),'confirmado')
-            print("passou confirmar")
         
         elif str(trigger) == 'deletar-relacao-control.n_clicks':
             update_relacao_simples(int(indice),'deletar')
-            print("passou deletar")
 
         return [n1+n2]
 
@@ -1447,15 +1445,12 @@ def main_callbacks(app):
         elif trigger == '{"index":"'+str(id_geral)+'","type":"deletar-entidade"}.n_clicks':
             comando[1] ='deletar'
             comando[2] ='s'
-        else:
-            print('n bateu')
 
         return [comando]
 
     def corrigir_entidade(id_geral,tipo,texto):
         df = pd.read_csv("./csv/lista_entidades.csv")
             
-        print("PASSEI POR AQUIII")
         id_geral = int(id_geral)    
         indice = df[(df['id_geral'] == id_geral)].index
         df.tipo_ent[indice] = tipo
