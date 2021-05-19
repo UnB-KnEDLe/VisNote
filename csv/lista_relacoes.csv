@@ -1,372 +1,372 @@
 id_geral,id_dodf_rel,tipo_rel,estado_rel,texto,anotacoes,x_tsne,y_tsne,x_umap,y_umap
-4231201313,4_2.3.1.2013R1,Ato_Tornado_Sem_Efeito_Exo_Nom,deletar,"TORNAR SEM EFEITO no Decreto de 14 de dezembro de 2012, publicado no DODF no 254, 
+4231201313,4_2.3.1.2013R1,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 14 de dezembro de 2012, publicado no DODF no 254, 
 de 17 de dezembro de 2012, pagina 59, o ato que nomeou LUCIANA ABRANTES DE ALMEI-
 DA PINHO, matricula 1.652.880-8, para exercer o Cargo em Comissao, Simbolo DFA-08, de 
 Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da Administracao Regional de 
-Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201313', '4231201314', '4231201315', '4231201316', '4231201317', '4231201318', '4231201319', '42312013110', '42312013111', '42312013112', '42312013113', '42312013114']",-0.07880113,-0.5559173000000001,-1.055120587348938,7.2499308586120605
+Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201313', '4231201314', '4231201315', '4231201316', '4231201317', '4231201318', '4231201319', '42312013110', '42312013111', '42312013112', '42312013113', '42312013114']",0.047173873,0.6362225,4.291406154632568,7.405142784118652
 4231201351512,4_2.3.1.2013R5,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 14 de dezembro de 2012, publicado no DODF no 254, 
 de 17 de dezembro de 2012, pagina 59, o ato que nomeou LUCIANA ABRANTES DE ALMEI-
 DA PINHO, matricula 1.652.880-8, para exercer o Cargo em Comissao, Simbolo DFA-08, de 
 Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da Administracao Regional de 
-Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201351512', '4231201351513', '4231201351514', '4231201351515', '4231201351516', '4231201351517', '4231201351518', '4231201351519', '4231201351520', '4231201351521', '4231201351522', '4231201351523']",-0.08204116,-0.54631495,-0.003869903972372413,7.474905014038086
+Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201351512', '4231201351513', '4231201351514', '4231201351515', '4231201351516', '4231201351517', '4231201351518', '4231201351519', '4231201351520', '4231201351521', '4231201351522', '4231201351523']",0.05004636,0.63696724,3.702329397201538,6.662267208099365
 4231201393021,4_2.3.1.2013R9,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 14 de dezembro de 2012, publicado no DODF no 254, 
 de 17 de dezembro de 2012, pagina 59, o ato que nomeou LUCIANA ABRANTES DE ALMEI-
 DA PINHO, matricula 1.652.880-8, para exercer o Cargo em Comissao, Simbolo DFA-08, de 
 Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da Administracao Regional de 
-Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201393021', '4231201393022', '4231201393023', '4231201393024', '4231201393025', '4231201393026', '4231201393027', '4231201393028', '4231201393029', '4231201393030', '4231201393031', '4231201393032']",-0.07711526,-0.5461163,-0.09599685668945312,8.119297981262207
+Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['4231201393021', '4231201393022', '4231201393023', '4231201393024', '4231201393025', '4231201393026', '4231201393027', '4231201393028', '4231201393029', '4231201393030', '4231201393031', '4231201393032']",0.04501647,0.6423867,3.25564956665039,7.3329105377197275
 42312013134530,4_2.3.1.2013R13,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 14 de dezembro de 2012, publicado no DODF no 254, 
 de 17 de dezembro de 2012, pagina 59, o ato que nomeou LUCIANA ABRANTES DE ALMEI-
 DA PINHO, matricula 1.652.880-8, para exercer o Cargo em Comissao, Simbolo DFA-08, de 
 Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da Administracao Regional de 
-Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013134530', '42312013134531', '42312013134532', '42312013134533', '42312013134534', '42312013134535', '42312013134536', '42312013134537', '42312013134538', '42312013134539', '42312013134540', '42312013134541']",-0.07427977,-0.5537938,-0.958806335926056,8.267189025878906
+Taguatinga, da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013134530', '42312013134531', '42312013134532', '42312013134533', '42312013134534', '42312013134535', '42312013134536', '42312013134537', '42312013134538', '42312013134539', '42312013134540', '42312013134541']",0.047600477999999995,0.6362264,4.072439670562743,7.042677879333496
 42312013603061,4_2.3.1.2013R60,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR CAROLINA SILVA DE PAIVA do Cargo em Comissao, Simbolo DFG-12, de 
 Chefe do Nucleo de Apoio a Quiosques e Bancas de Jornal, da Gerencia de Servicos Publicos, 
 da Diretoria de Servicos, da Administracao Regional do Setor de Industria e Abastecimento, da 
-Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013603066', '42312013603063', '42312013603061', '42312013603062', '4231201360103122', '4231201360103123']",-0.078605704,-0.54740036,-0.93382728099823,11.239664077758787
+Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013603066', '42312013603063', '42312013603061', '42312013603062', '4231201360103122', '4231201360103123']",0.048715102999999996,0.63581336,5.6671085357666025,8.596157073974611
 42312013583040,4_2.3.1.2013R58,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, CENIRA PEREIRA TITO do Cargo em Comissao, Simbolo DFG-12, de 
 Chefe, do Nucleo de Conservacao de Proprios, da Gerencia de Execucao de Obras, Conservacao e 
 Manutencao, da Diretoria de Obras, da Administracao Regional do Riacho Fundo I, da Coordenadoria 
-das Cidades, da Casa Civil, da Governadoria do Distrito Federal, a contar do dia 31 de dezembro 2012.","['42312013583046', '42312013583040', '42312013583041', '42312013583042', '42312013583043', '42312013583044', '42312013583045', '42312013583047']",-0.08263265,-0.5464842,-0.494416356086731,10.550881385803224
+das Cidades, da Casa Civil, da Governadoria do Distrito Federal, a contar do dia 31 de dezembro 2012.","['42312013583046', '42312013583040', '42312013583041', '42312013583042', '42312013583043', '42312013583044', '42312013583045', '42312013583047']",0.043991107,0.6395679,4.768201351165772,9.193961143493652
 42312013593048,4_2.3.1.2013R59,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR TATIANA KELLER VENIS do Cargo em Comissao, Simbolo DFA-07, 
 de Secretario Administrativo, da Diretoria de Servicos, da Administracao Regional 
 do Setor de Industria e Abastecimento, da Coordenadoria das Cidades, da Casa Civil, 
-da Governadoria do Distrito Federal.","['42312013593054', '42312013593060', '42312013593048', '42312013593049', '42312013593050', '42312013593057', '42312013593051', '42312013593052', '42312013593053', '42312013593055', '42312013593056', '42312013593058', '42312013593059']",-0.08132241,-0.5463603,-1.1103581190109253,10.735471725463867
+da Governadoria do Distrito Federal.","['42312013593054', '42312013593060', '42312013593048', '42312013593049', '42312013593050', '42312013593057', '42312013593051', '42312013593052', '42312013593053', '42312013593055', '42312013593056', '42312013593058', '42312013593059']",0.048350967,0.6354581,5.763099193572997,8.039118766784668
 42312013593055,4_2.3.1.2013R59,Ato_Exoneracao_Comissionado,nao_confirmado,"NOMEAR MARCILENE GONCALVES DO NASCIMENTO para exercer o Cargo em Comis-
 sao, Simbolo DFA-07, de Secretario Administrativo, da Diretoria de Servicos, da Administracao 
 Regional do Setor de Industria e Abastecimento, da Coordenadoria das Cidades, da Casa Civil, 
-da Governadoria do Distrito Federal.","['42312013593054', '42312013593060', '42312013593048', '42312013593049', '42312013593050', '42312013593057', '42312013593051', '42312013593052', '42312013593053', '42312013593055', '42312013593056', '42312013593058', '42312013593059']",-0.08800199,-0.5506704000000001,-2.1466915607452397,10.348376274108887
+da Governadoria do Distrito Federal.","['42312013593054', '42312013593060', '42312013593048', '42312013593049', '42312013593050', '42312013593057', '42312013593051', '42312013593052', '42312013593053', '42312013593055', '42312013593056', '42312013593058', '42312013593059']",0.048975125,0.6426552,6.364255905151367,9.019243240356444
 42312013613098,4_2.3.1.2013R61,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR a pedido, MARCELA DA SILVA NASCIMENTO do Cargo em Comissao, 
 Simbolo DFA-14, de Assessor, da Assessoria Administrativa, da Secretaria de Estado de 
-Governo do Distrito Federal.","['42312013613099', '42312013613098', '42312013613100', '42312013613101', '42312013613102', '42312013613103', '42312013613104']",-0.08673382,-0.55088073,-3.6014058589935303,9.5420560836792
+Governo do Distrito Federal.","['42312013613099', '42312013613098', '42312013613100', '42312013613101', '42312013613102', '42312013613103', '42312013613104']",0.04377666,0.6386403,8.057861328125,9.503381729125977
 42312013623105,4_2.3.1.2013R62,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeada para outro cargo, LEILIANE RIBEIRO ERNESTO do 
 Cargo em Comissao, Simbolo DFA-12, de Assessor, da Assessoria Administrativa, da Secretaria 
-de Estado de Governo do Distrito Federal.","['42312013623109', '42312013623110', '42312013623105', '42312013623106', '42312013623107', '42312013623108', '42312013623111']",-0.08803783,-0.55095667,-3.4337470531463623,9.621219635009766
-42312013633118,4_2.3.1.2013R63,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR o TC QOPM FRANCISCO ERONILDO FEITOSA RODRIGUES, matricula 
+de Estado de Governo do Distrito Federal.","['42312013623109', '42312013623110', '42312013623105', '42312013623106', '42312013623107', '42312013623108', '42312013623111']",0.051738277,0.6415789000000001,7.550617694854736,8.613185882568361
+42312013633118,4_2.3.1.2013R63,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR o TC QOPM FRANCISCO ERONILDO FEITOSA RODRIGUES, matricula 
 50.139-5, do Cargo em Comissao, Simbolo DFG-14, de Chefe, da Secao de Analise Tecnico-
--Juridica, do Gabinete do Comandante Geral, da Policia Militar do Distrito Federal.","['42312013633124', '42312013633118', '42312013633119', '42312013633120', '42312013633121', '42312013633122', '42312013633123', '42312013633125', '42312013633126']",-0.07866986,-0.5456770000000001,-2.293194055557251,11.49913501739502
+-Juridica, do Gabinete do Comandante Geral, da Policia Militar do Distrito Federal.","['42312013633124', '42312013633118', '42312013633119', '42312013633120', '42312013633121', '42312013633122', '42312013633123', '42312013633125', '42312013633126']",0.044436197999999996,0.63900894,7.217353343963622,7.748836040496826
 42312013174542,4_2.3.1.2013R17,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR JOSE LUSINAN DIAS HENRIQUE para exercer o Cargo em Comissao, 
 Simbolo DFA-08, de Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da 
 Administracao Regional de Taguatinga, da Coordenadoria das Cidades, da Casa Civil, 
-da Governadoria do Distrito Federal.","['42312013174544', '42312013174548', '42312013174542', '42312013174543', '42312013174545', '42312013174546', '42312013174547']",-0.08508073,-0.55541164,-0.5892369747161865,8.691498756408691
+da Governadoria do Distrito Federal.","['42312013174544', '42312013174548', '42312013174542', '42312013174543', '42312013174545', '42312013174546', '42312013174547']",0.051450826,0.637927,3.896808862686157,8.151040077209473
 42312013184542,4_2.3.1.2013R18,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR JOSE LUSINAN DIAS HENRIQUE para exercer o Cargo em Comissao, 
 Simbolo DFA-08, de Assistente, da Gerencia de Esporte e Lazer, da Diretoria Social, da 
 Administracao Regional de Taguatinga, da Coordenadoria das Cidades, da Casa Civil, 
-da Governadoria do Distrito Federal.","['42312013184544', '42312013184548', '42312013184542', '42312013184543', '42312013184545', '42312013184546', '42312013184547']",-0.075457595,-0.5514684,-0.8547220230102539,7.9561405181884775
+da Governadoria do Distrito Federal.","['42312013184544', '42312013184548', '42312013184542', '42312013184543', '42312013184545', '42312013184546', '42312013184547']",0.04910129,0.6363224000000001,3.5526626110076904,8.353161811828612
 42312013194564,4_2.3.1.2013R19,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR MARCILENE GONCALVES DO NASCIMENTO para exercer o Cargo em Comis-
 sao, Simbolo DFA-07, de Secretario Administrativo, da Diretoria de Servicos, da Administracao 
 Regional do Setor de Industria e Abastecimento, da Coordenadoria das Cidades, da Casa Civil, 
-da Governadoria do Distrito Federal.","['42312013194569', '42312013194566', '42312013194564', '42312013194565', '42312013194567', '42312013194568']",-0.07962068,-0.5465755,-1.4369456768035889,10.46462345123291
+da Governadoria do Distrito Federal.","['42312013194569', '42312013194566', '42312013194564', '42312013194565', '42312013194567', '42312013194568']",0.046981603,0.6435043,6.183407306671143,8.114138603210451
 42312013204576,4_2.3.1.2013R20,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR GEMIMA SILVA SANTOS para exercer o Cargo em Comissao, Simbolo DFG-12, 
 de Chefe do Nucleo de Apoio a Quiosques e Bancas de Jornal, da Gerencia de Servicos Publicos, 
 da Diretoria de Servicos, da Administracao Regional do Setor de Industria e Abastecimento, da 
-Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013204581', '42312013204578', '42312013204580', '42312013204576', '42312013204577', '42312013204579']",-0.08323466,-0.54419184,-0.32415202260017395,10.213430404663086
+Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013204581', '42312013204578', '42312013204580', '42312013204576', '42312013204577', '42312013204579']",0.04426419,0.6385427,6.521493911743164,8.20268726348877
 42312013214582,4_2.3.1.2013R21,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR MARIA DE FATIMA SILVA para exercer o Cargo de Natureza Especial, Simbolo 
 CNE-06, de Chefe de Gabinete, da Administracao Regional do Setor de Industria e Abastecimento, 
-da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013214587', '42312013214582', '42312013214583', '42312013214584', '42312013214585', '42312013214586']",-0.08690797,-0.5503517,-2.1006231307983403,9.86466121673584
+da Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013214587', '42312013214582', '42312013214583', '42312013214584', '42312013214585', '42312013214586']",0.051915202,0.6395008000000001,5.529364585876465,9.3198881149292
 42312013224595,4_2.3.1.2013R22,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR NEY DA SILVA FERNANDES para exercer o Cargo de Natureza Especial, Simbolo 
 CNE-07, de Chefe da Assessoria do Gabinete, da Administracao Regional de Vicente Pires, da 
-Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013224600', '42312013224597', '42312013224595', '42312013224596', '42312013224598', '42312013224599']",-0.08603759,-0.5506683000000001,-1.0559827089309692,10.166078567504883
+Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013224600', '42312013224597', '42312013224595', '42312013224596', '42312013224598', '42312013224599']",0.044081233,0.6404655,4.732414245605469,8.533203125
 42312013234601,4_2.3.1.2013R23,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR CRISTIANE DE SOUZA CARVALHO para o Cargo em Comissao, Simbolo DFA-
 06, de Assistente, do Nucleo de Comandos de Reparos, da Gerencia de Execucao de Obras, 
 Conservacao e Manutencao, da Diretoria de Obras, da Administracao Regional do Lago Sul, da 
-Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013234606', '42312013234604', '42312013234601', '42312013234602', '42312013234603', '42312013234605', '42312013234607']",-0.08179185,-0.5458963000000001,-1.0869090557098389,9.258249282836914
+Coordenadoria das Cidades, da Casa Civil, da Governadoria do Distrito Federal.","['42312013234606', '42312013234604', '42312013234601', '42312013234602', '42312013234603', '42312013234605', '42312013234607']",0.05253292,0.64003056,5.136238098144531,8.740597724914549
 42312013234607,4_2.3.1.2013R23,Ato_Nomeacao_Comissionado,nao_confirmado,"EXONERAR a pedido, MARCELA DA SILVA NASCIMENTO do Cargo em Comissao, 
 Simbolo DFA-14, de Assessor, da Assessoria Administrativa, da Secretaria de Estado de 
-Governo do Distrito Federal.","['42312013234606', '42312013234604', '42312013234601', '42312013234602', '42312013234603', '42312013234605', '42312013234607']",-0.087373175,-0.55150795,-4.149952411651611,9.089470863342283
+Governo do Distrito Federal.","['42312013234606', '42312013234604', '42312013234601', '42312013234602', '42312013234603', '42312013234605', '42312013234607']",0.04810393599999999,0.64404684,7.8064775466918945,8.966064453125
 42312013244621,4_2.3.1.2013R24,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR LEILIANE RIBEIRO ERNESTO para exercer o Cargo em Comissao, Sim-
 bolo DFA-14, de Assessor, da Assessoria Administrativa, da Secretaria de Estado de 
-Governo do Distrito Federal.","['42312013244623', '42312013244624', '42312013244625', '42312013244626', '42312013244622', '42312013244621']",-0.08225357,-0.54587096,-3.957460880279541,8.493003845214844
+Governo do Distrito Federal.","['42312013244623', '42312013244624', '42312013244625', '42312013244626', '42312013244622', '42312013244621']",0.04986763,0.63663536,7.384238243103027,9.00804328918457
 423120132117,4_2.3.1.2013R2,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 19 de dezembro de 2012, publicado no DODF no 258, 
 de 20 de dezembro de 2012, pagina 17, o ato que exonerou DEBORA JEANE DE OLIVEIRA 
 do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Desenvolvimento e Ca-
 pacitacao de Pessoas, da Diretoria Administrativo Financeira, da Subsecretaria de Administracao 
-Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['423120132118', '423120132124', '423120132117', '423120132119', '423120132120', '423120132121', '423120132122', '423120132123', '423120132125', '423120132126', '423120132128']",-0.07507862,-0.5518155,-2.325358629226685,8.390693664550781
+Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['423120132118', '423120132124', '423120132117', '423120132119', '423120132120', '423120132121', '423120132122', '423120132123', '423120132125', '423120132126', '423120132128']",0.046907764000000005,0.63793236,5.680936336517334,7.251937389373777
 423120133146,4_2.3.1.2013R3,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 26 de novembro de 2012, publicado no DODF no 239, 
 de 27 de novembro de 2012, pagina 29, o ato que nomeou ERILENE DARC DE LIMA para 
 exercer o Cargo em Comissao, Simbolo DFA-10, de Assessor Tecnico, da Gerencia de Protecao 
 as Vitimas de Violencia - Paranoa, da Coordenacao de Atendimento Externo, da Subsecretaria 
 de Protecao as Vitimas de Violencia, da Secretaria de Estado de Justica, Direitos Humanos e 
-Cidadania do Distrito Federal.","['423120133147', '423120133146', '423120133148', '423120133149', '423120133150', '423120133151', '423120133152', '423120133153', '423120133154', '423120133155', '423120133156']",-0.07767153,-0.54763854,1.0121175050735474,10.281083106994627
+Cidadania do Distrito Federal.","['423120133147', '423120133146', '423120133148', '423120133149', '423120133150', '423120133151', '423120133152', '423120133153', '423120133154', '423120133155', '423120133156']",0.04703445,0.63617116,6.4718894958496085,5.6727962493896475
 4231201361626,4_2.3.1.2013R6,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 19 de dezembro de 2012, publicado no DODF no 258, 
 de 20 de dezembro de 2012, pagina 17, o ato que exonerou DEBORA JEANE DE OLIVEIRA 
 do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Desenvolvimento e Ca-
 pacitacao de Pessoas, da Diretoria Administrativo Financeira, da Subsecretaria de Administracao 
-Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['4231201361627', '4231201361633', '4231201361626', '4231201361628', '4231201361629', '4231201361630', '4231201361631', '4231201361632', '4231201361634', '4231201361635', '4231201361637']",-0.07958477,-0.54691094,-1.8368561267852783,7.739758968353271
+Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['4231201361627', '4231201361633', '4231201361626', '4231201361628', '4231201361629', '4231201361630', '4231201361631', '4231201361632', '4231201361634', '4231201361635', '4231201361637']",0.04857985,0.6442549,6.84461784362793,6.685757160186768
 4231201371655,4_2.3.1.2013R7,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 26 de novembro de 2012, publicado no DODF no 239, 
 de 27 de novembro de 2012, pagina 29, o ato que nomeou ERILENE DARC DE LIMA para 
 exercer o Cargo em Comissao, Simbolo DFA-10, de Assessor Tecnico, da Gerencia de Protecao 
 as Vitimas de Violencia - Paranoa, da Coordenacao de Atendimento Externo, da Subsecretaria 
 de Protecao as Vitimas de Violencia, da Secretaria de Estado de Justica, Direitos Humanos e 
-Cidadania do Distrito Federal.","['4231201371656', '4231201371655', '4231201371657', '4231201371658', '4231201371659', '4231201371660', '4231201371661', '4231201371662', '4231201371663', '4231201371664', '4231201371665']",-0.07596649,-0.55270064,1.54239022731781,10.577014923095703
+Cidadania do Distrito Federal.","['4231201371656', '4231201371655', '4231201371657', '4231201371658', '4231201371659', '4231201371660', '4231201371661', '4231201371662', '4231201371663', '4231201371664', '4231201371665']",0.048050437,0.6432049,6.825655460357666,4.628174304962158
 42312013103135,4_2.3.1.2013R10,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 19 de dezembro de 2012, publicado no DODF no 258, 
 de 20 de dezembro de 2012, pagina 17, o ato que exonerou DEBORA JEANE DE OLIVEIRA 
 do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Desenvolvimento e Ca-
 pacitacao de Pessoas, da Diretoria Administrativo Financeira, da Subsecretaria de Administracao 
-Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['42312013103136', '42312013103142', '42312013103135', '42312013103137', '42312013103138', '42312013103139', '42312013103140', '42312013103141', '42312013103143', '42312013103144', '42312013103146']",-0.08641744,-0.5521979,-2.379629850387573,8.234153747558594
+Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['42312013103136', '42312013103142', '42312013103135', '42312013103137', '42312013103138', '42312013103139', '42312013103140', '42312013103141', '42312013103143', '42312013103144', '42312013103146']",0.051090695,0.6419325,6.3835411071777335,7.164530754089356
 42312013113164,4_2.3.1.2013R11,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 26 de novembro de 2012, publicado no DODF no 239, 
 de 27 de novembro de 2012, pagina 29, o ato que nomeou ERILENE DARC DE LIMA para 
 exercer o Cargo em Comissao, Simbolo DFA-10, de Assessor Tecnico, da Gerencia de Protecao 
 as Vitimas de Violencia - Paranoa, da Coordenacao de Atendimento Externo, da Subsecretaria 
 de Protecao as Vitimas de Violencia, da Secretaria de Estado de Justica, Direitos Humanos e 
-Cidadania do Distrito Federal.","['42312013113165', '42312013113164', '42312013113166', '42312013113167', '42312013113168', '42312013113169', '42312013113170', '42312013113171', '42312013113172', '42312013113173', '42312013113174']",-0.08109058400000001,-0.55735266,0.8142469525337219,9.99847412109375
+Cidadania do Distrito Federal.","['42312013113165', '42312013113164', '42312013113166', '42312013113167', '42312013113168', '42312013113169', '42312013113170', '42312013113171', '42312013113172', '42312013113173', '42312013113174']",0.04337377,0.6408176,7.462778091430664,5.492162704467773
 42312013144644,4_2.3.1.2013R14,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 19 de dezembro de 2012, publicado no DODF no 258, 
 de 20 de dezembro de 2012, pagina 17, o ato que exonerou DEBORA JEANE DE OLIVEIRA 
 do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Desenvolvimento e Ca-
 pacitacao de Pessoas, da Diretoria Administrativo Financeira, da Subsecretaria de Administracao 
-Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['42312013144645', '42312013144651', '42312013144644', '42312013144646', '42312013144647', '42312013144648', '42312013144649', '42312013144650', '42312013144652', '42312013144653', '42312013144655']",-0.07653969999999999,-0.55371976,-2.760127067565918,7.591785430908202
+Geral, da Secretaria de Estado de Desenvolvimento Economico do Distrito Federal.","['42312013144645', '42312013144651', '42312013144644', '42312013144646', '42312013144647', '42312013144648', '42312013144649', '42312013144650', '42312013144652', '42312013144653', '42312013144655']",0.051210715999999996,0.64101875,5.941393852233888,6.623539447784424
 42312013154673,4_2.3.1.2013R15,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 26 de novembro de 2012, publicado no DODF no 239, 
 de 27 de novembro de 2012, pagina 29, o ato que nomeou ERILENE DARC DE LIMA para 
 exercer o Cargo em Comissao, Simbolo DFA-10, de Assessor Tecnico, da Gerencia de Protecao 
 as Vitimas de Violencia - Paranoa, da Coordenacao de Atendimento Externo, da Subsecretaria 
 de Protecao as Vitimas de Violencia, da Secretaria de Estado de Justica, Direitos Humanos e 
-Cidadania do Distrito Federal.","['42312013154674', '42312013154673', '42312013154675', '42312013154676', '42312013154677', '42312013154678', '42312013154679', '42312013154680', '42312013154681', '42312013154682', '42312013154683']",-0.08079865,-0.5464369000000001,2.0732977390289307,9.987712860107422
-42312013643147,4_2.3.1.2013R64,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, JULIO DA SILVA CARVALHO, matricula 261.777-3, do Cargo em 
+Cidadania do Distrito Federal.","['42312013154674', '42312013154673', '42312013154675', '42312013154676', '42312013154677', '42312013154678', '42312013154679', '42312013154680', '42312013154681', '42312013154682', '42312013154683']",0.044530495999999996,0.641223,6.9192748069763175,4.822041034698486
+42312013643147,4_2.3.1.2013R64,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR, a pedido, JULIO DA SILVA CARVALHO, matricula 261.777-3, do Cargo em 
 Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Estudos e Cadastro, da Coordenacao 
 de Infraestrutura em Sinalizacao, da Subsecretaria de Infraestrutura, da Secretaria de Estado de 
-Transportes do Distrito Federal, a contar de 17 de dezembro de 2012.","['42312013643148', '42312013643152', '42312013643153', '42312013643147', '42312013643149', '42312013643150', '42312013643151', '42312013643154', '42312013643155', '42312013643156']",-0.08076534,-0.556917,-2.1363358497619642,10.640774726867676
+Transportes do Distrito Federal, a contar de 17 de dezembro de 2012.","['42312013643148', '42312013643152', '42312013643153', '42312013643147', '42312013643149', '42312013643150', '42312013643151', '42312013643154', '42312013643155', '42312013643156']",0.051766463,0.6391481,7.643571376800537,8.331507682800293
 42312013653188,4_2.3.1.2013R65,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, LINCOLN BRUNO TARGINO PEDROSA do Cargo de Natureza 
 Especial, Simbolo CNE-06, de Chefe da Assessoria de Comunicacao Social, da Secretaria de 
-Estado do Entorno do Distrito Federal.","['42312013653189', '42312013653192', '42312013653188', '42312013653190', '42312013653193', '42312013653194']",-0.07699933,-0.5541228,-1.7717798948287964,11.15499496459961
-42312013663201,4_2.3.1.2013R66,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, NILSON RABELO DE SOUZA JU-
+Estado do Entorno do Distrito Federal.","['42312013653189', '42312013653192', '42312013653188', '42312013653190', '42312013653193', '42312013653194']",0.05174073,0.6404046,6.626792907714844,9.416753768920898
+42312013663201,4_2.3.1.2013R66,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, NILSON RABELO DE SOUZA JU-
 NIOR do Cargo de Natureza Especial, Simbolo CNE-07, de Assessor Especial, da Subsecretaria 
 da Micro e Pequena Empresa e Empreendedor Individual, da Secretaria de Estado da Micro e 
-Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013663206', '42312013663201', '42312013663202', '42312013663203', '42312013663204', '42312013663207', '42312013663208', '42312013663209']",-0.085832134,-0.54932344,-3.3335692882537837,11.737667083740234
+Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013663206', '42312013663201', '42312013663202', '42312013663203', '42312013663204', '42312013663207', '42312013663208', '42312013663209']",0.05018905,0.6433191999999999,4.819611072540283,10.474507331848145
 42312013673216,4_2.3.1.2013R67,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, VENICIUS GUEDES DOS SANTOS 
 do Cargo de Natureza Especial, Simbolo CNE-07, de Diretor, da Diretoria de Atendimento ao 
 Empresario, da Subsecretaria da Micro e Pequena Empresa e Empreendedor Individual, da 
-Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013673220', '42312013673217', '42312013673218', '42312013673216', '42312013673219', '42312013673221', '42312013673222', '42312013673223']",-0.07859699,-0.55639225,-3.7818102836608887,11.353925704956055
-42312013683230,4_2.3.1.2013R68,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, HEBE RIBEIRO DE FARIAS TAVA-
+Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013673220', '42312013673217', '42312013673218', '42312013673216', '42312013673219', '42312013673221', '42312013673222', '42312013673223']",0.047135953,0.64417857,5.541950225830078,12.150816917419435
+42312013683230,4_2.3.1.2013R68,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, HEBE RIBEIRO DE FARIAS TAVA-
 RES do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Feiras e Shoppings, 
 da Diretoria de Atendimento ao Empreendedor, da Subsecretaria da Micro e Pequena Empresa 
 e Empreendedor Individual, da Secretaria de Estado da Micro e Pequena Empresa e Economia 
-Solidaria do Distrito Federal.","['42312013683234', '42312013683231', '42312013683237', '42312013683230', '42312013683232', '42312013683233', '42312013683235', '42312013683236']",-0.0876699,-0.55400157,-3.623051404953003,10.957063674926758
+Solidaria do Distrito Federal.","['42312013683234', '42312013683231', '42312013683237', '42312013683230', '42312013683232', '42312013683233', '42312013683235', '42312013683236']",0.044225074,0.63985986,5.597963333129883,11.698077201843262
 42312013693244,4_2.3.1.2013R69,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, MARIA LAURA DOS SANTOS do 
 Cargo em Comissao, Simbolo DFA-14, de Assessor, da Subsecretaria de Apoio e Fomento, da 
-Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013693248', '42312013693249', '42312013693245', '42312013693251', '42312013693246', '42312013693244', '42312013693247', '42312013693250']",-0.0793055,-0.5564720999999999,-4.529601097106934,10.761414527893066
+Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013693248', '42312013693249', '42312013693245', '42312013693251', '42312013693246', '42312013693244', '42312013693247', '42312013693250']",0.046347427999999996,0.6366272,6.235638618469237,11.654536247253418
 42312013703258,4_2.3.1.2013R70,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, NEILA GISELE PESSOA do Cargo 
 em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Associativismo e Cooperativismo, 
 da Diretoria de Atendimento a Economia Solidaria, da Subsecretaria de Economia Solidaria, da 
-Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013703262', '42312013703259', '42312013703265', '42312013703263', '42312013703258', '42312013703260', '42312013703261', '42312013703264']",-0.08650949,-0.5547732,-6.43574333190918,12.485250473022461
+Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013703262', '42312013703259', '42312013703265', '42312013703263', '42312013703258', '42312013703260', '42312013703261', '42312013703264']",0.049024377,0.6360212,8.588710784912111,12.085368156433105
 42312013254636,4_2.3.1.2013R25,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR o TC QOPM VINICIUS SILVA DE FREITAS, matricula 50.176-X, par exercer o 
 Cargo em Comissao, Simbolo DFG-14, de Chefe, da Secao de Analise Tecnico-Juridica, do 
-Gabinete do Comandante Geral, da Policia Militar do Distrito Federal.","['42312013254637', '42312013254640', '42312013254643', '42312013254636', '42312013254638', '42312013254639', '42312013254641', '42312013254642']",-0.08408854,-0.55482453,-2.231997013092041,11.94247341156006
+Gabinete do Comandante Geral, da Policia Militar do Distrito Federal.","['42312013254637', '42312013254640', '42312013254643', '42312013254636', '42312013254638', '42312013254639', '42312013254641', '42312013254642']",0.044635865999999996,0.6378100999999999,7.409313678741455,7.175052165985107
 42312013264667,4_2.3.1.2013R26,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR FRANCISCO CARLOS BARBOSA para exercer o Cargo em Comissao, 
 Simbolo DFG-14, de Gerente, da Gerencia de Estudos e Cadastro, da Coordenacao de 
 Infraestrutura em Sinalizacao, da Subsecretaria de Infraestrutura, da Secretaria de Estado 
-de Transportes do Distrito Federal.","['42312013264669', '42312013264670', '42312013264667', '42312013264668', '42312013264671', '42312013264672']",-0.078648396,-0.55566823,-2.686972141265869,9.137284278869627
+de Transportes do Distrito Federal.","['42312013264669', '42312013264670', '42312013264667', '42312013264668', '42312013264671', '42312013264672']",0.04732734,0.64371926,6.849930763244629,7.816722869873048
 42312013274684,4_2.3.1.2013R27,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR ERILENE DARC DE LIMA para exercer o Cargo em Comissao, Simbolo DFA-10, 
 de Assessor Tecnico, da Gerencia de Protecao as Vitimas de Violencia - Paranoa, da Coordenacao 
 de Atendimento Externo, da Subsecretaria de Protecao as Vitimas de Violencia, da Secretaria de 
-Estado de Justica, Direitos Humanos e Cidadania do Distrito Federal.","['42312013274686', '42312013274684', '42312013274685', '42312013274687', '42312013274688', '42312013274689', '42312013274690', '42312013274691']",-0.076265536,-0.55130523,1.1278347969055176,11.222078323364258
+Estado de Justica, Direitos Humanos e Cidadania do Distrito Federal.","['42312013274686', '42312013274684', '42312013274685', '42312013274687', '42312013274688', '42312013274689', '42312013274690', '42312013274691']",0.045748238,0.6427741,7.19228458404541,6.02182674407959
 42312013284692,4_2.3.1.2013R28,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR JOSE MARIA DA CUNHA ARAUJO para exercer o Cargo em Comissao, Simbolo 
-DFA-13, de Assessor do Gabinete, da Secretaria de Estado do Entorno do Distrito Federal.","['42312013284692', '42312013284693', '42312013284694', '42312013284695', '42312013284696']",-0.08409022,-0.5569061,-3.156512260437012,9.916610717773438
+DFA-13, de Assessor do Gabinete, da Secretaria de Estado do Entorno do Distrito Federal.","['42312013284692', '42312013284693', '42312013284694', '42312013284695', '42312013284696']",0.048567396,0.63619834,6.95555591583252,9.471506118774414
 42312013294704,4_2.3.1.2013R29,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR SIRIO MORAIS PARRIAO para exercer o do Cargo de Natureza Especial, 
 Simbolo CNE-06, de Chefe da Assessoria de Comunicacao Social, da Secretaria de Estado 
-do Entorno do Distrito Federal.","['42312013294707', '42312013294704', '42312013294705', '42312013294708', '42312013294709', '42312013294710']",-0.08470523,-0.5549166999999999,-2.650073528289795,11.094727516174316
+do Entorno do Distrito Federal.","['42312013294707', '42312013294704', '42312013294705', '42312013294708', '42312013294709', '42312013294710']",0.04340712,0.6393939000000001,5.754505157470702,9.73898696899414
 42312013294710,4_2.3.1.2013R29,Ato_Nomeacao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, NILSON RABELO DE SOUZA JU-
 NIOR do Cargo de Natureza Especial, Simbolo CNE-07, de Assessor Especial, da Subsecretaria 
 da Micro e Pequena Empresa e Empreendedor Individual, da Secretaria de Estado da Micro e 
-Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013294707', '42312013294704', '42312013294705', '42312013294708', '42312013294709', '42312013294710']",-0.08731287,-0.5518145999999999,-3.6469707489013667,12.323503494262695
+Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013294707', '42312013294704', '42312013294705', '42312013294708', '42312013294709', '42312013294710']",0.04784834,0.6362201,4.630274772644043,11.051634788513184
 42312013304719,4_2.3.1.2013R30,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR VENICIUS GUEDES DOS SANTOS para exercer o Cargo de Natureza Especial, 
 Simbolo CNE-07, de Assessor Especial, da Subsecretaria da Micro e Pequena Empresa e 
 Empreendedor Individual, da Secretaria de Estado da Micro e Pequena Empresa e Economia 
-Solidaria do Distrito Federal.","['42312013304721', '42312013304719', '42312013304720', '42312013304722', '42312013304723', '42312013304724']",-0.075162105,-0.5521416,-3.401280403137207,12.622026443481445
+Solidaria do Distrito Federal.","['42312013304721', '42312013304719', '42312013304720', '42312013304722', '42312013304723', '42312013304724']",0.044129536,0.6390361,5.517508029937744,10.595244407653807
 42312013314733,4_2.3.1.2013R31,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR NILSON RABELO DE SOUZA JUNIOR para exercer o Cargo de Natureza Especial, 
 Simbolo CNE-07, de Diretor, da Diretoria de Atendimento ao Empresario, da Subsecretaria 
 da Micro e Pequena Empresa e Empreendedor Individual, da Secretaria de Estado da Micro e 
-Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013314735', '42312013314738', '42312013314736', '42312013314733', '42312013314734', '42312013314737']",-0.08188081,-0.5433927,-3.77223801612854,11.245566368103027
+Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013314735', '42312013314738', '42312013314736', '42312013314733', '42312013314734', '42312013314737']",0.04868015,0.6354137,5.0448198318481445,11.402140617370605
 42312013324747,4_2.3.1.2013R32,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR MARIA LAURA DOS SANTOS para exercer o Cargo em Comissao, Simbolo DFG-
 14, de Gerente, da Gerencia de Feiras e Shoppings, da Diretoria de Atendimento ao Empreen-
 dedor, da Subsecretaria da Micro e Pequena Empresa e Empreendedor Individual, da Secretaria 
-de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013324750', '42312013324747', '42312013324748', '42312013324749', '42312013324751', '42312013324752']",-0.08675741,-0.55440784,-3.73422646522522,12.689678192138672
+de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013324750', '42312013324747', '42312013324748', '42312013324749', '42312013324751', '42312013324752']",0.051344614000000004,0.6380425000000001,5.967333793640138,10.859435081481934
 42312013334761,4_2.3.1.2013R33,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR HEBE RIBEIRO DE FARIAS TAVARES para exercer o Cargo em Comissao, Simbolo 
 DFA-14, de Assessor, da Subsecretaria de Apoio e Fomento, da Secretaria de Estado da Micro 
-e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013334763', '42312013334764', '42312013334765', '42312013334761', '42312013334762', '42312013334766']",-0.0786086,-0.5445701999999999,-5.3729166984558105,9.1825532913208
+e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013334763', '42312013334764', '42312013334765', '42312013334761', '42312013334762', '42312013334766']",0.050071835999999995,0.6366496,6.771333694458008,10.840776443481444
 42312013344775,4_2.3.1.2013R34,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR THAIS ALVES MOREIRA DE OLIVEIRA para exercer o Cargo em Comissao, 
 Simbolo DFG-14, de Gerente, da Gerencia de Associativismo e Cooperativismo, da Diretoria 
 de Atendimento a Economia Solidaria, da Subsecretaria de Economia Solidaria, da Secretaria 
-de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013344777', '42312013344778', '42312013344780', '42312013344775', '42312013344776', '42312013344779']",-0.08010496,-0.5462496,-5.306321620941162,13.21180820465088
+de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013344777', '42312013344778', '42312013344780', '42312013344775', '42312013344776', '42312013344779']",0.044487915999999995,0.63778245,8.757808685302733,12.621423721313475
 423120134334,4_2.3.1.2013R4,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 27 de novembro de 2012, publicado do DODF de no 
 240, de 28 de novembro de 2012, pagina 12, o ato que nomeou SERGIO VELOSO DE BRITO, 
 matricula 1.431.256-5, para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, da 
 Gerencia de Contabilidade, da Coordenacao de Financas, da Diretoria de Financas e Adminis-
-tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['423120134335', '423120134342', '423120134343', '423120134334', '423120134336', '423120134337', '423120134338', '423120134339', '423120134340', '423120134341', '423120134344', '423120134345']",-0.08609571,-0.5505251999999999,1.460561990737915,8.69271183013916
+tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['423120134335', '423120134342', '423120134343', '423120134334', '423120134336', '423120134337', '423120134338', '423120134339', '423120134340', '423120134341', '423120134344', '423120134345']",0.048684943,0.6433024,4.987971782684326,5.193544387817383
 4231201381843,4_2.3.1.2013R8,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 27 de novembro de 2012, publicado do DODF de no 
 240, de 28 de novembro de 2012, pagina 12, o ato que nomeou SERGIO VELOSO DE BRITO, 
 matricula 1.431.256-5, para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, da 
 Gerencia de Contabilidade, da Coordenacao de Financas, da Diretoria de Financas e Adminis-
-tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['4231201381844', '4231201381851', '4231201381852', '4231201381843', '4231201381845', '4231201381846', '4231201381847', '4231201381848', '4231201381849', '4231201381850', '4231201381853', '4231201381854']",-0.07642015,-0.5487595000000001,1.2405383586883545,8.345998764038086
+tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['4231201381844', '4231201381851', '4231201381852', '4231201381843', '4231201381845', '4231201381846', '4231201381847', '4231201381848', '4231201381849', '4231201381850', '4231201381853', '4231201381854']",0.049163777,0.6434408,6.0737128257751465,5.048797607421875
 42312013123352,4_2.3.1.2013R12,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 27 de novembro de 2012, publicado do DODF de no 
 240, de 28 de novembro de 2012, pagina 12, o ato que nomeou SERGIO VELOSO DE BRITO, 
 matricula 1.431.256-5, para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, da 
 Gerencia de Contabilidade, da Coordenacao de Financas, da Diretoria de Financas e Adminis-
-tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['42312013123353', '42312013123360', '42312013123361', '42312013123352', '42312013123354', '42312013123355', '42312013123356', '42312013123357', '42312013123358', '42312013123359', '42312013123362', '42312013123363']",-0.081459306,-0.5578647,1.7129294872283936,9.276999473571776
+tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['42312013123353', '42312013123360', '42312013123361', '42312013123352', '42312013123354', '42312013123355', '42312013123356', '42312013123357', '42312013123358', '42312013123359', '42312013123362', '42312013123363']",0.043311052,0.6398114,5.450809955596924,4.650532245635986
 42312013164861,4_2.3.1.2013R16,Ato_Tornado_Sem_Efeito_Exo_Nom,nao_confirmado,"TORNAR SEM EFEITO no Decreto de 27 de novembro de 2012, publicado do DODF de no 
 240, de 28 de novembro de 2012, pagina 12, o ato que nomeou SERGIO VELOSO DE BRITO, 
 matricula 1.431.256-5, para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, da 
 Gerencia de Contabilidade, da Coordenacao de Financas, da Diretoria de Financas e Adminis-
-tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['42312013164862', '42312013164869', '42312013164870', '42312013164861', '42312013164863', '42312013164864', '42312013164865', '42312013164866', '42312013164867', '42312013164868', '42312013164871', '42312013164872']",-0.08040827,-0.55672485,0.6398409008979797,8.789413452148438
+tracao, do Instituto de Previdencia dos Servidores do Distrito Federal - IPREV/DF.","['42312013164862', '42312013164869', '42312013164870', '42312013164861', '42312013164863', '42312013164864', '42312013164865', '42312013164866', '42312013164867', '42312013164868', '42312013164871', '42312013164872']",0.044926938,0.64228225,5.593714237213135,5.3749847412109375
 4231201347103119,4_2.3.1.2013R47,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR GISLEIDE APARECIDA DE OLIVEIRA, matricula 262.285-8, ocupante do Cargo 
 de Natureza Especial, Simbolo CNE-06, de Chefe da Unidade de Controle Interno, para ter 
 exercicio interinamente, no Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de 
 Contabilidade, da Coordenacao de Financas, da Diretoria de Financas e Administracao, do Insti-
-tuto de Previdencia dos Servidores do Distrito Federal - IPREV/DF, sem acumular vencimento.","['42312013474876', '42312013474878', '42312013474879', '42312013474874', '42312013474875', '42312013474877', '42312013474882', '4231201347103118', '4231201347103119']",-0.08226812,-0.54685664,0.3680824637413025,9.387207984924316
-42312013713281,4_2.3.1.2013R71,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, THAIS ALVES MOREIRA DE OLI-
+tuto de Previdencia dos Servidores do Distrito Federal - IPREV/DF, sem acumular vencimento.","['42312013474876', '42312013474878', '42312013474879', '42312013474874', '42312013474875', '42312013474877', '42312013474882', '4231201347103118', '4231201347103119']",0.051566243,0.6416516999999999,5.2137064933776855,5.77179765701294
+42312013713281,4_2.3.1.2013R71,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, THAIS ALVES MOREIRA DE OLI-
 VEIRA do Cargo em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Artesanato, da 
 Diretoria de Atendimento a Economia Solidaria, da Subsecretaria de Economia Solidaria, da 
-Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013713285', '42312013713286', '42312013713282', '42312013713288', '42312013713281', '42312013713283', '42312013713284', '42312013713287']",-0.07540397,-0.5510903,-6.1017889976501465,11.426603317260742
+Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013713285', '42312013713286', '42312013713282', '42312013713288', '42312013713281', '42312013713283', '42312013713284', '42312013713287']",0.04701797,0.6436149999999999,7.91322660446167,12.646768569946287
 42312013723296,4_2.3.1.2013R72,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, IDALETE SILVA do Cargo em Co-
 missao, Simbolo DFA-14, de Assessor, da Subsecretaria de Administracao Geral, da Secretaria 
-de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013723301', '42312013723302', '42312013723297', '42312013723304', '42312013723303', '42312013723298', '42312013723296', '42312013723299']",-0.07605314,-0.5506842,-5.160432815551758,10.469078063964844
+de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013723301', '42312013723302', '42312013723297', '42312013723304', '42312013723303', '42312013723298', '42312013723296', '42312013723299']",0.04745273,0.63640654,7.168989181518555,11.004711151123047
 42312013733311,4_2.3.1.2013R73,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, SIRLEY LELIS DE OLIVEIRA do 
 Cargo em Comissao Simbolo DFG-14, de Gerente, da Gerencia de Manutencao e Conservacao, 
 da Diretoria de Apoio Operacional, da Subsecretaria de Administracao Geral, da Secretaria de 
-Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013733315', '42312013733316', '42312013733312', '42312013733313', '42312013733311', '42312013733317', '42312013733318']",-0.08786453,-0.54976016,-4.6320838928222665,11.756683349609375
+Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013733315', '42312013733316', '42312013733312', '42312013733313', '42312013733311', '42312013733317', '42312013733318']",0.046720747,0.6359969,7.145671844482423,11.352224349975586
 42312013743325,4_2.3.1.2013R74,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, DEISE REZENDE XAVIER do Cargo 
 em Comissao, Simbolo DFG-14, de Gerente, da Gerencia de Agricultura Familiar, da Diretoria 
 de Atendimento a Economia Solidaria, da Subsecretaria de Economia Solidaria, da Secretaria 
-de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013743329', '42312013743326', '42312013743330', '42312013743332', '42312013743325', '42312013743328', '42312013743331']",-0.08576159,-0.5523513000000001,-6.781643867492676,11.001757621765137
+de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013743329', '42312013743326', '42312013743330', '42312013743332', '42312013743325', '42312013743328', '42312013743331']",0.04802786,0.64362407,8.40839672088623,11.380264282226562
 42312013753339,4_2.3.1.2013R75,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, ADRIANO PEREIRA TAVARES do 
 Cargo em Comissao, Simbolo DFA-14, de Assessor, da Subsecretaria de Apoio e Fomento, da 
-Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013753342', '42312013753343', '42312013753340', '42312013753344', '42312013753341', '42312013753339', '42312013753345']",-0.08220381,-0.5577591,-5.334121227264403,9.683225631713867
+Secretaria de Estado da Micro e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013753342', '42312013753343', '42312013753340', '42312013753344', '42312013753341', '42312013753339', '42312013753345']",0.05133234,0.63908505,6.43109941482544,10.50025463104248
 42312013763374,4_2.3.1.2013R76,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, KASSIA MARIA DA SILVA BUSCACIO, Professor, matricula 65.603-8, 
 do Cargo em Comissao, Simbolo DFA-14, de Assessor, da Subsecretaria de Administracao Geral, 
-da Secretaria de Estado de Educacao do Distrito Federal, a contar de 21 de dezembro de 2012.","['42312013763375', '42312013763379', '42312013763380', '42312013763381', '42312013763374', '42312013763376', '42312013763377', '42312013763378', '42312013763382', '42312013763383']",-0.08057574,-0.556972,-2.9445507526397705,10.231091499328613
+da Secretaria de Estado de Educacao do Distrito Federal, a contar de 21 de dezembro de 2012.","['42312013763375', '42312013763379', '42312013763380', '42312013763381', '42312013763374', '42312013763376', '42312013763377', '42312013763378', '42312013763382', '42312013763383']",0.04368936599999999,0.6413812,8.530124664306639,9.064332962036133
 42312013773391,4_2.3.1.2013R77,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR MOHAMAD BAHMAD, Carreira Medica (Otorrinolaringologia), matricula 
 163.576-X, do Cargo em Comissao, Simbolo DFG-07, de Chefe da Unidade de Otorrinolarin-
 gologia, da Diretoria de Atencao a Saude, da Coordenacao Geral de Saude de Taguatinga, da 
 Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal, a contar 
-de 1o de novembro de 2012.","['42312013773391', '42312013773392', '42312013773393', '42312013773394', '42312013773395', '42312013773396', '42312013773397', '42312013773398', '42312013773399', '42312013773400']",-0.086183175,-0.5505856,1.0184463262557983,13.243083953857422
+de 1o de novembro de 2012.","['42312013773391', '42312013773392', '42312013773393', '42312013773394', '42312013773395', '42312013773396', '42312013773397', '42312013773398', '42312013773399', '42312013773400']",0.044859674,0.6420710000000001,8.897939682006836,6.477015018463135
 42312013783409,4_2.3.1.2013R78,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR LUSINEIDY FREITAS DE QUEIROZ, matricula 1.439.661-0, do Cargo em 
 Comissao, Simbolo DFG-07, de Chefe do Nucleo de Enfermagem da Central de Radiologia 
 de Taguatinga, da Coordenacao Geral de Saude de Taguatinga, da Subsecretaria de Atencao a 
-Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013783413', '42312013783416', '42312013783409', '42312013783410', '42312013783411', '42312013783412', '42312013783414', '42312013783415']",-0.07580614,-0.55174255,-0.14471806585788727,13.980491638183596
+Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013783413', '42312013783416', '42312013783409', '42312013783410', '42312013783411', '42312013783412', '42312013783414', '42312013783415']",0.047342468,0.6436286999999999,9.123491287231444,6.999059200286865
 42312013793417,4_2.3.1.2013R79,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeada para outro cargo, DAYSE AMANDA DE SOUSA, 
 matricula 1.440.917-8, do Cargo em Comissao, Simbolo DFA-06, de Assessor Tecnico, da 
 Coordenacao Geral de Saude de Taguatinga, da Subsecretaria de Atencao a Saude, da Secretaria 
-de Estado de Saude do Distrito Federal.","['42312013793418', '42312013793423', '42312013793417', '42312013793419', '42312013793420', '42312013793421', '42312013793422', '42312013793424', '42312013793425']",-0.08417751,-0.55540437,-1.971346378326416,12.688438415527346
+de Estado de Saude do Distrito Federal.","['42312013793418', '42312013793423', '42312013793417', '42312013793419', '42312013793420', '42312013793421', '42312013793422', '42312013793424', '42312013793425']",0.04488333,0.6419395999999999,9.38421630859375,8.535305976867676
 42312013354784,4_2.3.1.2013R35,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR NEILA GISELE PESSOA para exercer o Cargo em Comissao, Simbolo DFG-14, 
 de Gerente, da Gerencia de Tecnologia da Informacao, da Diretoria de Apoio Operacional, da 
 Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro e Pequena Empresa e 
-Economia Solidaria do Distrito Federal.","['42312013354786', '42312013354787', '42312013354785', '42312013354784', '42312013354788', '42312013354789']",-0.086263694,-0.5506785,-5.093149185180664,12.588468551635742
+Economia Solidaria do Distrito Federal.","['42312013354786', '42312013354787', '42312013354785', '42312013354784', '42312013354788', '42312013354789']",0.048229698,0.6436376,7.865561008453369,11.524994850158693
 42312013414784,4_2.3.1.2013R41,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR NEILA GISELE PESSOA para exercer o Cargo em Comissao, Simbolo DFG-14, 
 de Gerente, da Gerencia de Tecnologia da Informacao, da Diretoria de Apoio Operacional, da 
 Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro e Pequena Empresa e 
-Economia Solidaria do Distrito Federal.","['42312013414786', '42312013414787', '42312013414785', '42312013414784', '42312013414788', '42312013414789']",-0.07499103,-0.5525414000000001,-5.447571277618408,12.201567649841307
+Economia Solidaria do Distrito Federal.","['42312013414786', '42312013414787', '42312013414785', '42312013414784', '42312013414788', '42312013414789']",0.051651616,0.6410342,7.967042446136475,10.435272216796877
 42312013364798,4_2.3.1.2013R36,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR IDALETE SILVA para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, 
 da Gerencia de Artesanato, da Diretoria de Atendimento a Economia Solidaria, da Subsecreta-
 ria de Economia Solidaria, da Secretaria de Estado da Micro e Pequena Empresa e Economia 
-Solidaria do Distrito Federal.","['42312013364800', '42312013364801', '42312013364804', '42312013364798', '42312013364799', '42312013364802', '42312013364803']",-0.07596141,-0.54981846,-6.043835639953612,12.623787879943848
+Solidaria do Distrito Federal.","['42312013364800', '42312013364801', '42312013364804', '42312013364798', '42312013364799', '42312013364802', '42312013364803']",0.044562437,0.63780165,8.850215911865234,11.934232711791992
 42312013424798,4_2.3.1.2013R42,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR IDALETE SILVA para exercer o Cargo em Comissao, Simbolo DFG-14, de Gerente, 
 da Gerencia de Artesanato, da Diretoria de Atendimento a Economia Solidaria, da Subsecreta-
 ria de Economia Solidaria, da Secretaria de Estado da Micro e Pequena Empresa e Economia 
-Solidaria do Distrito Federal.","['42312013424800', '42312013424801', '42312013424804', '42312013424798', '42312013424799', '42312013424802', '42312013424803']",-0.085198216,-0.547148,-6.4712443351745605,11.966248512268065
+Solidaria do Distrito Federal.","['42312013424800', '42312013424801', '42312013424804', '42312013424798', '42312013424799', '42312013424802', '42312013424803']",0.047117185,0.6363943,9.497526168823242,11.570291519165039
 42312013374814,4_2.3.1.2013R37,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR SIRLEY LELIS DE OLIVEIRA para exercer o Cargo em Comissao, Simbolo DFA-
 14, de Assessor, da Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro e 
-Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013374817', '42312013374819', '42312013374818', '42312013374814', '42312013374815', '42312013374816']",-0.08444421,-0.5560385,-5.05802059173584,11.030647277832033
+Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013374817', '42312013374819', '42312013374818', '42312013374814', '42312013374815', '42312013374816']",0.05021438,0.6424111,6.989413261413574,11.968618392944336
 42312013434814,4_2.3.1.2013R43,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR SIRLEY LELIS DE OLIVEIRA para exercer o Cargo em Comissao, Simbolo DFA-
 14, de Assessor, da Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro e 
-Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013434817', '42312013434819', '42312013434818', '42312013434814', '42312013434815', '42312013434816']",-0.080393374,-0.5567013000000001,-5.515353202819824,10.432785034179688
+Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013434817', '42312013434819', '42312013434818', '42312013434814', '42312013434815', '42312013434816']",0.04326726,0.64007163,7.6107540130615225,10.487664222717283
 42312013384828,4_2.3.1.2013R38,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR GIOVANA BIANCA MONTENEGRO BRASIL para exercer o Cargo em Comis-
 sao Simbolo DFG-14, de Gerente, da Gerencia de Manutencao e Conservacao, da Diretoria de 
 Apoio Operacional, da Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro 
-e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013384830', '42312013384831', '42312013384833', '42312013384828', '42312013384829', '42312013384832']",-0.08182704,-0.55722594,-4.383009433746338,12.915973663330078
+e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013384830', '42312013384831', '42312013384833', '42312013384828', '42312013384829', '42312013384832']",0.04791688,0.6356633,7.70958137512207,11.1923828125
 42312013444828,4_2.3.1.2013R44,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR GIOVANA BIANCA MONTENEGRO BRASIL para exercer o Cargo em Comis-
 sao Simbolo DFG-14, de Gerente, da Gerencia de Manutencao e Conservacao, da Diretoria de 
 Apoio Operacional, da Subsecretaria de Administracao Geral, da Secretaria de Estado da Micro 
-e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013444830', '42312013444831', '42312013444833', '42312013444828', '42312013444829', '42312013444832']",-0.07633633,-0.55319196,-4.630777835845947,12.03201675415039
+e Pequena Empresa e Economia Solidaria do Distrito Federal.","['42312013444830', '42312013444831', '42312013444833', '42312013444828', '42312013444829', '42312013444832']",0.04652878,0.6365491999999999,8.386940956115723,10.324405670166016
 42312013394842,4_2.3.1.2013R39,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR ADRIANO PEREIRA TAVARES para exercer o Cargo em Comissao, Simbolo DFG-
 14, de Gerente, da Gerencia de Agricultura Familiar, da Diretoria de Atendimento a Economia 
 Solidaria, da Subsecretaria de Economia Solidaria, da Secretaria de Estado da Micro e Pequena 
-Empresa e Economia Solidaria do Distrito Federal.","['42312013394845', '42312013394844', '42312013394842', '42312013394843', '42312013394846', '42312013394847']",-0.080189355,-0.5442593000000001,-5.371231555938722,11.426197052001953
+Empresa e Economia Solidaria do Distrito Federal.","['42312013394845', '42312013394844', '42312013394842', '42312013394843', '42312013394846', '42312013394847']",0.04989262,0.6357925999999999,9.56795597076416,10.520730018615724
 42312013454842,4_2.3.1.2013R45,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR ADRIANO PEREIRA TAVARES para exercer o Cargo em Comissao, Simbolo DFG-
 14, de Gerente, da Gerencia de Agricultura Familiar, da Diretoria de Atendimento a Economia 
 Solidaria, da Subsecretaria de Economia Solidaria, da Secretaria de Estado da Micro e Pequena 
-Empresa e Economia Solidaria do Distrito Federal.","['42312013454845', '42312013454844', '42312013454842', '42312013454843', '42312013454846', '42312013454847']",-0.0830321,-0.54404867,-6.299009799957275,10.989141464233398
+Empresa e Economia Solidaria do Distrito Federal.","['42312013454845', '42312013454844', '42312013454842', '42312013454843', '42312013454846', '42312013454847']",0.05178759,0.63830596,9.30422306060791,10.929905891418457
 42312013404855,4_2.3.1.2013R40,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR DEISE REZENDE XAVIER para exercer o Cargo em Comissao, Simbolo DFA-14, 
 de Assessor, da Subsecretaria de Apoio e Fomento, da Secretaria de Estado da Micro e Pequena 
-Empresa e Economia Solidaria do Distrito Federal.","['42312013404857', '42312013404858', '42312013404859', '42312013404856', '42312013404860', '42312013404855']",-0.07540299,-0.54985607,-6.139932632446289,9.824579238891602
+Empresa e Economia Solidaria do Distrito Federal.","['42312013404857', '42312013404858', '42312013404859', '42312013404856', '42312013404860', '42312013404855']",0.050882533,0.6427961999999999,7.306884765625,12.390231132507324
 42312013464855,4_2.3.1.2013R46,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR DEISE REZENDE XAVIER para exercer o Cargo em Comissao, Simbolo DFA-14, 
 de Assessor, da Subsecretaria de Apoio e Fomento, da Secretaria de Estado da Micro e Pequena 
-Empresa e Economia Solidaria do Distrito Federal.","['42312013464857', '42312013464858', '42312013464859', '42312013464856', '42312013464860', '42312013464855']",-0.077866405,-0.5555663000000001,-6.3481855392456055,10.040769577026367
+Empresa e Economia Solidaria do Distrito Federal.","['42312013464857', '42312013464858', '42312013464859', '42312013464856', '42312013464860', '42312013464855']",0.046125695,0.636555,6.823006629943848,12.225342750549315
 42312013484893,4_2.3.1.2013R48,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR MARISA CORREA SILVA, matricula 219.809-6, para exercer o Cargo em Comissao, 
 Simbolo DFA-14, de Assessor, da Subsecretaria de Administracao Geral, da Secretaria de Estado 
-de Educacao do Distrito Federal.","['42312013484896', '42312013484897', '42312013484898', '42312013484893', '42312013484894', '42312013484895', '42312013484899']",-0.0774326,-0.54878986,-4.4959983825683585,9.755166053771973
+de Educacao do Distrito Federal.","['42312013484896', '42312013484897', '42312013484898', '42312013484893', '42312013484894', '42312013484895', '42312013484899']",0.05169076,0.6388315,9.087538719177246,9.623355865478516
 42312013494910,4_2.3.1.2013R49,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR PAULO ELI COELHO DE LIMA, Carreira Medica (Otorrinolaringologia), matricula 
 1.441.085-0, para exercer o Cargo em Comissao, Simbolo DFG-07, de Chefe da Unidade de 
 Otorrinolaringologia, da Diretoria de Atencao a Saude, da Coordenacao Geral de Saude de Tagua-
-tinga, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013494912', '42312013494914', '42312013494917', '42312013494910', '42312013494911', '42312013494913', '42312013494915', '42312013494916']",-0.08441397,-0.5562153000000001,-1.2582978010177612,12.228316307067873
-42312013873550,4_2.3.1.2013R87,Ato_Exoneracao_Efetivo,confirmado,"EXONERAR, a pedido, LARISSA GOULART TOMASIO, matricula, 179166-4, ocupante do 
+tinga, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013494912', '42312013494914', '42312013494917', '42312013494910', '42312013494911', '42312013494913', '42312013494915', '42312013494916']",0.05049227,0.63676715,9.106821060180664,7.957627296447754
+42312013873550,4_2.3.1.2013R87,Ato_Exoneracao_Efetivo,nao_confirmado,"EXONERAR, a pedido, LARISSA GOULART TOMASIO, matricula, 179166-4, ocupante do 
 Cargo de Especialista em Assistencia Social, Especialidade: Psicologo, Terceira Classe, Padrao 
 IV, da Carreira Publica de Assistencia Social do Quadro de Pessoal do Distrito Federal, lotada 
 na Secretaria de Desenvolvimento Social e Transferencia de Renda, a contar de 04 de dezembro 
-de 2012, conforme processo 380.002.470/2012.","['42312013873551', '42312013873550', '42312013873552', '42312013873553', '42312013873554', '42312013873555', '42312013873556', '42312013873557', '42312013873559', '42312013873560', '42312013873561', '42312013873562', '4231201387103125']",-0.08504149,-0.5546203000000001,-1.6918511390686035,9.48512077331543
+de 2012, conforme processo 380.002.470/2012.","['42312013873551', '42312013873550', '42312013873552', '42312013873553', '42312013873554', '42312013873555', '42312013873556', '42312013873557', '42312013873559', '42312013873560', '42312013873561', '42312013873562', '4231201387103125']",0.05029942,0.6429324000000001,5.223058700561523,7.585080623626709
 42312013803441,4_2.3.1.2013R80,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, TEREZINHA ALVES GUIMARAES, Enfermeiro, matricula 118.179-3, 
 do Cargo em Comissao, Simbolo DFG-07, de Chefe do Nucleo de Enfermagem, da Gerencia do 
 Centro de Saude do Varjao, da Diretoria Regional de Atencao Primaria a Saude, da Coordenacao 
 Geral de Saude da Asa Norte, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de 
-Saude do Distrito Federal.","['42312013803442', '42312013803446', '42312013803447', '42312013803441', '42312013803443', '42312013803444', '42312013803445', '42312013803448', '42312013803449']",-0.08101626,-0.5569803000000001,-0.26319026947021484,11.916484832763672
+Saude do Distrito Federal.","['42312013803442', '42312013803446', '42312013803447', '42312013803441', '42312013803443', '42312013803444', '42312013803445', '42312013803448', '42312013803449']",0.044196445,0.6401671,10.303832054138184,7.206433296203612
 42312013813458,4_2.3.1.2013R81,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR LEONARDO BORGES FERREIRA, Tecnico de Laboratorio  Patologia Cli-
 nica, matricula 188.601-0, do Cargo em Comissao, Simbolo DFA-05, de Assessor Tecnico, da 
 Coordenacao Geral de Saude de Ceilandia, da Subsecretaria de Atencao a Saude, da Secretaria 
-de Estado de Saude do Distrito Federal.","['42312013813463', '42312013813465', '42312013813458', '42312013813459', '42312013813460', '42312013813461', '42312013813462', '42312013813464']",-0.08039581,-0.5467463,-2.314164161682129,13.33444595336914
+de Estado de Saude do Distrito Federal.","['42312013813463', '42312013813465', '42312013813458', '42312013813459', '42312013813460', '42312013813461', '42312013813462', '42312013813464']",0.048579946,0.6363013000000001,8.407843589782715,7.994283199310303
 42312013823474,4_2.3.1.2013R82,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR BEATRIZ YARA FARIAS DE AMORIM, Carreira Medica (Pediatria), matricula 
 134.255-X, do Cargo em Comissao, Simbolo DFG-12, de Gerente, da Gerencia do Centro de 
 Saude no 09, da Diretoria Regional de Atencao Primaria a Saude, da Coordenacao Geral de 
 Saude da Asa Norte, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude 
-do Distrito Federal.","['42312013823478', '42312013823479', '42312013823481', '42312013823474', '42312013823475', '42312013823476', '42312013823477', '42312013823480']",-0.07593066,-0.5538973,-0.5941381454467773,12.694286346435547
+do Distrito Federal.","['42312013823478', '42312013823479', '42312013823481', '42312013823474', '42312013823475', '42312013823476', '42312013823477', '42312013823480']",0.048691943,0.64346945,9.604734420776367,6.245841979980469
 42312013833482,4_2.3.1.2013R83,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeada para outro cargo, JAQUELINE PEREIRA DA SILVA 
 DE FARIA, Enfermeira, matricula 139.745-1, do Cargo em Comissao, Simbolo DFG-07, de 
 Chefe do Nucleo de Enfermagem, da Gerencia do Centro de Saude no 09, da Diretoria Regional 
 de Atencao Primaria a Saude, da Coordenacao Geral de Saude da Asa Norte, da Subsecretaria 
-de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013833483', '42312013833487', '42312013833490', '42312013833482', '42312013833484', '42312013833485', '42312013833486', '42312013833488', '42312013833489']",-0.08070659,-0.5451713,-0.830307126045227,12.472162246704102
-42312013843507,4_2.3.1.2013R84,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR MARIA CLEONICE DE SDMONTE, Auxiliar de Enfermagem, matricula 137.447-
+de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013833483', '42312013833487', '42312013833490', '42312013833482', '42312013833484', '42312013833485', '42312013833486', '42312013833488', '42312013833489']",0.051322002,0.64127463,8.602106094360353,6.642292022705077
+42312013843507,4_2.3.1.2013R84,Ato_Exoneracao_Comissionado,confirmado,"EXONERAR MARIA CLEONICE DE SDMONTE, Auxiliar de Enfermagem, matricula 137.447-
 8, do Cargo em Comissao, Simbolo DFG-07, de Supervisor de Enfermagem, da Gerencia de 
 Enfermagem, da Diretoria de Atencao a Saude, da Coordenacao Geral de Saude do Gama, da 
-Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013843512', '42312013843515', '42312013843510', '42312013843507', '42312013843508', '42312013843509', '42312013843511', '42312013843513', '42312013843514']",-0.076579,-0.5498679,-0.5578381419181824,12.212514877319336
+Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013843512', '42312013843515', '42312013843510', '42312013843507', '42312013843508', '42312013843509', '42312013843511', '42312013843513', '42312013843514']",0.051176045,0.64196235,9.71258544921875,6.9290404319763175
 42312013853524,4_2.3.1.2013R85,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, a pedido, FRANK STANLEY DE FREITAS SOUZA, Farmaceutico Bioquimico 
 de Laboratorio, matricula 1.434.749-0, do Cargo em Comissao, Simbolo DFG-07, de Chefe 
 do Nucleo de Laboratorio, da Diretoria de Atencao a Saude, da Coordenacao Geral de Saude 
 de Sao Sebastiao, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do 
-Distrito Federal.","['42312013853525', '42312013853529', '42312013853524', '42312013853526', '42312013853527', '42312013853528', '42312013853530', '42312013853531', '42312013853532']",-0.08257575,-0.54636276,-1.6411079168319702,13.76764965057373
-42312013863542,4_2.3.1.2013R86,Ato_Exoneracao_Efetivo,confirmado,"EXONERAR, a pedido, FABIO MARCELINO ALVES, matricula 1.401.902-7, Tecnico de 
+Distrito Federal.","['42312013853525', '42312013853529', '42312013853524', '42312013853526', '42312013853527', '42312013853528', '42312013853530', '42312013853531', '42312013853532']",0.05123526,0.6414856,8.498030662536621,5.83657693862915
+42312013863542,4_2.3.1.2013R86,Ato_Exoneracao_Efetivo,nao_confirmado,"EXONERAR, a pedido, FABIO MARCELINO ALVES, matricula 1.401.902-7, Tecnico de 
 Atividades do Hemocentro, Agente Administrativo, do Quadro de Pessoal da Fundacao Hemo-
-centro de Brasilia, conforme processo 063.000.583/2012, a contar de 17 de dezembro de 2012.","['42312013863543', '42312013863549', '42312013863542', '42312013863544', '42312013863545', '42312013863546', '42312013863547', '42312013863548']",-0.08478676,-0.55393517,-2.49373745918274,8.931390762329102
+centro de Brasilia, conforme processo 063.000.583/2012, a contar de 17 de dezembro de 2012.","['42312013863543', '42312013863549', '42312013863542', '42312013863544', '42312013863545', '42312013863546', '42312013863547', '42312013863548']",0.049665242000000005,0.64321625,5.063558578491211,6.499856948852539
 42312013504935,4_2.3.1.2013R50,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR DAYSE AMANDA DE SOUSA, matricula 1.440.917-8, para exercer o Cargo em 
 Comissao, Simbolo DFG-07, de Chefe do Nucleo de Enfermagem, da Central de Radiologia 
 de Taguatinga, da Coordenacao Geral de Saude de Taguatinga, da Subsecretaria de Atencao a 
-Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013504938', '42312013504941', '42312013504936', '42312013504937', '42312013504935', '42312013504939', '42312013504940']",-0.08242424599999999,-0.546192,-0.6650968194007874,14.30369472503662
+Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013504938', '42312013504941', '42312013504936', '42312013504937', '42312013504935', '42312013504939', '42312013504940']",0.051924124,0.6386589,8.792922019958496,7.433633327484131
 42312013514942,4_2.3.1.2013R51,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR SIMONE RIBEIRO DUTRA, Auxiliar de Enfermagem, matricula 133.914-1, para 
 exercer o Cargo em Comissao, Simbolo DFA-06, de Assessor Tecnico, da Coordenacao Geral 
 de Saude de Taguatinga, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude 
-do Distrito Federal.","['42312013514947', '42312013514946', '42312013514942', '42312013514943', '42312013514944', '42312013514945', '42312013514948', '42312013514949']",-0.0811448,-0.5455819000000001,-1.4820873737335205,13.684171676635742
+do Distrito Federal.","['42312013514947', '42312013514946', '42312013514942', '42312013514943', '42312013514944', '42312013514945', '42312013514948', '42312013514949']",0.052246827999999995,0.6394420999999999,10.670167922973633,7.565282344818115
 42312013524959,4_2.3.1.2013R52,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR JULIA MARCIA GONCALVES DA MOTTA, Enfermeiro, matricula 129.556-X, 
 para exercer o Cargo em Comissao, Simbolo DFG-07, de Chefe do Nucleo de Enfermagem, da 
 Gerencia do Centro de Saude do Varjao, da Diretoria Regional de Atencao Primaria a Saude, da 
 Coordenacao Geral de Saude da Asa Norte, da Subsecretaria de Atencao a Saude, da Secretaria 
-de Estado de Saude do Distrito Federal.","['42312013524963', '42312013524966', '42312013524964', '42312013524961', '42312013524959', '42312013524960', '42312013524962', '42312013524965']",-0.0857299,-0.54907507,0.6691864728927612,12.432453155517578
+de Estado de Saude do Distrito Federal.","['42312013524963', '42312013524966', '42312013524964', '42312013524961', '42312013524959', '42312013524960', '42312013524962', '42312013524965']",0.047846053,0.63489383,10.662358283996582,6.518383502960205
 42312013534975,4_2.3.1.2013R53,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR FABIANA DE OLIVEIRA GOMES, Tecnico em Radiologia, matricula 142.765-2, 
 para exercer o Cargo em Comissao, Simbolo DFA-05, de Assessor Tecnico, da Coordenacao 
 Geral de Saude de Ceilandia, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de 
-Saude do Distrito Federal.","['42312013534980', '42312013534982', '42312013534979', '42312013534975', '42312013534976', '42312013534977', '42312013534978', '42312013534981']",-0.07613866,-0.552934,-1.5014297962188718,12.984833717346193
+Saude do Distrito Federal.","['42312013534980', '42312013534982', '42312013534979', '42312013534975', '42312013534976', '42312013534977', '42312013534978', '42312013534981']",0.045550317,0.6432686,9.865382194519043,8.327702522277832
 42312013545000,4_2.3.1.2013R54,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR JAQUELINE PEREIRA DA SILVA DE FARIA, Enfermeira, matricula 139.745-1, para 
 exercer o Cargo em Comissao, Simbolo DFG-12, de Gerente, da Gerencia do Centro de Saude no 
 09, da Diretoria Regional de Atencao Primaria a Saude, da Coordenacao Geral de Saude da Asa 
-Norte, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013545004', '42312013545005', '42312013545007', '42312013545002', '42312013545003', '42312013545000', '42312013545001', '42312013545006']",-0.08283059,-0.54643595,0.4004380404949188,13.182158470153807
+Norte, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013545004', '42312013545005', '42312013545007', '42312013545002', '42312013545003', '42312013545000', '42312013545001', '42312013545006']",0.045976564000000004,0.6427552,9.385212898254396,5.397482395172119
 42312013555008,4_2.3.1.2013R55,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR REGINA CASTRO DE CARVALHO, Enfermeira, matricula 157.451-5, para exercer 
 o Cargo em Comissao, Simbolo DFG-07, de Chefe do Nucleo de Enfermagem, da Gerencia do 
 Centro de Saude no 09, da Diretoria Regional de Atencao Primaria a Saude, da Coordenacao 
 Geral de Saude da Asa Norte, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de 
-Saude do Distrito Federal.","['42312013555012', '42312013555015', '42312013555010', '42312013555013', '42312013555008', '42312013555009', '42312013555011', '42312013555014']",-0.07535419,-0.55243456,0.27542394399642944,12.705028533935547
+Saude do Distrito Federal.","['42312013555012', '42312013555015', '42312013555010', '42312013555013', '42312013555008', '42312013555009', '42312013555011', '42312013555014']",0.047000505,0.6363444,9.978386878967283,5.977793216705322
 42312013565025,4_2.3.1.2013R56,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR CLEIRE PESSONI, Enfermeira, matricula 133.458-1, para exercer o Cargo em 
 Comissao, Simbolo DFG-07, de Supervisor de Enfermagem, da Gerencia de Enfermagem, da 
 Diretoria de Atencao a Saude, da Coordenacao Geral de Saude do Gama, da Subsecretaria de 
-Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013565029', '42312013565032', '42312013565027', '42312013565025', '42312013565026', '42312013565028', '42312013565030', '42312013565031']",-0.08364432,-0.5440096999999999,-0.3385653495788574,13.403398513793945
+Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013565029', '42312013565032', '42312013565027', '42312013565025', '42312013565026', '42312013565028', '42312013565030', '42312013565031']",0.044193354000000004,0.6399562,10.071609497070312,7.509100914001465
 42312013575042,4_2.3.1.2013R57,Ato_Nomeacao_Comissionado,nao_confirmado,"NOMEAR HELENICE P. DOS SANTOS ARAUJO, Tecnico de Laboratorio  Patologia Clinica, 
 matricula 141.208-6, para exercer o Cargo em Comissao, Simbolo DFG-07, de Chefe do Nucleo 
 de Laboratorio, da Diretoria de Atencao a Saude, da Coordenacao Geral de Saude de Sao Sebas-
-tiao, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013575047', '42312013575050', '42312013575042', '42312013575043', '42312013575044', '42312013575045', '42312013575046', '42312013575048', '42312013575049']",-0.08379293,-0.5473385000000001,-0.710827112197876,13.680649757385256
+tiao, da Subsecretaria de Atencao a Saude, da Secretaria de Estado de Saude do Distrito Federal.","['42312013575047', '42312013575050', '42312013575042', '42312013575043', '42312013575044', '42312013575045', '42312013575046', '42312013575048', '42312013575049']",0.043331157,0.63894045,8.540695190429688,7.123215198516848
 42312013884261,4_2.3.1.2013R88,Ato_Exoneracao_Comissionado,nao_confirmado,"EXONERAR, por estar sendo nomeado para outro cargo, 
 LUIZ CARLOS BURITI PEREIRA, matricula 2640252, ocupante do cargo em comissao 
 de Assessor Simbolo CA-III, da Agencia Reguladora de Aguas, Energia e Saneamento 
-Basico do Distrito Federal, a contar de 02/01/2013.","['42312013884266', '42312013884262', '42312013884261', '42312013884263', '42312013884264', '42312013884267', '42312013884268', '42312013884269']",-0.08835626,-0.5511391,-4.019114971160889,10.370586395263672
+Basico do Distrito Federal, a contar de 02/01/2013.","['42312013884266', '42312013884262', '42312013884261', '42312013884263', '42312013884264', '42312013884267', '42312013884268', '42312013884269']",0.04913943,0.64387816,6.632467746734619,9.751782417297363

@@ -233,7 +233,7 @@ def create_layout(app):
                         dcc.Tabs(id='tabs_left', value='atos', children=[
                             # guia referente às informações do ponto que foi clicado por último
                             dcc.Tab(
-                                label='Relações',
+                                label='RELAÇÕES',
                                 value='atos',
                                 children=[                                    
                                 html.Button(id="flag-warning-atos", className="Button",n_clicks=0, style={"display":"none"}),
@@ -341,36 +341,6 @@ def create_layout(app):
                                         },
                                     ),
                                 ])
-                                ]
-                            ),
-
-                            #guia legenda
-                            dcc.Tab(
-                                label='LEGENDA',
-                                value='legend',
-                                children=[
-                                    html.Div(id='control-tab-2', style={"padding": "10px", 'width':'40vh'}, children=[
-                                    html.H6("Classes:"),
-                                    #html.P(style={'display':'grid','grid-template-columns':'25% 75%', 'float':'left'},children=[html.P('#',style={'color':'rgb(237,100,90)'}),"Ato_Abono_Permanencia"]),
-                                    html.P("Ato_Abono_Permanencia"),
-                                    html.P("Ato_Aposentadoria"),
-                                    html.P("Ato_Exoneracao_Comissionado"),
-                                    html.P("Ato_Exoneracao_Efetivo"),
-                                    html.P("Ato_Abono_Permanencia"),
-                                    html.P("Ato_Nomeacao_Comissionado"),
-                                    html.P("Ato_Nomeacao_Efetivo"),
-                                    html.P("Ato_Retificacao_Comissionado"),
-                                    html.P("Ato_Retificacao_Efetivo"),
-                                    html.P("Ato_Reversao"),
-                                    html.P("Ato_Substituicao"),
-                                    html.P("Ato_Tornado_Sem_Efeito_Apo"),
-                                    html.P("Ato_Tornado_Sem_Efeito_Exo_Nom"),
-                                    html.Br(),
-                                    html.H6("Estados:"),
-                                    html.P("Confirmado: a classe deste ato já foi verificada"),
-                                    html.P("Apagar: o conteúdo desta anotação não é um ato"),
-                                    html.P("Avaliar Depois:o anotador está em dúvida sobre a classe"),
-                                    ])
                                 ]
                             ),
                         ])                          
@@ -1270,19 +1240,55 @@ def main_callbacks(app):
         df.estado_rel[indice] = estado
         df.to_csv("./csv/lista_relacoes.csv", index=False)
 
+    def update_relacao_avancado(indice):
+        df = pd.read_csv("./csv/lista_relacoes.csv")
+        anotacoes = df.anotacoes[indice]
+        list_anotacoes = literal_eval(anotacoes) 
+        estados_ent = []
+        estado = df.estado_rel[indice]
+
+        j = 0
+        all_confirmado = 1
+        all_deletar = 1
+        while j < len(list_anotacoes): 
+            id_anno = list_anotacoes[j]
+            info = busca_lista_anotacoes(id_anno)
+            if info[2] == 'nao_confirmado':
+                all_confirmado = 0
+            if info[2] != 'deletar':
+                all_deletar = 0
+            estados_ent.append(info[2])
+            j += 1
+
+        if 'em_duvida' in estados_ent:
+            estado = 'em_duvida'
+
+        elif 'corrigido' in estados_ent:
+            estado = 'corrigido'
+
+        elif all_confirmado:
+            estado = 'confirmado'
+
+        elif all_deletar:
+            estado = 'deletar'
+
+        df.estado_rel[indice] = estado
+        df.to_csv("./csv/lista_relacoes.csv", index=False)
+
     @app.callback(
         [
             Output('flag-update-relacao-control', 'n_clicks'),
         ],
         [
             Input("confirmar-relacao-control", "n_clicks"),
-            Input("deletar-relacao-control", "n_clicks")
+            Input("deletar-relacao-control", "n_clicks"),
+            Input('flag-update-entidade-control', 'n_clicks')
         ],
         [
             State("confirmar-relacao-control", "value")
         ]
     )
-    def update_relacao_control(n1,n2,indice):
+    def update_relacao_control(n1,n2,flag_entidades,indice):
         context = dash.callback_context
         trigger = context.triggered[0]['prop_id']
 
@@ -1291,6 +1297,10 @@ def main_callbacks(app):
         
         elif str(trigger) == 'deletar-relacao-control.n_clicks':
             update_relacao_simples(int(indice),'deletar')
+
+        elif str(trigger) == 'flag-update-entidade-control.n_clicks':
+            update_relacao_avancado(int(indice))
+
 
         return [n1+n2]
 
@@ -1356,7 +1366,11 @@ def main_callbacks(app):
         df = pd.read_csv("./csv/lista_entidades.csv")
         id_geral = int(id_geral)    
         indice = df[(df['id_geral'] == id_geral)].index
-        df.estado_ent[indice] = estado
+        estado_ent = list(df.estado_ent[indice])[0]
+        print(estado)
+        if estado_ent == 'nao_confirmado':
+            df.estado_ent[indice] = estado
+        
         df.to_csv("./csv/lista_entidades.csv", index=False)
 
     @app.callback(
@@ -1419,16 +1433,14 @@ def main_callbacks(app):
         ]
     )
     def trigger_entidade(confirmar,corrigir,duvida,deletar,children): 
-        print('get_id')
-        print(children)
+
         if deletar is None:
             raise PreventUpdate
         comando = children
         context = dash.callback_context
         trigger = context.triggered[0]['prop_id']
         id_geral = children[0]
-        print(id_geral)
-        print(trigger)
+
 
         if trigger == '{"index":"'+str(id_geral)+'","type":"confirmar-entidade"}.n_clicks':
             comando[1] ='confirmado'
@@ -1473,8 +1485,7 @@ def main_callbacks(app):
         ]
     )
     def update_entidade_control(values,clicks,tipos,textos):
-        print('update_entidade')
-        print(values)
+
         trigger = []
         if values != []:
             for i in range(len(values)):
@@ -1483,13 +1494,17 @@ def main_callbacks(app):
                     id_geral = trigger[0]
                     do = trigger[1]
                     if do == 'corrigir':
-                        print(tipos[i])
-                        print(textos[i])
+
                         corrigir_entidade(id_geral,tipos[i],textos[i])
                     else:
                         update_entidade(id_geral, do)
             if trigger == []:
                 raise PreventUpdate
-            print(trigger)
+
             return [clicks+1]
         return [clicks]
+
+
+    
+
+
