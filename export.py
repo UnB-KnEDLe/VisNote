@@ -14,8 +14,14 @@ import dash_table
 
 import pandas as pd
 
-# Organiza o output em uma tabela para mostrar ao o usuário as anotações que foram extraídas
+
 def return_tables():
+    '''
+     - Apresenta ao usuário o conteúdo da lista de entidades e da lista de relações
+     - Também permite o download das duas listas
+    
+     :Return: html.Div com o conteúdo que será apresentado na tela do usuário
+    '''
     df_entidades = pd.read_csv("./csv/lista_entidades.csv")
     df_relacoes = pd.read_csv("./csv/lista_relacoes.csv")
     list_of_tables = []
@@ -107,7 +113,7 @@ def return_tables():
 
     return html.Div(list_of_tables)
 
-# Função principal    
+# Função principal (a que contém os callbacks e que será chamada na main.py)   
 def export_callbacks(app):
     @app.callback(
         [

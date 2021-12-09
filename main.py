@@ -144,7 +144,7 @@ def create_layout(app):
                         ],         
                 ),
 
-                # Canto esquerdo do Header
+                # Canto direito do Header
                 html.Div(
                     style={"display": "flex"},
                     children=[
@@ -163,7 +163,7 @@ def create_layout(app):
                 ),
         ]),
 
-        # Ajuda (ainda precisa ser editado)
+        # página de ajuda (ainda precisa ser editado)
         html.Div(
             className="card",
             id="about-us",
@@ -190,9 +190,9 @@ def create_layout(app):
             ],
         ),
 
-        # página de extração de anotações
+        # página de importação de anotações
         html.Div(id = "pagina-input-anotacoes",children =[
-            # Local para a inserção dos arquivos XML
+            # local para a inserção dos arquivos XML
             html.Div([
                 html.H1('Extrair anotações', className='card-title'),
                 html.H2('Extração das anotações feitas no NidoTat', className='card-subtitle'),
@@ -204,12 +204,12 @@ def create_layout(app):
                         html.H3('Arraste e solte o XML aqui', className='text-pdf'),
                         html.Button('Selecione no seu Computador', className='choose-button')
                     ], className='card-pdf-box'),
-                    # Allow multiple files to be uploaded
+                    # permitir fazer o upload de mais de um documento
                     multiple=True
                 ),
             ], className='card'),
             
-            #Onde aparece as anotações que foram extraídas, com a opção de salvá-las em um arquivo CSV
+            # local onde aparece as anotações que foram extraídas, com a opção de salvá-las em um arquivo CSV
             html.Div(id='output-data-upload')], className='row'),
         ]),
 
@@ -223,8 +223,8 @@ def create_layout(app):
                        "height":"auto",
                        },
             children=[
-                #flags
-                
+
+                # Tabelas                
                 html.Div(
                     #className="card-ato",
                     id="lista_atos",
@@ -346,7 +346,8 @@ def create_layout(app):
                         ])                          
                     ],
                 ),
-                #menu e layout
+                
+                #Representações Gráficas
                 html.Div(
                     id="pagina-revisar-anotacoes-meio",
                     className="control-tabs",
@@ -452,7 +453,7 @@ def create_layout(app):
                         ]),
                 ]),
                 
-                # telas que mostram informações extras sob demanda
+                # Painel de Controle
                 html.Div(
                     className="control-tabs",
                     
@@ -754,7 +755,6 @@ def main_callbacks(app):
             return [True]
         return [False]
 
-    
     @app.callback(
         [
             Output('tabela_atos', 'children'),
@@ -972,7 +972,7 @@ def main_callbacks(app):
     def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag_relacoes,flag_entidades):
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
-            figure = generate_figure(df,'TEMP',label,'ent')
+            figure = generate_figure(df,'TEMP','estado','ent')
         else: #if run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
             df = pd.read_csv("./csv/lista_entidades.csv")
             
@@ -1053,6 +1053,10 @@ def main_callbacks(app):
         tipo_ent = df['tipo_ent'][indice]
         texto_ent = df['texto'][indice]
         estado_ent = df['estado_ent'][indice]
+        print(id_geral)
+        print(indice)
+        print(list(tipo_ent))
+        print(tipo_ent)
         info.append(list(tipo_ent)[0])
         info.append(list(texto_ent)[0])
         info.append(list(estado_ent)[0])
@@ -1503,8 +1507,3 @@ def main_callbacks(app):
 
             return [clicks+1]
         return [clicks]
-
-
-    
-
-
