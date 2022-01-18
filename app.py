@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import os
 import dash
 
-from main import create_layout, main_callbacks
+from main_layout import create_layout
+from main import  main_callbacks
 
 # for the Local version, import local_layout and local_callbacks
 # from local import local_layout, local_callbacks

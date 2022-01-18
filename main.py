@@ -1,4 +1,4 @@
-from extraction import extraction_callbacks, organize_content, return_tables
+import extraction 
 from multidimensional_projection import projecao_multi
 from export import export_callbacks
 
@@ -12,9 +12,6 @@ from dash.exceptions import PreventUpdate
 import pandas as pd
 import plotly.express as px
 import re
-
-from urllib.parse import quote as urlquote
-import urllib
 
 from ast import literal_eval
 
@@ -107,426 +104,6 @@ options_entidades = [{'label': 'Ato_Abono_Permanencia', 'value': 'Ato_Abono_Perm
  {'label': 'carreira', 'value': 'carreira'},
  {'label': 'data', 'value': 'data'}]
 
-def create_layout(app):
-    return html.Div([
-    html.Link(href="https://fonts.googleapis.com/css2?family=Raleway&display=swap", rel="stylesheet"),
-    html.Div([
-        # Header
-        html.Div(
-            className="row header",
-            id="app-header",
-            children=[
-                # Logo do Projeto KnEDLe
-                html.Img(
-                    src=app.get_asset_url("knedle-logo4.png"),
-                    className="logo",
-                    id="logo",
-                ),
-
-                # Botões para a próxima etapa
-                html.Div(
-                    className="row background",
-                    id="proximo",
-                    children=[
-                        html.Button(children=["<- Voltar"], className="Button", id="voltar-extrair-classes-button", n_clicks=0, style={"display":"none"}),
-                        
-                        
-                        
-                        html.Button(children=["Revisar anotações ->"], className="Button", id="button-revisar-anotacoes", n_clicks=0, style={"display":"none"}),
-                        html.Button(id="value-button-revisar-anotacoes", className="Button",n_clicks=0, style={"display":"none"}),
-                        
-                        html.Button(children=["Download anotações ->"], className="Button", id="button-output-anotacoes", n_clicks=0, style={"display":"none"}),
-                        
-                        html.Button(children=["<- Revisar anotações"], className="Button", id="button-voltar-revisar-anotacoes", n_clicks=0, style={"display":"none"}),
-                        html.Button(children=["Importar novas anotações ->"], className="Button", id="button-voltar-input-anotacoes", n_clicks=0, style={"display":"none"}),
-                        
-                        #html.Button(children=["Corrigir entidades ->"], className="Button", id="corrigir-entidades-button", n_clicks=0, style={"display":"none"}),
-                        ],         
-                ),
-
-                # Canto direito do Header
-                html.Div(
-                    style={"display": "flex"},
-                    children=[
-                        # Botão para mostrar mini tutorial escrito e um botão para o tutorial em vídeo
-                        html.Button(
-                            "Ajuda",
-                            id="about-button",
-                        ),
-
-                        # Logo do VisNote       
-                        html.H3(
-                            "VisNote 2.0",
-                            id="app-title",
-                        ),
-                    ]
-                ),
-        ]),
-
-        # página de ajuda (ainda precisa ser editado)
-        html.Div(
-            className="card",
-            id="about-us",
-            style={"display": "none"},
-            children=[
-                html.Div(
-                    id="about-content",
-                    children=[
-                        html.H4(className='card-title',
-                                style={"text-align": "center"},
-                                children=["About Us"],
-                                ),
-                        html.Div(id="about-text",
-                                 children=[
-                                    html.H6("The scatter plot below is the result of running the t-SNE algorithm on DODF's datasets, resulting in 2D and 3D visualizations of the documents."),
-                                    html.H6("Official publications such as the Diario Oficial do Distrito Federal (DODF) are sources of information on all official government acts. Although these documents are rich in knowledge, analysing these texts manually by specialists is a complex and unfeasible task considering the growing volume of documents, the result of the frequent number of publications in the Distrito Federal Government's (GDF) communication vehicle."),
-                                    html.H6("VisNote aims to facilitate the visualization of such information using unsupervised machine learning methods and data visualization techniques. This is one of the tools developed by the KnEDLe Project. To learn more about us, click on 'Learn More' below.")
-                            ]),
-                        html.Br(),
-                        html.Button(children=[
-                            html.A("Learn More", href='https://unb-knedle.github.io/', target="_blank", id="learn-more-button")], className="Button"),
-                    ]),
-                html.Hr(),
-            ],
-        ),
-
-        # página de importação de anotações
-        html.Div(id = "pagina-input-anotacoes",children =[
-            # local para a inserção dos arquivos XML
-            html.Div([
-                html.H1('Extrair anotações', className='card-title'),
-                html.H2('Extração das anotações feitas no NidoTat', className='card-subtitle'),
-                html.H2('e armazenadas em arquivos XML', className='card-subtitle'),
-                dcc.Upload(
-                    id='upload-data',
-                    children=html.Div([
-                        html.Img(src='assets/img/file.svg', className='card-logo-pdf'),
-                        html.H3('Arraste e solte o XML aqui', className='text-pdf'),
-                        html.Button('Selecione no seu Computador', className='choose-button')
-                    ], className='card-pdf-box'),
-                    # permitir fazer o upload de mais de um documento
-                    multiple=True
-                ),
-            ], className='card'),
-            
-            # local onde aparece as anotações que foram extraídas, com a opção de salvá-las em um arquivo CSV
-            html.Div(id='output-data-upload')], className='row'),
-        ]),
-
-        # página de correção de anotações - nível tipo dos atos
-        html.Div( 
-            className="row background",  
-            id="pagina-revisar-anotacoes",         
-            style={
-                       "display": "none",
-                       "grid-template-columns": "400px auto 400px",
-                       "height":"auto",
-                       },
-            children=[
-
-                # Tabelas                
-                html.Div(
-                    #className="card-ato",
-                    id="lista_atos",
-                    className="control-tabs",
-                    children=[                       
-                        dcc.Tabs(id='tabs_left', value='atos', children=[
-                            # guia referente às informações do ponto que foi clicado por último
-                            dcc.Tab(
-                                label='RELAÇÕES',
-                                value='atos',
-                                children=[                                    
-                                html.Button(id="flag-warning-atos", className="Button",n_clicks=0, style={"display":"none"}),
-
-                                dcc.ConfirmDialog(
-                                    id='warning_atos',
-                                    message='Não foram encontrados atos pertencentes a esta classe. Por favor, selecione outra(s) classe(s).',
-                                ), 
-                                
-                                dcc.Dropdown(
-                                                id="dropdown-atos",
-                                                searchable=True,
-                                                clearable=False,
-                                                multi=True,
-                                                options=[
-                                                    {"label": "Todos","value": "Todos",},
-                                                    {"label": "Ato_Abono_Permanencia","value": "Ato_Abono_Permanencia",}, 
-                                                    {"label": "Ato_Cessao","value": "Ato_Cessao",}, 
-                                                    {"label": "Ato_Exoneracao_Comissionado","value": "Ato_Exoneracao_Comissionado",}, 
-                                                    {"label": "Ato_Exoneracao_Efetivo","value": "Ato_Exoneracao_Efetivo",}, 
-                                                    {"label": "Ato_Nomeacao_Comissionado","value": "Ato_Nomeacao_Comissionado",}, 
-                                                    {"label": "Ato_Nomeacao_Efetivo","value": "Ato_Nomeacao_Efetivo",}, 
-                                                    {"label": "Ato_Retificacao_Comissionado","value": "Ato_Retificacao_Comissionado",}, 
-                                                    {"label": "Ato_Retificacao_Efetivo","value": "Ato_Retificacao_Efetivo",},
-                                                    {"label": "Ato_Reversao","value": "Ato_Reversao",}, 
-                                                    {"label": "Ato_Substituicao","value": "Ato_Substituicao",}, 
-                                                    {"label": "Ato_Tornado_Sem_Efeito_Apo","value": "Ato_Tornado_Sem_Efeito_Apo",},                                                                    
-                                                    {"label": "Ato_Tornado_Sem_Efeito_Exo_Nom","value": "Ato_Tornado_Sem_Efeito_Exo_Nom",},
-                                                    {"label": "Apagar","value": "Apagar",}, 
-                                                    {"label": "Avaliar Depois","value": "Avaliar_Depois",}, 
-                                                ],
-                                                placeholder="Select a class",
-                                                value="Todos",
-                                ),
-
-                                html.Div(id='tabela_atos',children=[
-                                    dash_table.DataTable(
-                                        id='datatable_relacoes',
-                                        #columns=[{"name": i, "id": i} for i in df2.columns],
-                                        #data=df2.to_dict('records'),
-                                        editable=False,
-                                        row_selectable="single",
-                                        selected_rows=[],
-                                        hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
-                                        css=[{"selector": ".show-hide", "rule": "display: none", }],
-                                        style_as_list_view=True,
-                                        style_cell={
-                                                'overflow': 'auto',
-                                                'textOverflow': 'ellipsis',
-                                                'minWidth':'300px',
-                                                #'maxWidth': '300px',
-                                                'textAlign': 'left'
-                                        }, 
-                                        style_data={
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                        },
-                                        style_table={
-                                                'maxHeight': '67vh',
-                                                'overflowY': 'auto',
-                                                'overflowX': 'auto',
-                                                #'marginBottom': '40px'
-                                        },
-                                        style_header={
-                                            #'display': 'none'
-                                        },
-                                    ),
-                                ])
-                            ]),  
-
-                            dcc.Tab(
-                                label='ENTIDADES',
-                                value='entidades',
-                                children=[
-                                    html.Div(id='tabela_entidades',children=[
-                                    dash_table.DataTable(
-                                        id='datatable_entidades',
-                                        #columns=[{"name": i, "id": i} for i in df2.columns],
-                                        #data=df2.to_dict('records'),
-                                        editable=False,
-                                        row_selectable="single",
-                                        selected_rows=[],
-                                        hidden_columns=['x_tsne','y_tsne','x_umap','y_umap','cod','documento','id','anotador','estado'],
-                                        css=[{"selector": ".show-hide", "rule": "display: none", }],
-                                        style_as_list_view=True,
-                                        style_cell={
-                                                'overflow': 'auto',
-                                                'textOverflow': 'ellipsis',
-                                                'minWidth':'300px',
-                                                #'maxWidth': '300px',
-                                                'textAlign': 'left'
-                                        }, 
-                                        style_data={
-                                            'whiteSpace': 'normal',
-                                            'height': 'auto',
-                                        },
-                                        style_table={
-                                                'maxHeight': '67vh',
-                                                'overflowY': 'auto',
-                                                'overflowX': 'auto',
-                                                #'marginBottom': '40px'
-                                        },
-                                        style_header={
-                                            #'display': 'none'
-                                        },
-                                    ),
-                                ])
-                                ]
-                            ),
-                        ])                          
-                    ],
-                ),
-                
-                #Representações Gráficas
-                html.Div(
-                    id="pagina-revisar-anotacoes-meio",
-                    className="control-tabs",
-                    
-                    children=[
-                        dcc.Tabs(id='tabs_middle', value='atos_graph', 
-                    #style={"height": "100%"},
-                        children=[
-                            dcc.Tab(
-                                label='RELAÇÕES',
-                                value='atos_graph',
-                                children=[
-                                    # Layouts className='card-graph',
-                                    html.Div( id = "grafico",
-                                        children=[
-                                        # menu com os controles
-                                        html.Div(
-                                            className="row background",
-                                            id="menu",
-                                            children=[
-                                                html.Div(
-                                                    id="menu-visualizacoes",
-                                                    children=[
-                                                        dcc.Dropdown(
-                                                            id="dropdown-method",
-                                                            searchable=False,
-                                                            clearable=False,
-                                                            options=[
-                                                                {"label": "UMAP","value": "UMAP",},
-                                                                {"label": "t-SNE","value": "t-SNE",},                                                                    
-                                                            ],
-                                                            placeholder="Select a technique",
-                                                            value="t-SNE",
-                                                        ),
-                                                        dcc.Dropdown(
-                                                            id="dropdown-label",
-                                                            searchable=False,
-                                                            clearable=False,
-                                                            options=[
-                                                                {"label": "Classe","value": "classe",},
-                                                                {"label": "Estado","value": "estado",},                                                                    
-                                                            ],
-                                                            placeholder="Select a label",
-                                                            value="classe",
-                                                        ),
-                                                        html.Button("confirmar vários",id="button-confirmar-varios-relacoes", className="Button",n_clicks=0),
-                                                        html.Button(id="button-confirmar-varios-relacoes-result", className="Button",n_clicks=0,style={"display":"none"}),
-                                                                                  
-                                                    ]
-                                                ),
-                                            ],
-                                        ),
-                                            dcc.Graph(id="graph-relacoes")
-                                        ]),
-                                ]),
-                            dcc.Tab(
-                                label='ENTIDADES',
-                                value='entidades_graph',
-                                children=[
-                                    # Layouts className='card-graph',
-                                    html.Div(id = "grafico-entidades",
-                                        children=[
-                                        # menu com os controles
-                                        html.Div(
-                                            className="row background",
-                                            id="menu-entidades",
-                                            children=[
-                                                html.Div(
-                                                    id="menu-visualizacoes-entidades",
-                                                    children=[
-                                                        dcc.Dropdown(
-                                                            id="dropdown-method-entidades",
-                                                            searchable=False,
-                                                            clearable=False,
-                                                            options=[
-                                                                {"label": "UMAP","value": "UMAP",},
-                                                                {"label": "t-SNE","value": "t-SNE",},                                                                    
-                                                            ],
-                                                            placeholder="Select a technique",
-                                                            value="t-SNE",
-                                                        ),
-                                                        dcc.Dropdown(
-                                                            id="dropdown-label-entidades",
-                                                            searchable=False,
-                                                            clearable=False,
-                                                            options=[
-                                                                {"label": "Classe","value": "classe",},
-                                                                {"label": "Estado","value": "estado",},                                                                    
-                                                            ],
-                                                            placeholder="Select a label",
-                                                            value="classe",
-                                                        ),
-                                                        html.Button("confirmar vários",id="button-confirmar-varios-entidades", className="Button",n_clicks=0),
-                                                        html.Button(id="button-confirmar-varios-entidades-result", className="Button",n_clicks=0,style={"display":"none"}),
-                                                                                  
-                                                    ]
-                                                ),
-                                            ],
-                                        ),
-                                            dcc.Graph(id="graph-entidades")
-                                        ]),
-                                ]),
-                        ]),
-                ]),
-                
-                # Painel de Controle
-                html.Div(
-                    className="control-tabs",
-                    
-                    children=[
-                        dcc.Tabs(id='tabs', value='point', children=[
-                            # guia referente às informações do ponto que foi clicado por último
-                            dcc.Tab(
-                                label='ATO SELECIONADO',
-                                value='point',
-                                children=[
-                                    html.Div(id='control-tab', style={"padding": "5px"}, children=[
-                                        html.Div(id="selected-point"),
-                                        html.Button(children=["ATUALIZAR ENTIDADES"], className="Button-control", id='flag-update-entidade-control',n_clicks=0, style={'display':'none'}),
-                                        html.Button(children=["CONFIRMAR TODOS"], className="Button-control", id='confirmar-relacao-control',n_clicks=0, style={'display':'none'}),
-                                        html.Button(children=["DELETAR RELAÇÃO"], className="Button-control", id='deletar-relacao-control', n_clicks=0, style={'display':'none'}),
-                                        html.Button(id="flag-update-relacao-control", className="Button",n_clicks=0,style={"display":"none"}),
-                                        html.Button(id="update-entidade", className="Button",n_clicks=0,style={"display":"none"}),
-                                        html.Div(children=['id_anno','nada'],id="id_geral_entidade", style={'display':'none'}),
-                                        html.Div(id="corrigir-classe-buttons", children=[
-                                            html.Button("confirmar",id="confirmar-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
-                                            html.Button(id="confirmar-classe-button-result", className="Button",n_clicks=0, style={"display":"none"}), 
-                                            html.Button("corrigir",id="corrigir-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
-                                        ]),                  
-                                        html.Div(id="input-corrigir-classe",style={"display":"none"},children=[
-                                            html.H6("Nova classe:"),
-                                            html.H6(className="card-tab",children=[
-                                                dcc.Dropdown(
-                                                id="dropdown-classes",
-                                                searchable=True,
-                                                clearable=False,
-                                                options=[
-                                                    {"label": "Ato_Abono_Permanencia","value": "Ato_Abono_Permanencia",},
-                                                    {"label": "Ato_Aposentadoria","value": "Ato_Aposentadoria",}, 
-                                                    {"label": "Ato_Cessao","value": "Ato_Cessao",}, 
-                                                    {"label": "Ato_Exoneracao_Comissionado","value": "Ato_Exoneracao_Comissionado",}, 
-                                                    {"label": "Ato_Exoneracao_Efetivo","value": "Ato_Exoneracao_Efetivo",}, 
-                                                    {"label": "Ato_Nomeacao_Comissionado","value": "Ato_Nomeacao_Comissionado",}, 
-                                                    {"label": "Ato_Nomeacao_Efetivo","value": "Ato_Nomeacao_Efetivo",}, 
-                                                    {"label": "Ato_Retificacao_Comissionado","value": "Ato_Retificacao_Comissionado",},
-                                                    {"label": "Ato_Retificacao_Efetivo","value": "Ato_Retificacao_Efetivo",}, 
-                                                    {"label": "Ato_Reversao","value": "Ato_Reversao",}, 
-                                                    {"label": "Ato_Substituicao","value": "Ato_Substituicao",}, 
-                                                    {"label": "Ato_Tornado_Sem_Efeito_Apo","value": "Ato_Tornado_Sem_Efeito_Apo",},                                                                    
-                                                    {"label": "Ato_Tornado_Sem_Efeito_Exo_Nom","value": "Ato_Tornado_Sem_Efeito_Exo_Nom",},
-                                                    {"label": "Apagar","value": "Apagar",}, 
-                                                    {"label": "Avaliar Depois","value": "Avaliar_Depois",}, 
-                                                ],
-                                                placeholder="Select a class",
-                                                value="Ato_Cessao",
-                                            ),
-                                            ]),
-                                            html.Button("Enviar",id="enviar-corrigir-classe-button", className="Button",n_clicks=0,style={"display":"none"}),
-                                            html.Button(id="enviar-corrigir-classe-button-result",n_clicks=0, style={"display":"none"}),
-                                        ]),
-                                ]),                                
-                            ]),                                                            
-                        ])
-                    ]
-                ),
-            ],
-        ),
-
-        # página de exportação de anotações revisadas
-        html.Div(id = "pagina-output-anotacoes",children =[
-            #Onde aparecem várias tabelas, uma para cada tipo de ato, com as entidades que foram extraídas
-            dcc.Loading(
-                    id="loading-2",
-                    children=[html.Div([html.Div(id="loading-output-2")])],
-                    type="circle",
-                ),
-            html.Div(id='output-anotacoes-revisadas')], className='row'
-        ),
-])
 
 def main_callbacks(app):
 
@@ -661,33 +238,9 @@ def main_callbacks(app):
         return displays
     
     # Parte 1 - Extração de anotações do XML
-    extraction_callbacks(app)
+    extraction.extraction_callbacks(app)
 
     export_callbacks(app)
-    
-    '''
-    @app.callback(
-        [
-            Output('output-anotacoes-revisadas', 'children'),
-        ],
-        [
-            Input("button-output-anotacoes", "n_clicks"),
-        ],
-        [
-            State('upload-data', 'contents'),
-            State('upload-data', 'filename'),
-            State('upload-data', 'last_modified')
-        ])
-    def update_output(extrair, list_of_contents, list_of_names, list_of_dates):
-        children = []
-        if extrair:
-            xmls = []
-            organize_content(list_of_contents, list_of_names, list_of_dates,xmls)
-            children = [return_entidades(xmls)]
-            return [children]
-        
-        return [children]
-    '''
 
     # multidimensional projection callbacks
 
@@ -704,6 +257,7 @@ def main_callbacks(app):
             relacoes = pd.read_csv("./csv/lista_relacoes.csv")
             mdp_relacoes = projecao_multi(relacoes) 
             mdp_relacoes.to_csv("./csv/lista_relacoes.csv",index=False)
+
             entidades = pd.read_csv("./csv/lista_entidades.csv")
             mdp_entidades = projecao_multi(entidades) 
             mdp_entidades.to_csv("./csv/lista_entidades.csv",index=False)
@@ -802,7 +356,7 @@ def main_callbacks(app):
                 editable=False,
                 row_selectable="single",
                 selected_rows=[],
-                hidden_columns=['id_geral','id_dodf_rel','anotacoes','x_tsne','y_tsne','x_umap','y_umap'],
+                hidden_columns=['id_geral','id_ato','anotacoes','x_tsne','y_tsne','x_umap','y_umap'],
                 css=[{"selector": ".show-hide", "rule": "display: none", }],
                 style_as_list_view=True,
                 style_cell={
@@ -881,7 +435,7 @@ def main_callbacks(app):
                 editable=False,
                 row_selectable="single",
                 selected_rows=[],
-                hidden_columns= ['id_geral', 'id_dodf_rel', 'id_dodf', 'id_rel','anotador_rel', 'id_ent', 'anotador_ent','x_tsne', 'y_tsne', 'x_umap', 'y_umap'],
+                hidden_columns= ['id_geral', 'id_ato', 'id_dodf', 'id_rel','anotador_rel', 'id_ent', 'anotador_ent','x_tsne', 'y_tsne', 'x_umap', 'y_umap'],
                 css=[{"selector": ".show-hide", "rule": "display: none", }],
                 style_as_list_view=True,
                 style_cell={
@@ -927,7 +481,7 @@ def main_callbacks(app):
         display = 0
         if run == 0:
             df = pd.read_csv("./csv/relacoes_temp.csv")
-            figure = generate_figure(df,'TEMP',label,'rel')
+            figure = generate_figure(df,mp,label,'rel')
             return [figure,display]
         else: #if run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
             df = pd.read_csv("./csv/lista_relacoes.csv")
@@ -972,7 +526,7 @@ def main_callbacks(app):
     def display_grafico_entidades(tipos,run,mp,label,confirmar,enviar,confirmar_varios,flag_relacoes,flag_entidades):
         if run == 0:
             df = pd.read_csv("./csv/entidades_temp.csv")
-            figure = generate_figure(df,'TEMP','estado','ent')
+            figure = generate_figure(df,mp,label,'ent')
         else: #if run > 0 or confirmar > 0 or enviar > 0 or confirmar_varios > 0:
             df = pd.read_csv("./csv/lista_entidades.csv")
             
@@ -980,10 +534,8 @@ def main_callbacks(app):
             if "Todos" not in tipos:
                 df2 = df[(df.tipo_rel == tipos[0])]
                 if len(df2) == 0:
-                    
                     raise PreventUpdate
-                    figure = generate_figure(df,mp,label,'ent')
-                    return [figure]
+                    
                 if len(tipos) > 1:
                     t = len(tipos)
                     j = 1
@@ -1004,9 +556,9 @@ def main_callbacks(app):
     # Parte referente a atualizar 'detail on demand' de acordo com interações nas tabelas e gráficos 
     # (falta atualizações de qnd ocorrer alterações nas anotações)
 
-    def find_id_tabela(id_dodf_rel):
+    def find_id_tabela(id_ato):
         df = pd.read_csv("./csv/lista_relacoes.csv")
-        indice = df[df.id_dodf_rel == id_dodf_rel].index
+        indice = df[df.id_ato == id_ato].index
 
         return indice
 
@@ -1036,9 +588,9 @@ def main_callbacks(app):
         else: 
             indice_aux = df[(df['x_umap'].isin(X)) & (df['y_umap'].isin(Y))].index
 
-        id_dodf_rel = df.id_dodf_rel[indice_aux]
+        id_ato = df.id_ato[indice_aux]
 
-        indice = find_id_tabela(list(id_dodf_rel)[0])
+        indice = find_id_tabela(list(id_ato)[0])
 
         return indice 
 
@@ -1053,10 +605,6 @@ def main_callbacks(app):
         tipo_ent = df['tipo_ent'][indice]
         texto_ent = df['texto'][indice]
         estado_ent = df['estado_ent'][indice]
-        print(id_geral)
-        print(indice)
-        print(list(tipo_ent))
-        print(tipo_ent)
         info.append(list(tipo_ent)[0])
         info.append(list(texto_ent)[0])
         info.append(list(estado_ent)[0])
@@ -1069,7 +617,7 @@ def main_callbacks(app):
 
         tipo_rel = df.tipo_rel[indice]
         texto = df.texto[indice]
-        idd = df['id_dodf_rel'][indice]
+        idd = df['id_ato'][indice]
         anotacoes = list(df.anotacoes[indice])[0]
         list_anotacoes = literal_eval(anotacoes) 
         contents.append(html.H4("Ato",style={'text-align': 'center'}))
@@ -1193,9 +741,9 @@ def main_callbacks(app):
 
         elif str(trigger) == 'datatable_relacoes.derived_virtual_selected_rows' and row_id_relacoes != []:
             selected_rows=[table_relacoes[i] for i in  row_id_relacoes]
-            id_dodf_rel = selected_rows[0]["id_dodf_rel"]
+            id_ato = selected_rows[0]["id_ato"]
 
-            indice = find_id_tabela(id_dodf_rel)
+            indice = find_id_tabela(id_ato)
             contents = update_contents(indice, df)
             style_atualizar = {}
             style_confirmar = {}
@@ -1204,9 +752,9 @@ def main_callbacks(app):
 
         elif str(trigger) == 'datatable_entidades.derived_virtual_selected_rows' and row_id_entidades != []:
             selected_rows=[table_entidades[i] for i in row_id_entidades]
-            id_dodf_rel = selected_rows[0]["id_dodf_rel"]
+            id_ato = selected_rows[0]["id_ato"]
 
-            indice = find_id_tabela(id_dodf_rel)
+            indice = find_id_tabela(id_ato)
             contents = update_contents(indice, df)
             style_atualizar = {}
             style_confirmar = {}

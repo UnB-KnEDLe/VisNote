@@ -19,23 +19,6 @@ import dash_core_components as dcc
 import dash_html_components as html
 import dash_table
 
-'''correct_names = {
-        'Ato_Abono_Permanencia': 'Abono de Permanência',
-        'Ato_Aposentadoria': 'Aposentadoria',
-        'Ato_Cessao': 'Cessão',
-        'Ato_Exoneracao_Comissionado': 'Exoneração - Comissionado',
-        'Ato_Exoneracao_Efetivo': 'Exoneração - Efetivo',
-        'Ato_Nomeacao_Comissionado': 'Nomeação - Comissionado',
-        'Ato_Nomeacao_Efetivo': 'Nomeação - Efetivo',
-        'Ato_Retificacao_Comissionado': 'Retificação - Comissionado',
-        'Ato_Retificacao_Efetivo': 'Retificação - Efetivo',
-        'Ato_Reversao': 'Reversão',
-        'Ato_Substituicao': 'Substituição',
-        'Ato_Tornado_Sem_Efeito_Apo': 'Tornar sem efeito - Aposentadoria',
-        'Ato_Tornado_Sem_Efeito_Exo_Nom': 'Tornar sem efeito - Exoneração e Nomeação',
-        'todos_atos': 'Todos os atos'
-}'''
-
 # recebe o input do usuário e o organiza
 def organize_content(list_of_contents, list_of_names, list_of_dates,xmls):
     i = 0
@@ -59,9 +42,128 @@ def organize_content(list_of_contents, list_of_names, list_of_dates,xmls):
                 'There was an error processing this file.'
             ])
 
+def extract_annotations(xmls):
+    tipos_atos = ['Ato_Abono_Permanencia','Ato_Aposentadoria','Ato_Cessao','Ato_Exoneracao_Comissionado','Ato_Exoneracao_Efetivo','Ato_Nomeacao_Comissionado','Ato_Nomeacao_Efetivo','Ato_Retificacao_Comissionado','Ato_Retificacao_Efetivo','Ato_Reversao','Ato_Substituicao','Ato_Tornado_Sem_Efeito_Apo','Ato_Tornado_Sem_Efeito_Exo_Nom']
+    
+    colunas_entidades = ['id_ato', 'id_dodf','num_doc_dodf','data_doc_dodf','tipo_rel', 'id_rel','anotador_rel','texto_rel','tipo_ent','id_ent', 'anotador_ent','texto_ent']
+    df_entidades = pd.DataFrame(columns = colunas_entidades)
+    dict_entidades= {'id_ato':'x','id_dodf':'x','num_doc_dodf':'x','data_doc_dodf':'x','tipo_rel':'x', 'id_rel':'x','anotador_rel':'x','texto_rel':'x','tipo_ent':'x','id_ent':'x', 'anotador_ent':'x','offset_ent':'x','length_ent':'x','texto_ent':'x',}
+    
+    colunas_relacoes = ['id_ato','tipo_rel','estado_rel','texto','entidades']
+    df_relacoes = pd.DataFrame(columns = colunas_relacoes)
+    dict_relacoes = {'id_ato':'x','tipo_rel':'x','estado_rel':'x','texto':'x','entidades':[]}
+
+    roots = []
+    for xml in xmls:
+        tree = ET.parse(xml)
+        root = tree.getroot()
+        roots.append(root)
+    
+    for root in roots:
+        # coleta id do dodf
+        id_dodf = root.find("./document/id")
+        id_dodf_text = id_dodf.text
+        
+        # cria lista de ids de relações
+        ids_rel = []
+        for rel in root.findall("./document/passage/relation"):
+            id_rel = rel.get('id')
+            ids_rel.append(id_rel)
+            # coleta tipo e anotador da relação
+            for info in rel.findall('infon'):
+                if info.get('key') == 'type':
+                    tipo_rel = info.text
+                elif info.get('key') == 'annotator':
+                    annotatorRel = info.text 
+
+            # cria lista de ids de anotações
+            ids_anno = []
+            for info in rel.findall('node'):
+                id_anno = info.get('refid')
+                ids_anno.append(id_anno)
+
+            # encontra texto principal da relação
+            for id_anno in ids_anno: 
+                # encontra e itera sobre todos os elementos annotation do xml
+                for anno in root.findall("./document/passage/annotation"):
+                    # para cada anotação definida por um id, coleta o tipo, anotador e texto
+                    if anno.get('id') == id_anno:
+                        # encontra tipo
+                        for info in anno.findall('infon'):
+                            if info.get('key') == 'type':
+                                tipo = info.text
+                                if tipo in tipos_atos:
+                                    # encontra texto
+                                    for info in anno.findall('text'):
+                                        texto_rel = info.text 
+
+            id_ato = id_dodf_text +'-'+ id_rel
+
+            dict_relacoes["id_ato"] = id_ato
+            dict_relacoes["tipo_rel"] = tipo_rel
+            dict_relacoes["estado_rel"] = 'nao_confirmado'
+            dict_relacoes["texto"] = texto_rel
+            ids_entidades = []
+
+            # loop na lista de ids
+            for id_anno in ids_anno:
+                # encontra e itera sobre todos os elementos annotation do xml
+                for anno in root.findall("./document/passage/annotation"):
+                    # para cada anotação definida por um id, coleta o tipo, anotador, offset, length e texto
+                    if anno.get('id') == id_anno:
+                        # encontra tipo e anotador
+                        for info in anno.findall('infon'):
+                            if info.get('key') == 'type':
+                                tipo_ent = info.text
+                            elif info.get('key') == 'annotator':
+                                annotatorAnno = info.text
+                        
+                        # encontra texto
+                        for info in anno.findall('text'):
+                            texto_ent = info.text  
+                        
+                        
+                        underscore_num_data = re.sub('^[^_]+(?=_)', '', id_dodf_text)
+                        ponto_data = re.sub('^([^.])+(?=\.)', '', underscore_num_data)
+                        index_inicio_data = underscore_num_data.find(ponto_data)
+                        num_doc_dodf = underscore_num_data[1:index_inicio_data]
+                        data_doc_dodf = ponto_data[1:]
+
+                        id_geral = id_dodf_text + id_rel + id_anno
+                        id_geral = re.sub('[^0-9]', '', id_geral)
+                        dict_entidades["id_geral"] = id_geral  
+
+                        ids_entidades.append(id_geral)                   
+                        
+                        dict_entidades["id_ato"] = id_ato    
+                        dict_entidades["id_dodf"] = id_dodf_text  
+                        dict_entidades["num_doc_dodf"] = num_doc_dodf
+                        dict_entidades["data_doc_dodf"] = data_doc_dodf 
+                        dict_entidades["tipo_rel"] = tipo_rel
+                        dict_entidades["id_rel"] = id_rel
+                        dict_entidades["anotador_rel"] = annotatorRel
+                        dict_entidades["texto_rel"] = texto_rel
+                        dict_entidades["tipo_ent"] = tipo_ent
+                        dict_entidades["id_ent"] = id_anno
+                        dict_entidades["anotador_ent"] = annotatorAnno
+                        dict_entidades["texto_ent"] = texto_ent
+                        dict_entidades["estado_ent"] = "nao_confirmado"
+
+                        df_length = len(df_entidades)
+                        df_entidades.loc[df_length] = dict_entidades
+
+            dict_relacoes["entidades"] = ids_entidades
+            df_relacoes_length = len(df_relacoes)
+            df_relacoes.loc[df_relacoes_length] = dict_relacoes
+
+    df_entidades.to_csv("./csv/lista_entidades.csv",index=False)   
+    df_relacoes.to_csv("./csv/lista_relacoes.csv",index=False)  
+
+    return df_entidades, df_relacoes        
+
 # trata o input do usuário e retorna um dataframe
 def extract_entidades(xmls):  
-    colunas = ['id_geral', 'id_dodf_rel','id_dodf','tipo_rel', 'id_rel','anotador_rel','tipo_ent','id_ent', 'anotador_ent','texto','estado_ent']
+    colunas = ['id_geral', 'id_ato','id_dodf','tipo_rel', 'id_rel','anotador_rel','tipo_ent','id_ent', 'anotador_ent','texto','estado_ent']
     df = pd.DataFrame(columns = colunas)
     dictData={'id_dodf':'x','tipo_rel':'x', 'id_rel':'x','anotador_rel':'x','tipo_ent':'x','id_ent':'x', 'anotador_ent':'x','texto':'x','estado_ent':'x'}
     
@@ -115,7 +217,7 @@ def extract_entidades(xmls):
                         id_geral = re.sub('[^0-9]', '', id_geral)
                             
                         dictData["id_geral"] = id_geral    
-                        dictData["id_dodf_rel"] = id_dodf_text + id_rel   
+                        dictData["id_ato"] = id_dodf_text + id_rel   
                         dictData["id_dodf"] = id_dodf_text   
                         dictData["tipo_rel"] = tipoRel
                         dictData["id_rel"] = id_rel
@@ -136,23 +238,23 @@ def find_entidades(df,j):
     entidades = []
     i = 0
     while i < len(df.texto):
-        if df.id_dodf_rel[i] == df.id_dodf_rel[j]:
+        if df.id_ato[i] == df.id_ato[j]:
             entidades.append(df.id_geral[i])
         i += 1
     return entidades
 
 def extract_relacoes(df):
     tipos_atos = ['Ato_Abono_Permanencia','Ato_Aposentadoria','Ato_Cessao','Ato_Exoneracao_Comissionado','Ato_Exoneracao_Efetivo','Ato_Nomeacao_Comissionado','Ato_Nomeacao_Efetivo','Ato_Retificacao_Comissionado','Ato_Retificacao_Efetivo','Ato_Reversao','Ato_Substituicao','Ato_Tornado_Sem_Efeito_Apo','Ato_Tornado_Sem_Efeito_Exo_Nom']
-    colunas = ['id_geral', 'id_dodf_rel','tipo_rel','estado_rel','texto','anotacoes']
+    colunas = ['id_geral', 'id_ato','tipo_rel','estado_rel','texto','anotacoes']
     df_result = pd.DataFrame(columns = colunas)
     
-    dictAux = {'id_geral':'x', 'id_dodf_rel':'x','tipo_rel':'x','estado_rel':'x','texto':'x','anotacoes':[]}
+    dictAux = {'id_geral':'x', 'id_ato':'x','tipo_rel':'x','estado_rel':'x','texto':'x','anotacoes':[]}
 
     i = 0
     while i < len(df.texto):
         if (len(df.texto[i]) > 0) and (df.tipo_ent[i] in tipos_atos):
             dictAux["id_geral"] = df.id_geral[i]    
-            dictAux["id_dodf_rel"] = df.id_dodf_rel[i]
+            dictAux["id_ato"] = df.id_ato[i]
             dictAux["tipo_rel"] = df.tipo_rel[i]
             dictAux["estado_rel"] = 'nao_confirmado'
             dictAux["texto"] = df.texto[i]
@@ -167,6 +269,9 @@ def extract_relacoes(df):
 def return_tables(xmls):
     df_entidades = extract_entidades(xmls)
     df_relacoes = extract_relacoes(df_entidades)
+
+    #df_entidades, df_relacoes = extract_annotations(xmls)
+
     list_of_tables = []
         
     if df_entidades.shape[0] > 0 :
@@ -184,7 +289,6 @@ def return_tables(xmls):
         csv_string = "data:text/csv;charset=utf-8," + \
             urllib.parse.quote(csv_string)
        
-
         download_button = html.A(
             children=['Download CSV'],
             id='download-link',
