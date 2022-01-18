@@ -1,17 +1,13 @@
-# -*- coding: utf-8 -*-
-import os
 import dash
 
-from main import create_layout, main_callbacks
-
-# for the Local version, import local_layout and local_callbacks
-# from local import local_layout, local_callbacks
+from templates.main import create_layout
+from src.main import  main_callbacks
 
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 
-app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}],external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__, meta_tags=[{"name": "viewport", "content": "width=device-width"}], external_stylesheets=external_stylesheets)
 server = app.server
-app.title = 'VisNote 2.0'
+app.title = 'VisNote'
 app.layout = create_layout(app)
 main_callbacks(app)
 

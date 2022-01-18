@@ -1,0 +1,116 @@
+
+/*#################################*/
+/*##                             ##*/
+/*##          UPLOADER           ##*/
+/*##                             ##*/
+/*#################################*/
+
+
+.uploader_card{
+    position: relative;
+    margin: auto;
+    margin-top: 25vh;
+    width: 60%;
+    background: #FFFFFF;
+    padding: 10px;
+
+}
+
+.uploader_title{
+    font-weight: 300;
+    font-size: 40px;
+    line-height: 47px;
+    text-align: left;
+    margin-left: 5vh;
+    margin-bottom: 10px;
+}
+
+.upload_box{
+    background: #FFFFFF;
+    border: 1px dashed #2894A3;
+    box-sizing: border-box;
+    margin-left: 5vh;
+    text-align: center;
+}
+
+.uploader_img{
+    display: block;
+    margin-top: 3vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*#################################*/
+/*##                             ##*/
+/*##           BUTTONS           ##*/
+/*##                             ##*/
+/*#################################*/
+
+.button {
+    background-color: #2894A3; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+  }
+  
+.base_button {
+    background-color: white; 
+    transition-duration: 0.4s;
+    color: black; 
+    border: 1px solid #2894A3;
+    margin-bottom: 3vh;
+}
+  
+.base_button:hover {
+    background-color: #2894A3;
+    color: white;
+}
+  
+
+/*#################################*/
+/*##                             ##*/
+/*##          REVIEWER           ##*/
+/*##                             ##*/
+/*#################################*/
+
+.reviewer_page {
+
+}
+
+
+.nav_link{
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+  }
+
+  
+.nav_link:hover{
+    background-color: #555;
+    color: white;
+  }
+
+
+.reviewer_sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 16rem;
+    padding: 2rem 1rem;
+    background-color: #2894A3;
+}
+
+.reviewer_content{
+    margin-left: 18rem;
+    margin-right: 2rem;
+    padding: 2rem 1rem
+}
