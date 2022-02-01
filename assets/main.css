@@ -40,6 +40,74 @@
     margin-right: auto;
 }
 
+.uploader_file_type{
+    display: grid;
+    grid-template-columns: auto auto auto;
+    justify-content: space-evenly;
+    width: fit-content;
+    margin-left: 5vh;
+    margin-bottom: 10px;
+    vertical-align: middle;
+}
+
+
+@keyframes fadein {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 0.99;
+    }
+  }
+
+._dash-loading-callback {
+    font-family: sans-serif;
+    padding-top: 50px;
+    color: rgb(90, 90, 90);
+    
+    /* The banner */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    cursor: progress;
+    
+    opacity: 0;
+    background-color: rgba(248, 248, 248, 0.89);
+    /* Delay animation by 1s to prevent flashing 
+       and smoothly transition the animation over 0.5s 
+     */
+    -moz-animation: fadein 0.5s ease-in 1s forwards; /* Firefox */
+    -webkit-animation: fadein 0.5s ease-in 1s forwards; /* Safari and Chrome */
+    -o-animation: fadein 0.5s ease-in 1s forwards; /* Opera */
+      animation: fadein 0.5s ease-in 1s forwards;
+    }
+
+/*#################################*/
+/*##                             ##*/
+/*##          REVIEWER           ##*/
+/*##                             ##*/
+/*#################################*/
+
+
+#reviewer_topmenu {
+    display: grid;
+    grid-template-columns:  auto auto auto auto auto auto auto auto auto auto auto 50%;
+    justify-content: space-evenly;
+    margin-left: 1vh;
+    margin-bottom: 10px;
+}
+
+#reviewer_annotations_view {
+    margin-bottom: 2vh;
+}
+
+#point_visualization{
+    height: 89.5vh; 
+}
+
 /*#################################*/
 /*##                             ##*/
 /*##           BUTTONS           ##*/
@@ -73,6 +141,19 @@
     color: white;
 }
   
+.base_button_reverse {
+    background-color: #2894A3; 
+    transition-duration: 0.4s;
+    color: white; 
+    border: 1px solid white;
+    align-self: center;
+    width: fit-content;
+}
+  
+.base_button_reverse:hover {
+    background-color: white;
+    color: #2894A3;
+}
 
 /*#################################*/
 /*##                             ##*/
@@ -80,9 +161,7 @@
 /*##                             ##*/
 /*#################################*/
 
-.reviewer_page {
 
-}
 
 
 .nav_link{
@@ -112,5 +191,4 @@
 .reviewer_content{
     margin-left: 18rem;
     margin-right: 2rem;
-    padding: 2rem 1rem
 }

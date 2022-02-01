@@ -1,4 +1,4 @@
-from . import uploader, reviewer
+from . import uploader, reviewer, multidimensional_projection
 
 import dash
 from dash.dependencies import Input, Output
@@ -14,10 +14,11 @@ def main_callbacks(app):
         ],
         [
             Input('upload_annotations', 'contents'),
-            Input("button_review_annotations", "n_clicks")
+            Input("button_review_annotations", "n_clicks"),
+            Input("button_return_upload_page", "n_clicks")
         ]
     )
-    def control_displays(upload_annotations,review_annotations):       
+    def control_displays(upload_annotations,review_annotations, return_upload_page):       
         # vê qual foi o input que ativou o callback
         context = dash.callback_context
         trigger = context.triggered[0]['prop_id']
@@ -42,17 +43,20 @@ def main_callbacks(app):
                 {}, #reviewer page
             ]
 
-        else: 
+        elif str(trigger) == 'button_return_upload_page.n_clicks':
             displays = [
-            {"display":"none"}, #button review_annotations
-            {"display":"none"}, #uploader page
-            {}, #reviewer page
-        ]
+                {"display":"none"}, #button review_annotations
+                {},  #uploader page
+                {"display":"none"}, #reviewer page
+            ]
 
         return displays
 
     # Part 1 - upload annotations
     uploader.callbacks(app)
+
+    # Run multidimensional projection methods
+    multidimensional_projection.callbacks(app)
 
     # Part 2 - review annotations
     reviewer.callbacks(app)

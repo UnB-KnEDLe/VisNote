@@ -1,10 +1,12 @@
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html
+import dash_daq as daq
 
 def template():
     sidebar = html.Div(className = 'reviewer_sidebar', children=
             [
+                html.Button(children=[" <- Return"], className="base_button_reverse", id="button_return_upload_page", n_clicks=0),
                 html.H2("VisNote"),
                 
                 dbc.Nav(className='reviewer_sidebar_menu', children=
@@ -19,11 +21,40 @@ def template():
         )
 
     control_panel = html.Div(id="reviewer_control_panel", children=[])
+
+
+
+    visualization_panel = html.Div(id="reviewer_layout_panel", children=[
+        html.Div(id='reviewer_topmenu', children=[
+            html.H6('points'),
+            daq.ToggleSwitch(id='view_switch',value=False),                        
+            html.H6('list'),
+            html.H6('|'),
+            html.H6('relation'),
+            daq.ToggleSwitch(id='level_switch',value=False),                        
+            html.H6('entity'),
+            html.H6('|'),
+            html.H6('tags'),
+            daq.ToggleSwitch(id='color_code_switch',value=False),                        
+            html.H6('state'),
+        ]),
+
+        html.Div(id='reviewer_annotations_view', children=[
+            html.Div(id='reviewer_point_visualization', children=[
+                dcc.Graph(id="point_visualization")
+            ]),
+
+            html.Div(id='reviewer_list_visualization', style={'display':'none'}, children=[
+                html.H6('Lista de annotations - a implementar'),
+            ])
+        ])
+    ])
     
+
 
     content = html.Div(id="page-content", className = "reviewer_content")
 
-    select_content = [html.P("Select annotations!")]
+    select_content = [visualization_panel]
 
     correct_content = [html.P("Correct annotations!")]
 

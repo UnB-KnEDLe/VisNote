@@ -10,9 +10,9 @@ import pandas as pd
 import re
 
 # recebe o input do usuário e o organiza
-def _organize_content(list_of_contents, list_of_names, list_of_dates,xmls):
+def _organize_content(list_of_contents, list_of_names, files, file_type):
     i = 0
-    for contents, filename, date in zip(list_of_contents, list_of_names, list_of_dates):
+    for contents, filename in zip(list_of_contents, list_of_names):
         content_type, content_string = contents.split(',')
 
         content = b64decode(content_string, validate=True)
@@ -23,7 +23,16 @@ def _organize_content(list_of_contents, list_of_names, list_of_dates,xmls):
                 temp_file = open(temp_xml[0], 'wb+')
                 temp_file.write(content)
 
-                xmls.append(temp_xml[1])
+                files.append(temp_xml[1])
+                i += 1
+
+            if 'csv' in filename:
+                temp_xml = tempfile.mkstemp(prefix=str(i), suffix='.csv')
+
+                temp_file = open(temp_xml[0], 'wb+')
+                temp_file.write(content)
+
+                files.append(temp_xml[1])
                 i += 1
 
         except Exception as e:
@@ -39,9 +48,9 @@ def extract_annotations(xmls):
     df_entidades = pd.DataFrame(columns = colunas_entidades)
     dict_entidades= {'id_ato':'x','id_dodf':'x','num_doc_dodf':'x','data_doc_dodf':'x','tipo_rel':'x', 'id_rel':'x','anotador_rel':'x','texto_rel':'x','tipo_ent':'x','id_ent':'x', 'anotador_ent':'x','offset_ent':'x','length_ent':'x','texto_ent':'x',}
     
-    colunas_relacoes = ['id_ato','tipo_rel','estado_rel','texto','entidades']
+    colunas_relacoes = ['id_ato','tipo_rel','texto','entidades']
     df_relacoes = pd.DataFrame(columns = colunas_relacoes)
-    dict_relacoes = {'id_ato':'x','tipo_rel':'x','estado_rel':'x','texto':'x','entidades':[]}
+    dict_relacoes = {'id_ato':'x','tipo_rel':'x','texto':'x','entidades':[]}
 
     roots = []
     for xml in xmls:
@@ -91,7 +100,6 @@ def extract_annotations(xmls):
 
             dict_relacoes["id_ato"] = id_ato
             dict_relacoes["tipo_rel"] = tipo_rel
-            dict_relacoes["estado_rel"] = 'nao_confirmado'
             dict_relacoes["texto"] = texto_rel
             ids_entidades = []
 
@@ -147,14 +155,61 @@ def extract_annotations(xmls):
             df_relacoes.loc[df_relacoes_length] = dict_relacoes
 
     df_entidades.to_csv("./data/original_annotations.csv",index=False)   
-    df_relacoes.to_csv("./data/original_annotations.csv",index=False)  
+    df_relacoes.to_csv("./data/original_relations.csv",index=False)  
 
-    return df_entidades, df_relacoes  
+    return df_entidades
+
+def _find_entidades(df,j):
+    entidades = []
+    i = 0
+    while i < len(df.texto_ent):
+        if df.id_ato[i] == df.id_ato[j]:
+            entidades.append(df.id_geral[i])
+        i += 1
+    return entidades
+
+def _extract_relations(df):
+    tipos_atos = ['Ato_Abono_Permanencia','Ato_Aposentadoria','Ato_Cessao','Ato_Exoneracao_Comissionado','Ato_Exoneracao_Efetivo','Ato_Nomeacao_Comissionado','Ato_Nomeacao_Efetivo','Ato_Retificacao_Comissionado','Ato_Retificacao_Efetivo','Ato_Reversao','Ato_Substituicao','Ato_Tornado_Sem_Efeito_Apo','Ato_Tornado_Sem_Efeito_Exo_Nom']
+    
+    colunas = ['id_ato','tipo_rel','texto','entidades']
+    df_relacoes = pd.DataFrame(columns = colunas)
+    dict_relacoes = {'id_ato':'x','tipo_rel':'x','texto':'x','entidades':[]}
+
+    df_result = pd.DataFrame(columns = colunas)
+    
+    i = 0
+    while i < len(df.texto_ent):
+        if (len(df.texto_ent[i]) > 0) and (df.tipo_ent[i] in tipos_atos):
+            dict_relacoes['id_ato'] = df.id_ato[i]
+            dict_relacoes['tipo_rel'] = df.tipo_rel[i]
+            dict_relacoes['texto'] = df.texto_rel[i]
+            dict_relacoes["anotacoes"] = _find_entidades(df,i)
+            df_length = len(df_result)
+            df_result.loc[df_length] = dict_relacoes
+        i += 1
+    df_result.to_csv("./data/original_relations.csv",index=False)  
+
+def verify_annotations(csv):
+    df = pd.read_csv(csv)
+
+    df['id_geral'] = df.index
+    df.to_csv("./data/original_annotations.csv",index=False)
+
+    
+
+    _extract_relations(df)
+
+    return df
+
+
 
 # Organiza o output em uma tabela para mostrar ao o usuário as anotações que foram extraídas
-def _show_annotations(xmls):
+def _show_annotations(files, is_csv):
 
-    df_entidades, df_relacoes = extract_annotations(xmls)
+    if is_csv:
+        df_entidades= verify_annotations(files[0])
+    else:
+        df_entidades = extract_annotations(files)
 
     list_of_tables = []
         
@@ -207,19 +262,20 @@ def _show_annotations(xmls):
 def callbacks(app):
     @app.callback(
         [
-            Output('uploader_output', 'children')
+            Output('uploader_output', 'children'),
+            Output("uploader_loading_output", "children")
         ],
         [
             Input('upload_annotations', 'contents')
         ],
         [
             State('upload_annotations', 'filename'),
-            State('upload_annotations', 'last_modified')
+            State('file-type-switch', 'value'),
         ])
-    def update_output(list_of_contents, list_of_names, list_of_dates):
+    def update_output(list_of_contents, list_of_names, file_type):
         children = []
         if list_of_contents is not None:
-            xmls = []
-            _organize_content(list_of_contents, list_of_names, list_of_dates,xmls)
-            children = [_show_annotations(xmls)]
-        return [children]
+            files = []
+            _organize_content(list_of_contents, list_of_names, files, file_type)
+            children = [_show_annotations(files, file_type)]
+        return [children, 0]
